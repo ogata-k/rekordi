@@ -15,6 +15,16 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## バージョン情報
+
+| 対象              | サポートバージョン         |
+|:-----------------|:------------------------|
+| Flutter          | 3.10.5                  |
+| Dart             | 3.0.5                   |
+| DevTools version | 2.23.1                  |
+| Android          | 25<=SDK<=33, target 33  |
+| iOS              | 未定                     |
+
 ## プロジェクト構成
 
 - .fvm :
