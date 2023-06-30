@@ -58,6 +58,14 @@ samples, guidance on mobile development, and a full API reference.
 - pubspec.lock : pubspec.yamlのLockファイル。
 
 
+## リンター
+下記のコマンドを実行したり、Android StudioのDart Analysisタブの中身を見ることで確認ができます。
+詳しいリント条件はanalysis_options.yamlを確認してください。
+
+```
+fvm flutter analyze
+```
+
 ## 多言語化
 下記のコマンドで手動で言語ファイルの同期処理を実行できます。
 翻訳の対応漏れがあった場合にはneed_translate.txt（untranslated-messages-file）に詳細なデータが出力されます。
