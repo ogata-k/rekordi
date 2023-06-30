@@ -1,0 +1,7 @@
+{
+  "@@locale": "ja",
+  "appName": "Rekordi",
+  "@appName": {
+    "description": "アプリ名"
+  }
+}

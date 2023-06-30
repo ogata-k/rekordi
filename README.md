@@ -57,3 +57,20 @@ samples, guidance on mobile development, and a full API reference.
 - pubspec.yaml: このプロジェクトで利用するパッケージの利用設定を記述したファイル。
 - pubspec.lock : pubspec.yamlのLockファイル。
 
+
+## 多言語化
+下記のコマンドで手動で言語ファイルの同期処理を実行できます。
+翻訳の対応漏れがあった場合にはneed_translate.txt（untranslated-messages-file）に詳細なデータが出力されます。
+しかし、l10n.yamlでsynthetic-package: trueとすることでアプリのビルド時に実行するようにできるため、そちらを採用しています。
+
+```
+fvm flutter gen-l10n
+```
+
+
+コマンドの使い方は下記のコマンドを叩いて確認してください。
+詳しくは、https://docs.flutter.dev/accessibility-and-localization/internationalizationを確認してください。
+
+```
+fvm flutter gen-l10n --help
+```
