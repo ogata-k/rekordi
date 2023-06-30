@@ -74,3 +74,7 @@ fvm flutter gen-l10n
 ```
 fvm flutter gen-l10n --help
 ```
+
+arbファイルの書き方は次を参照してください。
+* https://formatjs.io/docs/core-concepts/icu-syntax
+* https://qiita.com/yukihiroK/items/d431036401ae5bbc06f9
