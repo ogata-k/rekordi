@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:rekordi/presentation/resource/theme.dart';
+import 'package:rekordi/presentation/usecase/for_app/initialize_app.dart';
 
-void main() {
+void main() async {
+  await InitializeAppUsecase().call(minimize: false);
+
   runApp(const RekordiApp());
 }
 

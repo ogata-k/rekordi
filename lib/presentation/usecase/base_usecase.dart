@@ -1,0 +1,2 @@
+/// Usecaseのベースとなるクラス
+abstract class BaseUsecase {}
