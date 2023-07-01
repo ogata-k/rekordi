@@ -29,7 +29,7 @@ class ThemeBuilder {
         return theme.copyWith(
           appBarTheme: theme.appBarTheme.copyWith(
             centerTitle: true,
-            toolbarHeight: 56.0,
+            toolbarHeight: 52.0,
             backgroundColor: theme.useMaterial3
                 ? colorScheme.inversePrimary
                 : theme.appBarTheme.backgroundColor,
