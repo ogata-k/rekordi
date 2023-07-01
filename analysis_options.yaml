@@ -48,7 +48,8 @@ linter:
     - avoid_multiple_declarations_per_line
     - avoid_positional_boolean_parameters
     - avoid_private_typedef_functions
-    - avoid_redundant_argument_values
+    # デフォルト引数をわざわざ指定してもOKとする。意図した指定の場合もあるため。
+    # - avoid_redundant_argument_values
     - avoid_returning_null
     # deprecated: https://dart-lang.github.io/linter/lints/avoid_returning_null_for_future.html
     #    - avoid_returning_null_for_future
@@ -66,12 +67,13 @@ linter:
     - comment_references
     - dangling_library_doc_comments
     - deprecated_consistency
+    - deprecated_member_use_from_same_package
     - directives_ordering
     # - discarded_futures
     # - do_not_use_environment
     # - enable_null_safety
     - eol_at_end_of_file
-    - flutter_style_todos
+    # - flutter_style_todos
     - implicit_reopen
     - invalid_case_patterns
     - join_return_with_assignment
@@ -81,9 +83,10 @@ linter:
     - matching_super_parameters
     - no_adjacent_strings_in_list
     - no_default_cases
+    - no_leading_underscores_for_local_identifiers
     - no_literal_bool_comparisons
     - noop_primitive_operations
-    - omit_local_variable_types
+    # - omit_local_variable_types
     - one_member_abstracts
     - only_throw_errors
     - package_api_docs
@@ -93,7 +96,7 @@ linter:
     - prefer_final_in_for_each
     - prefer_final_locals
     - prefer_foreach
-    - prefer_int_literals
+    # - prefer_int_literals
     - prefer_single_quotes
     - require_trailing_commas
     - secure_pubspec_urls

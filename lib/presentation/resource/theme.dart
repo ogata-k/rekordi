@@ -1,0 +1,56 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+/// Theme builder
+class ThemeBuilder {
+  const ThemeBuilder._(this._builder);
+
+  factory ThemeBuilder.fromColorScheme(
+    ColorScheme Function(Brightness brightness) colorSchemeBuilder,
+  ) =>
+      ThemeBuilder._((Brightness brightness) {
+        final ColorScheme colorScheme = colorSchemeBuilder(brightness);
+        final Typography typography = Typography.material2021(
+          platform: defaultTargetPlatform,
+          colorScheme: colorScheme,
+        );
+        final TextTheme textTheme = colorScheme.brightness == Brightness.light
+            ? typography.black
+            : typography.white;
+        final ThemeData theme = ThemeData.from(
+          useMaterial3: true,
+          colorScheme: colorScheme,
+        ).copyWith(
+          // Typographyも設定するために意図的に指定
+          typography: typography,
+          textTheme: textTheme,
+        );
+
+        return theme.copyWith(
+          appBarTheme: theme.appBarTheme.copyWith(
+            centerTitle: true,
+            toolbarHeight: 56.0,
+            backgroundColor: theme.useMaterial3
+                ? colorScheme.inversePrimary
+                : theme.appBarTheme.backgroundColor,
+          ),
+        );
+      });
+
+  factory ThemeBuilder.fromSeed(Color seedColor) =>
+      ThemeBuilder.fromColorScheme(
+        (Brightness brightness) => ColorScheme.fromSeed(
+          brightness: brightness,
+          seedColor: seedColor,
+        ),
+      );
+
+  /// core builder function
+  final ThemeData Function(Brightness brightness) _builder;
+
+  ThemeData build(Brightness brightness) => _builder(brightness);
+
+  ThemeData buildLight() => build(Brightness.light);
+
+  ThemeData buildDark() => build(Brightness.dark);
+}
