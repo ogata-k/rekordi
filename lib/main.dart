@@ -3,11 +3,11 @@ import 'package:flutter_gen/gen_l10n/l10n.dart';
 import 'package:rekordi/presentation/resource/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const RekordiApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class RekordiApp extends StatelessWidget {
+  const RekordiApp({super.key});
 
   @override
   Widget build(BuildContext context) {
