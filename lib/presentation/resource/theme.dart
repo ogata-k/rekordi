@@ -45,6 +45,9 @@ class ThemeBuilder {
         ),
       );
 
+  factory ThemeBuilder.appDefault() =>
+      ThemeBuilder.fromSeed(const Color(0xFF80D8FF));
+
   /// core builder function
   final ThemeData Function(Brightness brightness) _builder;
 

@@ -11,8 +11,7 @@ class RekordiApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color seedColor = Color(0xFF80D8FF);
-    final ThemeBuilder themeBuilder = ThemeBuilder.fromSeed(seedColor);
+    final ThemeBuilder themeBuilder = ThemeBuilder.appDefault();
 
     return MaterialApp(
       localizationsDelegates: L10n.localizationsDelegates,
