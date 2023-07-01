@@ -8,4 +8,4 @@ synthetic-package: true
 preferred-supported-locales: ja
 nullable-getter: false
 suppress-warnings: false
-untranslated-messages-file: need_translate.txt
+untranslated-messages-file: need_translate.json

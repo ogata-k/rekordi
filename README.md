@@ -32,6 +32,7 @@ samples, guidance on mobile development, and a full API reference.
   を参照。
 - android : このプロジェクトのandroid関連の設定や実装が入るフォルダ。
 - asset : このプロジェクトで利用するアセットの置き場所。
+- dev_resource : 開発時にしか利用しないリソースを定義するフォルダ。
 - ios : このプロジェクトのios関連の設定や実装が入るフォルダ。
 - lib : このプロジェクトの実装をまとめたフォルダ。今回は簡易的なクリーンアーキテクチャを採用。
     - domain : ビジネスロジックの実装をするフォルダ。
@@ -54,6 +55,8 @@ samples, guidance on mobile development, and a full API reference.
     - main.dart : エントリーポイントのmainファイル。いわゆるDirty Mainで、各種DIや初期化を実施する。DIは引数形式のDIで依存性を注入する想定。
 - test : このプロジェクトのテストをまとめたフォルダ。
 - analysis_options : このプロジェクトで使用するFlutterのリント設定を記述したファイル
+- l10n.yaml : 言語ファイルに関連する設定ファイル。
+- need_translate.json : 言語ファイルをもとにアプリの多言語情報を生成した結果として生成される翻訳漏れの情報を出力するためのファイル
 - pubspec.yaml: このプロジェクトで利用するパッケージの利用設定を記述したファイル。
 - pubspec.lock : pubspec.yamlのLockファイル。
 
