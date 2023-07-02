@@ -5,6 +5,8 @@ import 'package:rekordi/domain/repository/preferences.dart';
 import 'package:rekordi/presentation/resource/theme.dart';
 import 'package:rekordi/presentation/usecase/for_app/initialize_app.dart';
 import 'package:rekordi/presentation/usecase/preferences/get_theme_mode.dart';
+import 'package:rekordi/presentation/usecase/preferences/update_theme_mode.dart';
+import 'package:rekordi/presentation/widget/observer/dynamic_theme_mode.dart';
 
 void main() async {
   await InitializeAppUsecase().call(minimize: false);
@@ -17,18 +19,23 @@ class RekordiApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeBuilder themeBuilder = ThemeBuilder.appDefault();
-
-    return MaterialApp(
-      localizationsDelegates: L10n.localizationsDelegates,
-      supportedLocales: L10n.supportedLocales,
-      theme: themeBuilder.buildLight(),
-      darkTheme: themeBuilder.buildDark(),
-      themeMode:
+    return DynamicThemeMode(
+      initialThemeMode:
           GetThemeModeUsecase(AppLocator().get<PreferencesRepository>()).call(),
-      debugShowCheckedModeBanner: false,
-      debugShowMaterialGrid: false,
-      home: const MyHomePage(),
+      builder: (BuildContext context, ThemeMode themeMode) {
+        final ThemeBuilder themeBuilder = ThemeBuilder.appDefault();
+
+        return MaterialApp(
+          localizationsDelegates: L10n.localizationsDelegates,
+          supportedLocales: L10n.supportedLocales,
+          theme: themeBuilder.buildLight(),
+          darkTheme: themeBuilder.buildDark(),
+          themeMode: themeMode,
+          debugShowCheckedModeBanner: false,
+          debugShowMaterialGrid: false,
+          home: const MyHomePage(),
+        );
+      },
     );
   }
 }
@@ -104,6 +111,39 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            DropdownButton<ThemeMode?>(
+              value: DynamicThemeMode.of(context)?.currentMode,
+              items: [
+                if (DynamicThemeMode.of(context)?.currentMode == null)
+                  const DropdownMenuItem<ThemeMode?>(
+                    value: null,
+                    child: Text('未設定（端末設定）'),
+                  ),
+                DropdownMenuItem<ThemeMode?>(
+                  value: ThemeMode.light,
+                  child: Text(ThemeMode.light.toString()),
+                ),
+                DropdownMenuItem<ThemeMode?>(
+                  value: ThemeMode.dark,
+                  child: Text(ThemeMode.dark.toString()),
+                ),
+                DropdownMenuItem<ThemeMode?>(
+                  value: ThemeMode.system,
+                  child: Text(ThemeMode.system.toString()),
+                )
+              ],
+              onChanged: (ThemeMode? value) {
+                UpdateThemeModeUsecase(
+                  AppLocator().get<PreferencesRepository>(),
+                ).call(value).then((_) {
+                  final ThemeMode currentStoredThemeMode = GetThemeModeUsecase(
+                    AppLocator().get<PreferencesRepository>(),
+                  ).call();
+                  DynamicThemeMode.of(context)
+                      ?.setThemeMode(currentStoredThemeMode);
+                });
+              },
             ),
           ],
         ),
