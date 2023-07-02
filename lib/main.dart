@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
+import 'package:rekordi/component/locator.dart';
+import 'package:rekordi/domain/repository/preferences.dart';
 import 'package:rekordi/presentation/resource/theme.dart';
 import 'package:rekordi/presentation/usecase/for_app/initialize_app.dart';
+import 'package:rekordi/presentation/usecase/preferences/get_theme_mode.dart';
 
 void main() async {
   await InitializeAppUsecase().call(minimize: false);
@@ -21,8 +24,8 @@ class RekordiApp extends StatelessWidget {
       supportedLocales: L10n.supportedLocales,
       theme: themeBuilder.buildLight(),
       darkTheme: themeBuilder.buildDark(),
-      // @todo 設定でライト、ダーク、端末設定、を切り替えられるようにする
-      themeMode: ThemeMode.system,
+      themeMode:
+          GetThemeModeUsecase(AppLocator().get<PreferencesRepository>()).call(),
       debugShowCheckedModeBanner: false,
       debugShowMaterialGrid: false,
       home: const MyHomePage(),
