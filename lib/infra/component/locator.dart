@@ -11,13 +11,8 @@ class GetItLocator extends Locator {
   }
 
   @override
-  T get<T extends Object>({String? instanceName}) {
-    if (!_instance.isReadySync(instanceName: instanceName)) {
-      _instance.allReadySync();
-    }
-
-    return _instance.get<T>(instanceName: instanceName);
-  }
+  T get<T extends Object>({String? instanceName}) =>
+      _instance.get<T>(instanceName: instanceName);
 
   @override
   Future<T> getAsync<T extends Object>({String? instanceName}) =>
@@ -29,7 +24,7 @@ class GetItLocator extends Locator {
   }
 
   @override
-  void registerLazySingleton<T extends Object>(
+  void registerSingleton<T extends Object>(
     FactoryFunc<T> factoryFunc, {
     String? instanceName,
     DisposingFunc<T>? dispose,
@@ -42,12 +37,14 @@ class GetItLocator extends Locator {
   }
 
   @override
-  void registerLazySingletonAsync<T extends Object>(
+  void registerAsyncSingleton<T extends Object>(
     FactoryFuncAsync<T> factoryFunc, {
     String? instanceName,
     DisposingFunc<T>? dispose,
   }) {
-    _instance.registerLazySingletonAsync<T>(
+    // 初取得時に初期化を完了するLazyを使う方法だとLocator初期化のタイミングで[allReady]で待つ対象にできない。
+    // そのため、初期化が完了するまで待てるようにNot Lazyで登録する。
+    _instance.registerSingletonAsync<T>(
       factoryFunc,
       instanceName: instanceName,
       dispose: dispose,
@@ -55,7 +52,7 @@ class GetItLocator extends Locator {
   }
 
   @override
-  void registerNewInstanceEveryTime<T extends Object>(
+  void registerEveryTimeNewInstance<T extends Object>(
     FactoryFunc<T> factoryFunc, {
     String? instanceName,
   }) {
@@ -63,7 +60,7 @@ class GetItLocator extends Locator {
   }
 
   @override
-  void registerNewInstanceAsyncEveryTime<T extends Object>(
+  void registerAsyncEveryTimeNewInstance<T extends Object>(
     FactoryFuncAsync<T> factoryFunc, {
     String? instanceName,
   }) {

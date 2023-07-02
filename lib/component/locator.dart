@@ -25,44 +25,44 @@ class AppLocator extends Locator {
   Future<void> waitToAllOk() => _instance.waitToAllOk();
 
   @override
-  void registerNewInstanceEveryTime<T extends Object>(
+  void registerEveryTimeNewInstance<T extends Object>(
     FactoryFunc<T> factoryFunc, {
     String? instanceName,
   }) =>
-      _instance.registerNewInstanceEveryTime<T>(
+      _instance.registerEveryTimeNewInstance<T>(
         factoryFunc,
         instanceName: instanceName,
       );
 
   @override
-  void registerNewInstanceAsyncEveryTime<T extends Object>(
+  void registerAsyncEveryTimeNewInstance<T extends Object>(
     FactoryFuncAsync<T> factoryFunc, {
     String? instanceName,
   }) =>
-      _instance.registerNewInstanceAsyncEveryTime<T>(
+      _instance.registerAsyncEveryTimeNewInstance<T>(
         factoryFunc,
         instanceName: instanceName,
       );
 
   @override
-  void registerLazySingleton<T extends Object>(
+  void registerSingleton<T extends Object>(
     FactoryFunc<T> factoryFunc, {
     String? instanceName,
     DisposingFunc<T>? dispose,
   }) =>
-      _instance.registerLazySingleton<T>(
+      _instance.registerSingleton<T>(
         factoryFunc,
         instanceName: instanceName,
         dispose: dispose,
       );
 
   @override
-  void registerLazySingletonAsync<T extends Object>(
+  void registerAsyncSingleton<T extends Object>(
     FactoryFuncAsync<T> factoryFunc, {
     String? instanceName,
     DisposingFunc<T>? dispose,
   }) =>
-      _instance.registerLazySingletonAsync<T>(
+      _instance.registerAsyncSingleton<T>(
         factoryFunc,
         instanceName: instanceName,
         dispose: dispose,
@@ -84,30 +84,30 @@ abstract class Locator {
   Future<void> waitToAllOk();
 
   /// 呼び出すたびにインスタンスを構築して返すクラスを登録する
-  void registerNewInstanceEveryTime<T extends Object>(
+  void registerEveryTimeNewInstance<T extends Object>(
     FactoryFunc<T> factoryFunc, {
     String? instanceName,
   });
 
   /// 呼び出すたびに非同期なインスタンスを構築して返すクラスを登録する
-  void registerNewInstanceAsyncEveryTime<T extends Object>(
+  ///
+  /// ※　[getAsync]でしか取得できないので注意
+  void registerAsyncEveryTimeNewInstance<T extends Object>(
     FactoryFuncAsync<T> factoryFunc, {
     String? instanceName,
   });
 
   /// シングルトンを登録する
-  /// 初めて呼び出したときにシングルトンを構築する
-  void registerLazySingleton<T extends Object>(
+  void registerSingleton<T extends Object>(
     FactoryFunc<T> factoryFunc, {
     String? instanceName,
     DisposingFunc<T>? dispose,
   });
 
-  /// 非同期なシングルトンを登録する
-  /// 初めて呼び出したときにシングルトンを構築する。
+  /// 非同期に作成するシングルトンを登録する
   ///
-  /// ※　[getAsync]でしか取得できないので注意
-  void registerLazySingletonAsync<T extends Object>(
+  /// ※　[waitToAllOk]で待っていれば[get]で取得できるが、待っていないなら[getAsync]でしか取得できないので注意
+  void registerAsyncSingleton<T extends Object>(
     FactoryFuncAsync<T> factoryFunc, {
     String? instanceName,
     DisposingFunc<T>? dispose,
