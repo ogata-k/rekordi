@@ -8,7 +8,13 @@ typedef DisposingFunc<T> = FutureOr<void> Function(T arg);
 
 /// このアプリ用のサービスロケーターのロケータークラス
 class AppLocator extends Locator {
-  static final Locator _instance = GetItLocator();
+  static Locator _instance = GetItLocator();
+
+  /// テスト時にデフォルト以外のインスタンスを利用したい場合に置き換える
+  // ignore: use_setters_to_change_properties
+  void asMock(Locator mockInstance) {
+    _instance = mockInstance;
+  }
 
   @override
   void asTest() => _instance.asTest();
