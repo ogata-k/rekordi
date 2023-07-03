@@ -41,6 +41,8 @@ dependencies:
   # Architecture
   ## DI
   get_it: 7.6.0
+  ## Handling state with context
+  flutter_riverpod: 2.3.6
 
   # Permanent Data
   shared_preferences: 2.2.0

@@ -1,39 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/l10n.dart';
-import 'package:rekordi/component/locator.dart';
-import 'package:rekordi/domain/repository/preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekordi/presentation/data_model/app_theme_mode.dart';
 import 'package:rekordi/presentation/resource/theme.dart';
 import 'package:rekordi/presentation/usecase/for_app/initialize_app.dart';
-import 'package:rekordi/presentation/usecase/preferences/get_theme_mode.dart';
-import 'package:rekordi/presentation/usecase/preferences/update_theme_mode.dart';
-import 'package:rekordi/presentation/widget/observer/dynamic_theme_mode.dart';
 
 void main() async {
   await InitializeAppUsecase().call(minimize: false);
 
-  runApp(const RekordiApp());
+  runApp(const ProviderScope(child: RekordiApp()));
 }
 
-class RekordiApp extends StatelessWidget {
+class RekordiApp extends ConsumerWidget {
   const RekordiApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return DynamicThemeMode(
-      builder: (BuildContext context, ThemeMode themeMode) {
-        final ThemeBuilder themeBuilder = ThemeBuilder.appDefault();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ThemeBuilder themeBuilder = ThemeBuilder.appDefault();
+    final ThemeMode appThemeMode = ref.watch(appThemeModeStateProvider);
 
-        return MaterialApp(
-          localizationsDelegates: L10n.localizationsDelegates,
-          supportedLocales: L10n.supportedLocales,
-          theme: themeBuilder.buildLight(),
-          darkTheme: themeBuilder.buildDark(),
-          themeMode: themeMode,
-          debugShowCheckedModeBanner: false,
-          debugShowMaterialGrid: false,
-          home: const MyHomePage(),
-        );
-      },
+    return MaterialApp(
+      localizationsDelegates: L10n.localizationsDelegates,
+      supportedLocales: L10n.supportedLocales,
+      theme: themeBuilder.buildLight(),
+      darkTheme: themeBuilder.buildDark(),
+      themeMode: appThemeMode,
+      debugShowCheckedModeBanner: false,
+      debugShowMaterialGrid: false,
+      home: const MyHomePage(),
     );
   }
 }
@@ -110,37 +104,33 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            DropdownButton<ThemeMode?>(
-              value: DynamicThemeMode.of(context)?.currentMode,
-              items: [
-                if (DynamicThemeMode.of(context)?.currentMode == null)
-                  const DropdownMenuItem<ThemeMode?>(
-                    value: null,
-                    child: Text('未設定（端末設定）'),
-                  ),
-                DropdownMenuItem<ThemeMode?>(
-                  value: ThemeMode.light,
-                  child: Text(ThemeMode.light.toString()),
-                ),
-                DropdownMenuItem<ThemeMode?>(
-                  value: ThemeMode.dark,
-                  child: Text(ThemeMode.dark.toString()),
-                ),
-                DropdownMenuItem<ThemeMode?>(
-                  value: ThemeMode.system,
-                  child: Text(ThemeMode.system.toString()),
-                )
-              ],
-              onChanged: (ThemeMode? value) {
-                UpdateThemeModeUsecase(
-                  AppLocator().get<PreferencesRepository>(),
-                ).call(value).then((_) {
-                  final ThemeMode currentStoredThemeMode = GetThemeModeUsecase(
-                    AppLocator().get<PreferencesRepository>(),
-                  ).call();
-                  DynamicThemeMode.of(context)
-                      ?.setThemeMode(currentStoredThemeMode);
-                });
+            Consumer(
+              builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                final ThemeMode appThemeMode =
+                    ref.watch(appThemeModeStateProvider);
+
+                return DropdownButton<ThemeMode>(
+                  value: appThemeMode,
+                  items: [
+                    DropdownMenuItem<ThemeMode>(
+                      value: ThemeMode.light,
+                      child: Text(ThemeMode.light.toString()),
+                    ),
+                    DropdownMenuItem<ThemeMode>(
+                      value: ThemeMode.dark,
+                      child: Text(ThemeMode.dark.toString()),
+                    ),
+                    DropdownMenuItem<ThemeMode>(
+                      value: ThemeMode.system,
+                      child: Text(ThemeMode.system.toString()),
+                    )
+                  ],
+                  onChanged: (ThemeMode? value) {
+                    ref
+                        .read(appThemeModeStateProvider.notifier)
+                        .setThemeMode(value);
+                  },
+                );
               },
             ),
           ],
