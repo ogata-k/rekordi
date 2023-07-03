@@ -20,8 +20,6 @@ class RekordiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DynamicThemeMode(
-      initialThemeMode:
-          GetThemeModeUsecase(AppLocator().get<PreferencesRepository>()).call(),
       builder: (BuildContext context, ThemeMode themeMode) {
         final ThemeBuilder themeBuilder = ThemeBuilder.appDefault();
 

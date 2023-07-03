@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:rekordi/component/locator.dart';
+import 'package:rekordi/domain/repository/preferences.dart';
+import 'package:rekordi/presentation/usecase/preferences/get_theme_mode.dart';
 
 /// アプリの[ThemeMode]を動的に変更する機構を提供するWidget
 /// of staticメソッドでアクセスできる
 class DynamicThemeMode extends StatefulWidget {
   const DynamicThemeMode({
     Key? key,
-    required this.initialThemeMode,
     required this.builder,
   }) : super(key: key);
 
-  final ThemeMode initialThemeMode;
   final Widget Function(BuildContext context, ThemeMode themeMode) builder;
 
   @override
@@ -25,7 +26,8 @@ class _DynamicThemeModeState extends State<DynamicThemeMode> {
   @override
   void initState() {
     super.initState();
-    _themeMode = widget.initialThemeMode;
+    _themeMode =
+        GetThemeModeUsecase(AppLocator().get<PreferencesRepository>()).call();
   }
 
   void setThemeMode(ThemeMode themeMode) {
