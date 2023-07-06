@@ -6,6 +6,7 @@ import 'package:rekordi/presentation/resource/theme.dart';
 import 'package:rekordi/presentation/usecase/for_app/initialize_app.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await InitializeAppUsecase().call(minimize: false);
 
   runApp(const ProviderScope(child: RekordiApp()));
