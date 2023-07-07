@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # Localization
   flutter_localizations:
     sdk: flutter
   intl: 0.18.0
@@ -43,6 +45,9 @@ dependencies:
   get_it: 7.6.0
   ## Handling state with context
   flutter_riverpod: 2.3.6
+
+  # Navigator
+  go_router: 9.0.2
 
   # Permanent Data
   shared_preferences: 2.2.0
