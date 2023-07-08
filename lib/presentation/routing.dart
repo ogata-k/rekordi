@@ -4,64 +4,21 @@ import 'package:rekordi/component/router.dart' as component;
 import 'package:rekordi/presentation/page/error/error.dart';
 import 'package:rekordi/presentation/page/home/home.dart';
 
-/// AppRouterで扱える形式に変換するための具象クラス
-class ComponentGoRouter extends component.Router {
-  ComponentGoRouter();
-
-  @override
-  Future<T?> push<T extends Object?>(
-    BuildContext context,
-    String path,
-    Object extra,
-  ) =>
-      GoRouter.of(context).push<T>(path, extra: extra);
-
-  @override
-  Future<T?> pushWithReplace<T extends Object?>(
-    BuildContext context,
-    String path,
-    Object extra,
-  ) =>
-      GoRouter.of(context).pushReplacement(path, extra: extra);
-
-  @override
-  Future<T?> pushWithClearStack<T extends Object?>(
-    BuildContext context,
-    String path,
-    Object extra,
-  ) {
-    // @todo Not Support
-    throw UnimplementedError('Not Support go_router: 9.0.0');
-  }
-
-  @override
-  bool canPop(BuildContext context) => GoRouter.of(context).canPop();
-
-  @override
-  void pop<T extends Object>(BuildContext context, [T? result]) =>
-      GoRouter.of(context).pop(result);
-
-  @override
-  void popUntilThePath(BuildContext context, List<String> path) {
-    // @todo Not Support
-    throw UnimplementedError('Not Support go_router: 9.0.0');
-  }
-
-  @override
-  void popUntilTheName(BuildContext context, List<String> name) {
-    // @todo Not Support
-    throw UnimplementedError('Not Support go_router: 9.0.0');
-  }
-
-  @override
-  void popUntilNotFirst(BuildContext context) {
-    // @todo Not Support
-    throw UnimplementedError('Not Support go_router: 9.0.0');
-  }
-
-  @override
-  void closeDialog<T extends Object>(BuildContext context, [T? result]) =>
-      Navigator.of(context).pop(result);
+/// エラーページを構築
+Page<dynamic> _buildErrorPage(
+  BuildContext context,
+  GoRouterState state,
+) {
+  return _BasicRoutePage(
+    key: state.pageKey,
+    child: ErrorPage(
+      // extraがないということは自動で呼び出されたということなので自動構築する
+      extra: state.extra == null
+          ? ErrorPageExtra(error: state.error)
+          : state.extra! as ErrorPageExtra,
+    ),
+    transitionsBuilder: _fromBottom,
+  );
 }
 
 /// ルーティング情報を取得
@@ -74,16 +31,8 @@ GoRouter getRouter() {
     // ルーティング一覧
     routes: <RouteBase>[
       GoRoute(
-        path: ErrorPageExtra.routingPath,
-        pageBuilder: (context, state) => _BasicRoutePage<void>(
-          key: state.pageKey,
-          child: ErrorPage(extra: state.extra! as ErrorPageExtra),
-          transitionsBuilder: _fromBottom,
-        ),
-      ),
-      GoRoute(
         path: HomePageExtra.routingPath,
-        pageBuilder: (context, state) => _BasicRoutePage<void>(
+        pageBuilder: (context, state) => _BasicRoutePage(
           key: state.pageKey,
           child: HomePage(
             extra: state.extra! as HomePageExtra,
@@ -91,19 +40,16 @@ GoRouter getRouter() {
           transitionsBuilder: _fromRight,
         ),
       ),
+
+      // エラー
+      GoRoute(
+        path: ErrorPageExtra.routingPath,
+        pageBuilder: _buildErrorPage,
+      ),
     ],
 
     // ルーティングに失敗した場合の画面
-    errorPageBuilder: (context, state) => _BasicRoutePage<void>(
-      key: state.pageKey,
-      // Extraを引数に与えて遷移してきているわけではないが、
-      // エラー情報は保持しているので構築できる
-      child: ErrorPage(extra: ErrorPageExtra(error: state.error)),
-      // デフォルトより少し遅らせて表示させる
-      transitionDuration: const Duration(milliseconds: 500),
-      reverseTransitionDuration: const Duration(milliseconds: 500),
-      transitionsBuilder: _fadeInPopToBottom,
-    ),
+    errorPageBuilder: _buildErrorPage,
   );
 }
 
@@ -129,16 +75,6 @@ class _BasicRoutePage<T> extends CustomTransitionPage<T> {
     super.arguments,
     super.restorationId,
   });
-}
-
-/// フェードインアニメーション
-Widget _noAnimation(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
-) {
-  return child;
 }
 
 /// フェードインアニメーション
@@ -210,4 +146,64 @@ Widget _fadeInPopToBottom(
     case AnimationStatus.completed:
       return child;
   }
+}
+
+/// AppRouterで扱える形式に変換するための具象クラス
+class ComponentGoRouter extends component.Router {
+  ComponentGoRouter();
+
+  @override
+  Future<T?> push<T extends Object?>(
+    BuildContext context,
+    String path,
+    Object extra,
+  ) =>
+      GoRouter.of(context).push<T>(path, extra: extra);
+
+  @override
+  Future<T?> pushWithReplace<T extends Object?>(
+    BuildContext context,
+    String path,
+    Object extra,
+  ) =>
+      GoRouter.of(context).pushReplacement(path, extra: extra);
+
+  @override
+  Future<T?> pushWithClearStack<T extends Object?>(
+    BuildContext context,
+    String path,
+    Object extra,
+  ) {
+    // @todo Not Support
+    throw UnimplementedError('Not Support go_router: 9.0.0');
+  }
+
+  @override
+  bool canPop(BuildContext context) => GoRouter.of(context).canPop();
+
+  @override
+  void pop<T extends Object>(BuildContext context, [T? result]) =>
+      GoRouter.of(context).pop(result);
+
+  @override
+  void popUntilThePath(BuildContext context, List<String> path) {
+    // @todo Not Support
+    throw UnimplementedError('Not Support go_router: 9.0.0');
+  }
+
+  @override
+  void popUntilTheName(BuildContext context, List<String> name) {
+    // @todo Not Support
+    throw UnimplementedError('Not Support go_router: 9.0.0');
+  }
+
+  @override
+  void popUntilNotFirst(BuildContext context) {
+    // @todo Not Support
+    throw UnimplementedError('Not Support go_router: 9.0.0');
+  }
+
+  @override
+  void closeDialog<T extends Object>(BuildContext context, [T? result]) =>
+      Navigator.of(context).pop(result);
 }
