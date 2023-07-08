@@ -52,6 +52,10 @@ dependencies:
   # Permanent Data
   shared_preferences: 2.2.0
 
+  # util
+  stack_trace: 1.11.0
+  logging: 1.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
