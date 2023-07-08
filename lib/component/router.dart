@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:rekordi/infra/component/router.dart';
 import 'package:rekordi/presentation/page/base.dart';
-import 'package:rekordi/presentation/routing.dart';
 
 /// アプリのルーティングを担うルーター
 class AppRouter {
