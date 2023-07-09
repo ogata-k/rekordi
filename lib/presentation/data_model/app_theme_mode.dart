@@ -8,7 +8,7 @@ import 'package:rekordi/presentation/usecase/preferences/update_theme_mode.dart'
 final StateNotifierProvider<AppThemeMode, ThemeMode> appThemeModeStateProvider =
     StateNotifierProvider((ref) {
   final ThemeMode initial =
-      GetThemeModeUsecase(AppLocator().get<PreferencesRepository>()).call();
+      GetThemeModeUsecase(locator().get<PreferencesRepository>()).call();
   return AppThemeMode(initial);
 });
 
@@ -18,12 +18,13 @@ class AppThemeMode extends StateNotifier<ThemeMode> {
 
   ThemeMode get currentMode => state;
 
+  /// [ThemeMode]を設定する
   void setThemeMode(ThemeMode? themeMode) {
     UpdateThemeModeUsecase(
-      AppLocator().get<PreferencesRepository>(),
+      locator().get<PreferencesRepository>(),
     ).call(themeMode).then((_) {
       final ThemeMode currentStoredThemeMode = GetThemeModeUsecase(
-        AppLocator().get<PreferencesRepository>(),
+        locator().get<PreferencesRepository>(),
       ).call();
       state = currentStoredThemeMode;
     });

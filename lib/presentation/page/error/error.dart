@@ -30,8 +30,8 @@ class ErrorPage extends BasePage<ErrorPageExtra> {
         actions: [
           IconButton(
             onPressed: () {
-              if (AppRouter.of(context).canPop()) {
-                AppRouter.of(context).pop();
+              if (router().canPop(context)) {
+                router().pop(context);
               }
             },
             icon: const Icon(Icons.close),

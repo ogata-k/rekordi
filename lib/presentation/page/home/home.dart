@@ -133,7 +133,8 @@ class _HomePageState extends State<_HomePage> {
             ),
             OutlinedButton(
               onPressed: () {
-                AppRouter.of(context).push(
+                router().push(
+                  context,
                   ErrorPageExtra(error: Exception('Dummy Error from Home')),
                 );
               },

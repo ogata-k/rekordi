@@ -1,81 +1,101 @@
 import 'package:flutter/widgets.dart';
-import 'package:rekordi/infra/component/router.dart';
+import 'package:rekordi/component/locator.dart';
 import 'package:rekordi/presentation/page/base.dart';
+
+/// 簡単に扱うためのヘルパ
+AppRouter router() => locator().get<AppRouter>();
 
 /// アプリのルーティングを担うルーター
 class AppRouter {
-  const AppRouter._(this._context);
+  const AppRouter(this._instance);
 
-  // 実際のofメソッドの挙動とは違うが、ほかのルーターと同様に使えるようにこの名前で宣言
-  factory AppRouter.of(BuildContext context) => AppRouter._(context);
+  final Router _instance;
 
-  static final Router _instance = ComponentGoRouter();
-
-  final BuildContext _context;
-
+  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
   Future<T?> push<Extra extends BasePageExtra, T extends Object?>(
+    BuildContext context,
     Extra extra,
   ) =>
-      _instance.push(_context, extra.absolutePagePath, extra);
+      _instance.push(context, extra.absolutePagePath, extra);
 
+  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
+  /// 遷移元を置き換えながら遷移する。
   Future<T?> pushWithReplace<Extra extends BasePageExtra, T extends Object?>(
+    BuildContext context,
     Extra extra,
   ) =>
-      _instance.pushWithReplace(_context, extra.absolutePagePath, extra);
+      _instance.pushWithReplace(context, extra.absolutePagePath, extra);
 
-  // @todo go_router v9.0.0が未対応なので対応していない
+  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
+  /// 画面のスタックを全部削除して遷移する。
   Future<T?> pushWithClearStack<Extra extends BasePageExtra, T extends Object?>(
+    BuildContext context,
     Extra extra,
   ) =>
-      _instance.pushWithClearStack(_context, extra.absolutePagePath, extra);
+      _instance.pushWithClearStack(context, extra.absolutePagePath, extra);
 
-  bool canPop() => _instance.canPop(_context);
+  /// 画面が取り除くことができるならtrue
+  bool canPop(BuildContext context) => _instance.canPop(context);
 
-  void pop<T extends Object>([T? result]) => _instance.pop(_context, result);
+  /// 画面を取り除く
+  void pop<T extends Object>(BuildContext context, [T? result]) =>
+      _instance.pop(context, result);
 
-  // @todo go_router v9.0.0が未対応なので対応していない
-  void popUntilThePath(List<String> path) =>
-      _instance.popUntilThePath(_context, path);
+  /// 指定された[pathList]の中のパスになるまで画面を取り除く
+  void popUntilThePath(BuildContext context, List<String> pathList) =>
+      _instance.popUntilThePath(context, pathList);
 
-  // @todo go_router v9.0.0が未対応なので対応していない
-  void popUntilTheName(List<String> name) =>
-      _instance.popUntilTheName(_context, name);
+  /// 指定された[nameList]の中のルーティング名になるまで画面を取り除く
+  void popUntilTheName(BuildContext context, List<String> nameList) =>
+      _instance.popUntilTheName(context, nameList);
 
-  // @todo go_router v9.0.0が未対応なので対応していない
-  void popUntilNotFirst() => _instance.popUntilNotFirst(_context);
+  /// 最初の画面まで取り除く
+  void popUntilFirst(BuildContext context) => _instance.popUntilFirst(context);
 
-  void closeDialog<T extends Object>([T? result]) =>
-      _instance.closeDialog(_context, result);
+  /// 画面一番上のダイアログを取り除く
+  void closeDialog<T extends Object>(BuildContext context, [T? result]) =>
+      _instance.closeDialog(context, result);
 }
 
 abstract class Router {
+  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
   Future<T?> push<T extends Object?>(
     BuildContext context,
     String path,
     Object extra,
   );
 
+  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
+  /// 遷移元を置き換えながら遷移する。
   Future<T?> pushWithReplace<T extends Object?>(
     BuildContext context,
     String path,
     Object extra,
   );
 
+  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
+  /// 画面のスタックを全部削除して遷移する。
   Future<T?> pushWithClearStack<T extends Object?>(
     BuildContext context,
     String path,
     Object extra,
   );
 
+  /// 画面が取り除くことができるならtrue
   bool canPop(BuildContext context);
 
+  /// 画面を取り除く
   void pop<T extends Object>(BuildContext context, [T? result]);
 
-  void popUntilThePath(BuildContext context, List<String> path);
+  /// 指定された[pathList]の中のパスになるまで画面を取り除く
+  void popUntilThePath(BuildContext context, List<String> pathList);
 
-  void popUntilTheName(BuildContext context, List<String> name);
+  /// 指定された[nameList]の中のルーティング名になるまで画面を取り除く
+  void popUntilTheName(BuildContext context, List<String> nameList);
 
-  void popUntilNotFirst(BuildContext context);
+  /// 最初の画面まで取り除く
+  void popUntilFirst(BuildContext context);
 
+  /// 画面一番上のダイアログを取り除く
   void closeDialog<T extends Object>(BuildContext context, [T? result]);
 }

@@ -6,11 +6,6 @@ class GetItLocator extends Locator {
   get_it.GetIt get _instance => get_it.GetIt.instance;
 
   @override
-  void asTest() {
-    _instance.allowReassignment = true;
-  }
-
-  @override
   T get<T extends Object>({String? instanceName}) =>
       _instance.get<T>(instanceName: instanceName);
 

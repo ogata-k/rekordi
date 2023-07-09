@@ -1,36 +1,44 @@
 import 'dart:async';
 
-import 'package:rekordi/infra/component/locator.dart';
+import 'package:rekordi/util/error.dart';
 
 typedef FactoryFunc<T> = T Function();
 typedef FactoryFuncAsync<T> = Future<T> Function();
 typedef DisposingFunc<T> = FutureOr<void> Function(T arg);
 
-/// このアプリ用のサービスロケーターのロケータークラス
-class AppLocator extends Locator {
-  static Locator _instance = GetItLocator();
+/// 簡単に扱うためのヘルパ
+AppLocator locator() => AppLocator();
 
-  /// テスト時にデフォルト以外のインスタンスを利用したい場合に置き換える
+/// このアプリ用のサービスロケーターのロケータークラス
+class AppLocator {
+  static Locator _instance = throw NotInitializeError(
+    description: 'Not initialized AppLocator inner instance',
+  );
+
+  /// AppLocatorを初期化する
   // ignore: use_setters_to_change_properties
-  void asMock(Locator mockInstance) {
-    _instance = mockInstance;
+  static void initialize(Locator locator) {
+    _instance = locator;
   }
 
-  @override
-  void asTest() => _instance.asTest();
-
-  @override
+  /// 型やインスタンス名に対応する登録してあるインスタンスを同期的に取得してくる。
+  /// 非同期インスタンスは準備済みなら取得できるが、まだ準備できていない場合はエラーになる。
   T get<T extends Object>({String? instanceName}) =>
       _instance.get(instanceName: instanceName);
 
-  @override
+  /// 型やインスタンス名に対応する登録してあるインスタンスを非同期的に取得してくる。
   Future<T> getAsync<T extends Object>({String? instanceName}) =>
       _instance.getAsync(instanceName: instanceName);
 
-  @override
+  /// このメソッドを呼び出すまでに登録したすべてのインスタンスの準備を完了させる。
   Future<void> waitToAllOk() => _instance.waitToAllOk();
 
-  @override
+  /// 型やインスタンス名に対応する登録してあるインスタンスの準備を完了させる。
+  Future<void> waitToOk<T extends Object>({String? instanceName}) async {
+    await _instance.getAsync<T>(instanceName: instanceName);
+  }
+
+  /// 毎回新規インスタンスを構築して返す形で登録する。
   void registerEveryTimeNewInstance<T extends Object>(
     FactoryFunc<T> factoryFunc, {
     String? instanceName,
@@ -40,7 +48,8 @@ class AppLocator extends Locator {
         instanceName: instanceName,
       );
 
-  @override
+  /// 毎回新規インスタンスを構築して返す形で登録する。
+  /// [getAsync]でしか取得できない。
   void registerAsyncEveryTimeNewInstance<T extends Object>(
     FactoryFuncAsync<T> factoryFunc, {
     String? instanceName,
@@ -50,9 +59,8 @@ class AppLocator extends Locator {
         instanceName: instanceName,
       );
 
-  @override
-  void registerSingleton<T extends Object>(
-    FactoryFunc<T> factoryFunc, {
+  /// 同期的に取得できるインスタンスをシングルトンで登録する。
+  void registerSingleton<T extends Object>(FactoryFunc<T> factoryFunc, {
     String? instanceName,
     DisposingFunc<T>? dispose,
   }) =>
@@ -62,12 +70,13 @@ class AppLocator extends Locator {
         dispose: dispose,
       );
 
-  @override
-  void registerAsyncSingleton<T extends Object>(
-    FactoryFuncAsync<T> factoryFunc, {
-    String? instanceName,
-    DisposingFunc<T>? dispose,
-  }) =>
+  /// 非同期的に取得できるインスタンスをシングルトンで登録する。
+  /// 準備を完了させておくことで、同期的にも取得できる。
+  void registerAsyncSingleton<T extends Object>(FactoryFuncAsync<T> factoryFunc,
+      {
+        String? instanceName,
+        DisposingFunc<T>? dispose,
+      }) =>
       _instance.registerAsyncSingleton<T>(
         factoryFunc,
         instanceName: instanceName,
@@ -77,9 +86,6 @@ class AppLocator extends Locator {
 
 /// サービスロケータのロケーター抽象クラス
 abstract class Locator {
-  /// テスト用にする
-  void asTest();
-
   /// 登録したシングルトンインスタンスを取得する
   T get<T extends Object>({String? instanceName});
 

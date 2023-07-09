@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:rekordi/component/logger.dart' as component;
-import 'package:rekordi/util/exception.dart';
+import 'package:rekordi/util/error.dart';
 import 'package:stack_trace/stack_trace.dart' show Frame, Trace;
 
 /// loggingパッケージのLogger具象クラス
@@ -59,7 +59,7 @@ class LoggingLogger extends component.Logger {
       case Level.OFF:
         return component.LogLevel.off;
       default:
-        throw const UnreachableException();
+        throw UnreachableError();
     }
   }
 

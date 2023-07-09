@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekordi/component/router.dart' as component;
+import 'package:rekordi/util/error.dart';
 
 /// AppRouterで扱える形式に変換するための具象クラス
 class ComponentGoRouter extends component.Router {
@@ -29,7 +30,9 @@ class ComponentGoRouter extends component.Router {
     Object extra,
   ) {
     // @todo Not Support
-    throw UnimplementedError('Not Support go_router: 9.0.0');
+    throw NotSupportError(
+      description: 'Not Support this implement by go_router: 9.0.0',
+    );
   }
 
   @override
@@ -40,21 +43,27 @@ class ComponentGoRouter extends component.Router {
       GoRouter.of(context).pop(result);
 
   @override
-  void popUntilThePath(BuildContext context, List<String> path) {
+  void popUntilThePath(BuildContext context, List<String> pathList) {
     // @todo Not Support
-    throw UnimplementedError('Not Support go_router: 9.0.0');
+    throw NotSupportError(
+      description: 'Not Support this implement by go_router: 9.0.0',
+    );
   }
 
   @override
-  void popUntilTheName(BuildContext context, List<String> name) {
+  void popUntilTheName(BuildContext context, List<String> nameList) {
     // @todo Not Support
-    throw UnimplementedError('Not Support go_router: 9.0.0');
+    throw NotSupportError(
+      description: 'Not Support this implement by go_router: 9.0.0',
+    );
   }
 
   @override
-  void popUntilNotFirst(BuildContext context) {
+  void popUntilFirst(BuildContext context) {
     // @todo Not Support
-    throw UnimplementedError('Not Support go_router: 9.0.0');
+    throw NotSupportError(
+      description: 'Not Support this implement by go_router: 9.0.0',
+    );
   }
 
   @override

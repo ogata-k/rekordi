@@ -45,15 +45,19 @@ class ThemeBuilder {
         ),
       );
 
+  /// アプリの[Theme]を構築するインスタンスを作成
   factory ThemeBuilder.appDefault() =>
       ThemeBuilder.fromSeed(const Color(0xFF80D8FF));
 
   /// core builder function
   final ThemeData Function(Brightness brightness) _builder;
 
+  /// 指定したテーマモードで構築
   ThemeData build(Brightness brightness) => _builder(brightness);
 
+  /// ライトテーマで構築
   ThemeData buildLight() => build(Brightness.light);
 
+  /// ダークテーマで構築
   ThemeData buildDark() => build(Brightness.dark);
 }
