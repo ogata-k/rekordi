@@ -1,4 +1,4 @@
-import 'package:rekordi/domain/repository/preferences.dart';
+import 'package:rekordi/domain/domain_infra/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart' as plugin;
 
 /// アプリの環境設定をローカルファイルで管理するためのクラス

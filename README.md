@@ -63,8 +63,8 @@ samples, guidance on mobile development, and a full API reference.
 - pubspec.yaml: このプロジェクトで利用するパッケージの利用設定を記述したファイル。
 - pubspec.lock : pubspec.yamlのLockファイル。
 
-
 ## リンター
+
 下記のコマンドを実行したり、Android StudioのDart Analysisタブの中身を見ることで確認ができます。
 詳しいリント条件はanalysis_options.yamlを確認してください。
 
@@ -72,7 +72,22 @@ samples, guidance on mobile development, and a full API reference.
 fvm flutter analyze
 ```
 
+## コード自動生成
+
+freezeや言語ファイルやデータベースなどbuild_runnerを使用する設定（Rekordiではfreezeとデータベースのみ）なら次のコマンドでコードを自動生成できます。
+
+```
+dart run build_runner build --delete-conflicting-outputs
+```
+
+もしbuild_runnerを変更があったときに都度実行する場合は次のコマンドで変更を監視して実行することをお勧めします。
+
+```
+dart run build_runner build watch --delete-conflicting-outputs
+```
+
 ## 多言語化
+
 下記のコマンドで手動で言語ファイルの同期処理を実行できます。
 翻訳の対応漏れがあった場合にはneed_translate.txt（untranslated-messages-file）に詳細なデータが出力されます。
 しかし、l10n.yamlでsynthetic-package: trueとすることでアプリのビルド時に実行するようにできるため、そちらを採用しています。
@@ -80,7 +95,6 @@ fvm flutter analyze
 ```
 fvm flutter gen-l10n
 ```
-
 
 コマンドの使い方は下記のコマンドを叩いて確認してください。
 詳しくは、https://docs.flutter.dev/accessibility-and-localization/internationalizationを確認してください。
