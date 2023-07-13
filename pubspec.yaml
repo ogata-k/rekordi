@@ -52,6 +52,7 @@ dependencies:
   # Permanent Data
   shared_preferences: 2.2.0
   drift: 2.9.0
+  drift_dev: 2.9.0
   sqlite3_flutter_libs: 0.5.15
   path_provider: 2.0.15
   path: 1.8.3
@@ -73,10 +74,6 @@ dev_dependencies:
 
   # Auto generate
   build_runner: 2.4.6
-
-  # Permanent Data
-  drift_dev: 2.9.0
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

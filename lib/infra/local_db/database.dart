@@ -2,11 +2,19 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:drift_dev/api/migrations.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:rekordi/domain/domain_infra/local_database.dart';
+import 'package:rekordi/util/error.dart';
 
 part 'database.g.dart';
+
+typedef Migration = Future<void> Function(Migrator m);
+
+final Map<int, List<Migration>> _incrementMigration = {};
+final Map<int, List<Migration>> _rollbackMigration = {};
 
 /// infraのLocalDatabase実装
 class InfraLocalDatabase extends LocalDatabase {
@@ -39,9 +47,43 @@ class Database extends _$Database {
           await m.createAll(); // default
         },
         onUpgrade: (Migrator m, int from, int to) async {
-          // @todo upgrade migration
+          if (from == to) {
+            throw UnreachableError(
+              description:
+                  // ignore: lines_longer_than_80_chars
+                  'This onUpgrade called when from version not equal to to version',
+            );
+          }
+
+          if (from < to) {
+            int v = from;
+            while (v <= to) {
+              final List<Migration> migrations = _incrementMigration[v] ?? [];
+              for (final Migration migration in migrations) {
+                await migration(m);
+              }
+              v++;
+            }
+          } else {
+            int v = from;
+            while (v >= to) {
+              final List<Migration> migrations = _rollbackMigration[v] ?? [];
+              for (final Migration migration in migrations) {
+                await migration(m);
+              }
+              v--;
+            }
+          }
         },
-        beforeOpen: (OpeningDetails details) async {},
+        beforeOpen: (details) async {
+          // your existing beforeOpen callback, enable foreign keys, etc.
+
+          if (kDebugMode) {
+            // This check pulls in a fair amount of code that's not needed
+            // anywhere else, so we recommend only doing it in debug builds.
+            await validateDatabaseSchema();
+          }
+        },
       );
 }
 
