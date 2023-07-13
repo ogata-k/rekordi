@@ -74,7 +74,7 @@ fvm flutter analyze
 
 ## コード自動生成
 
-freezeや言語ファイルやデータベースなどbuild_runnerを使用する設定（Rekordiではfreezeとデータベースのみ）なら次のコマンドでコードを自動生成できます。
+freezeやデータベースなどでbuild_runnerを使用する設定（Rekordiではfreezeとデータベースのみ）なら次のコマンドでコードを自動生成できます。
 
 ```
 dart run build_runner build --delete-conflicting-outputs
@@ -90,7 +90,7 @@ dart run build_runner build watch --delete-conflicting-outputs
 
 下記のコマンドで手動で言語ファイルの同期処理を実行できます。
 翻訳の対応漏れがあった場合にはneed_translate.txt（untranslated-messages-file）に詳細なデータが出力されます。
-しかし、l10n.yamlでsynthetic-package: trueとすることでアプリのビルド時に実行するようにできるため、そちらを採用しています。
+しかし、l10n.yamlでsynthetic-package: trueとすることでアプリのビルド時に実行できます。
 
 ```
 fvm flutter gen-l10n

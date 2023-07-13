@@ -18,6 +18,7 @@ analyzer:
     strict-inference: true
     strict-raw-types: true
   exclude:
+    - "lib/presentation/resource/l10n/l10n*.dart"
     - "**/*.g.dart"
 
 linter:
