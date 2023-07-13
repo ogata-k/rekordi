@@ -45,7 +45,8 @@ samples, guidance on mobile development, and a full API reference.
         - component : lib/componentで定義されたクラスの実装を定義する。
         - local_db :
           明示的にエラーを返すローカルなDBの実装をするフォルダ。必要があるならハンドリングしたいエラーはlib/domain/domain_exceptionに定義してあるので、それを返す。返却する値はlib/domain/modelを返す。
-            - entity : local_db内でテーブルの定義などに利用するエンティティモデル。
+            - dao : local_db内でデータアクセスの指定をまとめたアクセスオブジェクト。
+            - table : local_db内でテーブルの定義などに利用するモデル。
     - presentation : UIに関する実装を集めたフォルダ。
         - model : 状態を保持および管理するためのモデルを配置するフォルダ。基本的にここ以外でWidgetの状態管理を除いて状態を管理しない。
           modelで状態の更新がある場合はChangeNotifier(ValueNotifierでも可)
@@ -75,16 +76,16 @@ fvm flutter analyze
 
 ## コード自動生成
 
-freezeやデータベースなどでbuild_runnerを使用する設定（Rekordiではfreezeとデータベースのみ）なら次のコマンドでコードを自動生成できます。
+freezedやデータベースなどでbuild_runnerを使用する設定（Rekordiではfreezedとデータベースのみ）なら次のコマンドでコードを自動生成できます。
 
 ```
-dart run build_runner build --delete-conflicting-outputs
+fvm dart run build_runner build --delete-conflicting-outputs
 ```
 
 もしbuild_runnerを変更があったときに都度実行する場合は次のコマンドで変更を監視して実行することをお勧めします。
 
 ```
-dart run build_runner build watch --delete-conflicting-outputs
+fvm dart run build_runner build watch --delete-conflicting-outputs
 ```
 
 ## 多言語化
