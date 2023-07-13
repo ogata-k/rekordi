@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekordi/component/router.dart';
-import 'package:rekordi/presentation/data_model/app_theme_mode.dart';
+import 'package:rekordi/presentation/model/app_theme_mode.dart';
 import 'package:rekordi/presentation/page/base.dart';
 import 'package:rekordi/presentation/page/error/error.dart';
 import 'package:rekordi/presentation/resource/l10n/l10n.dart';
