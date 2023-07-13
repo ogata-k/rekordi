@@ -1,0 +1,22 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        generate_for:
+          - lib/infra/local_db/database.dart
+          - lib/infra/local_db/dao/*.dart
+          - lib/infra/local_db/table/*.dart
+      freezed:
+        generate_for:
+          - lib/domain/entity/*.dart
+        options:
+          # Disable the generation of copyWith/== for the entire project
+          copy_with: true
+          equal: true
+          # `when` and `map` can be enabled/disabled entirely by setting them to `true`/`false`
+          map: true
+          # We can also enable/disable specific variants of `when`/`map` by setting them to `true`/`false`:
+          when:
+            when: true
+            maybe_when: true
+            when_or_null: false
