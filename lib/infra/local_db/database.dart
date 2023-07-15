@@ -39,8 +39,12 @@ class InfraLocalDatabase extends LocalDatabase {
 class Database extends _$Database {
   Database() : super(_openConnection());
 
+  /// バージョンの初期値
+  /// 作成時のマイグレーションの初期値バージョンとして利用する
+  static const int _initialVersion = 0;
+
   @override
-  int get schemaVersion => 0;
+  int get schemaVersion => _initialVersion;
 
   @override
   DriftDatabaseOptions get options =>
@@ -49,7 +53,7 @@ class Database extends _$Database {
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (Migrator m) async {
-          await m.createAll(); // default
+          await _migrate(m, _initialVersion, schemaVersion);
         },
         onUpgrade: (Migrator m, int from, int to) async {
           if (from == to) {
@@ -60,25 +64,7 @@ class Database extends _$Database {
             );
           }
 
-          if (from < to) {
-            int v = from;
-            while (v <= to) {
-              final Migration? migration = _incrementMigration[v];
-              if (migration != null) {
-                await migration(m);
-              }
-              v++;
-            }
-          } else {
-            int v = from;
-            while (v >= to) {
-              final Migration? migration = _rollbackMigration[v];
-              if (migration != null) {
-                await migration(m);
-              }
-              v--;
-            }
-          }
+          await _migrate(m, from, to);
         },
         beforeOpen: (details) async {
           // your existing beforeOpen callback, enable foreign keys, etc.
@@ -90,6 +76,34 @@ class Database extends _$Database {
           }
         },
       );
+
+  /// 変化したバージョン情報をもとにマイグレーションを実行する
+  Future<void> _migrate(Migrator m, int from, int to) async {
+    if (from == to) {
+      // マイグレーションの必要なし
+      return;
+    }
+
+    if (from < to) {
+      int v = from;
+      while (v <= to) {
+        final Migration? migration = _incrementMigration[v];
+        if (migration != null) {
+          await migration(m);
+        }
+        v++;
+      }
+    } else {
+      int v = from;
+      while (v >= to) {
+        final Migration? migration = _rollbackMigration[v];
+        if (migration != null) {
+          await migration(m);
+        }
+        v--;
+      }
+    }
+  }
 }
 
 LazyDatabase _openConnection() {
