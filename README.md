@@ -79,13 +79,13 @@ fvm flutter analyze
 freezedやデータベースなどでbuild_runnerを使用する設定（Rekordiではfreezedとデータベースのみ）なら次のコマンドでコードを自動生成できます。
 
 ```
-fvm dart run build_runner build --delete-conflicting-outputs
+fvm flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 もしbuild_runnerを変更があったときに都度実行する場合は次のコマンドで変更を監視して実行することをお勧めします。
 
 ```
-fvm dart run build_runner build watch --delete-conflicting-outputs
+fvm flutter pub run watch --delete-conflicting-outputs
 ```
 
 ## 多言語化
