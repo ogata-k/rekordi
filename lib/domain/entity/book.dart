@@ -15,4 +15,8 @@ class BookEntity with _$BookEntity {
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _BookEntity;
+
+  /// Private Constructor
+  /// この中で独自のメソッドを定義するにはこれがないとエラーになる
+  const BookEntity._();
 }

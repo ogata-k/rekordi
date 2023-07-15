@@ -215,7 +215,7 @@ class __$$_BookEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BookEntity implements _BookEntity {
+class _$_BookEntity extends _BookEntity {
   const _$_BookEntity(
       {required this.bookId,
       required this.title,
@@ -223,7 +223,8 @@ class _$_BookEntity implements _BookEntity {
       required this.lightThemeBaseColor,
       required this.dartThemeBaseColor,
       required this.createdAt,
-      required this.updatedAt});
+      required this.updatedAt})
+      : super._();
 
   @override
   final int bookId;
@@ -341,7 +342,7 @@ class _$_BookEntity implements _BookEntity {
   }
 }
 
-abstract class _BookEntity implements BookEntity {
+abstract class _BookEntity extends BookEntity {
   const factory _BookEntity(
       {required final int bookId,
       required final String title,
@@ -350,6 +351,8 @@ abstract class _BookEntity implements BookEntity {
       required final Color dartThemeBaseColor,
       required final DateTime createdAt,
       required final DateTime updatedAt}) = _$_BookEntity;
+
+  const _BookEntity._() : super._();
 
   @override
   int get bookId;
