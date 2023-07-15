@@ -13,8 +13,8 @@ part 'database.g.dart';
 
 typedef Migration = Future<void> Function(Migrator m);
 
-final Map<int, List<Migration>> _incrementMigration = {};
-final Map<int, List<Migration>> _rollbackMigration = {};
+final Map<int, Migration> _incrementMigration = {};
+final Map<int, Migration> _rollbackMigration = {};
 
 /// infraのLocalDatabase実装
 class InfraLocalDatabase extends LocalDatabase {
@@ -58,8 +58,8 @@ class Database extends _$Database {
           if (from < to) {
             int v = from;
             while (v <= to) {
-              final List<Migration> migrations = _incrementMigration[v] ?? [];
-              for (final Migration migration in migrations) {
+              final Migration? migration = _incrementMigration[v];
+              if (migration != null) {
                 await migration(m);
               }
               v++;
@@ -67,8 +67,8 @@ class Database extends _$Database {
           } else {
             int v = from;
             while (v >= to) {
-              final List<Migration> migrations = _rollbackMigration[v] ?? [];
-              for (final Migration migration in migrations) {
+              final Migration? migration = _rollbackMigration[v];
+              if (migration != null) {
                 await migration(m);
               }
               v--;
