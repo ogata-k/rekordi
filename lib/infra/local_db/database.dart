@@ -27,6 +27,11 @@ class InfraLocalDatabase extends LocalDatabase {
   }
 
   final Database _instance;
+
+  @override
+  Future<void> close() async {
+    await _instance.close();
+  }
 }
 
 /// App Database infra

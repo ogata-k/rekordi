@@ -25,7 +25,10 @@ class InitializeAppUsecase extends BaseUsecase {
       ..registerSingleton<component_router.Router>(ComponentGoRouter.new)
       // ここからはリポジトリ用のインフラの登録
       ..registerAsyncSingleton<Preferences>(SharedPreferences.buildInstance)
-      ..registerSingleton<LocalDatabase>(InfraLocalDatabase.buildInstance)
+      ..registerSingleton<LocalDatabase>(
+        InfraLocalDatabase.buildInstance,
+        dispose: (db) async => await db.close(),
+      )
       // ここからはコンポーネント(これらは全体的に使うのでヘルパが用意されている)
       ..registerSingleton<AppLogger>(
         () => AppLogger(AppLocator().get<component_logger.Logger>())
