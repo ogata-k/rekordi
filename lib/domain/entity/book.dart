@@ -10,8 +10,8 @@ class BookEntity with _$BookEntity {
     required int bookId,
     required String title,
     required String description,
-    required Color lightThemeBaseColor,
-    required Color dartThemeBaseColor,
+    required Color lightThemeColor,
+    required Color dartThemeColor,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _BookEntity;

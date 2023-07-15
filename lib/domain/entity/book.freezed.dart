@@ -17,20 +17,27 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$BookEntity {
   int get bookId => throw _privateConstructorUsedError;
+
   String get title => throw _privateConstructorUsedError;
+
   String get description => throw _privateConstructorUsedError;
-  Color get lightThemeBaseColor => throw _privateConstructorUsedError;
-  Color get dartThemeBaseColor => throw _privateConstructorUsedError;
+
+  Color get lightThemeColor => throw _privateConstructorUsedError;
+
+  Color get dartThemeColor => throw _privateConstructorUsedError;
+
   DateTime get createdAt => throw _privateConstructorUsedError;
+
   DateTime get updatedAt => throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
             int bookId,
             String title,
             String description,
-            Color lightThemeBaseColor,
-            Color dartThemeBaseColor,
+            Color lightThemeColor,
+            Color dartThemeColor,
             DateTime createdAt,
             DateTime updatedAt)
         $default,
@@ -43,8 +50,8 @@ mixin _$BookEntity {
             int bookId,
             String title,
             String description,
-            Color lightThemeBaseColor,
-            Color dartThemeBaseColor,
+            Color lightThemeColor,
+            Color dartThemeColor,
             DateTime createdAt,
             DateTime updatedAt)?
         $default, {
@@ -83,8 +90,8 @@ abstract class $BookEntityCopyWith<$Res> {
       {int bookId,
       String title,
       String description,
-      Color lightThemeBaseColor,
-      Color dartThemeBaseColor,
+      Color lightThemeColor,
+      Color dartThemeColor,
       DateTime createdAt,
       DateTime updatedAt});
 }
@@ -105,8 +112,8 @@ class _$BookEntityCopyWithImpl<$Res, $Val extends BookEntity>
     Object? bookId = null,
     Object? title = null,
     Object? description = null,
-    Object? lightThemeBaseColor = null,
-    Object? dartThemeBaseColor = null,
+    Object? lightThemeColor = null,
+    Object? dartThemeColor = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -123,13 +130,13 @@ class _$BookEntityCopyWithImpl<$Res, $Val extends BookEntity>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      lightThemeBaseColor: null == lightThemeBaseColor
-          ? _value.lightThemeBaseColor
-          : lightThemeBaseColor // ignore: cast_nullable_to_non_nullable
+      lightThemeColor: null == lightThemeColor
+          ? _value.lightThemeColor
+          : lightThemeColor // ignore: cast_nullable_to_non_nullable
               as Color,
-      dartThemeBaseColor: null == dartThemeBaseColor
-          ? _value.dartThemeBaseColor
-          : dartThemeBaseColor // ignore: cast_nullable_to_non_nullable
+      dartThemeColor: null == dartThemeColor
+          ? _value.dartThemeColor
+          : dartThemeColor // ignore: cast_nullable_to_non_nullable
               as Color,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -155,8 +162,8 @@ abstract class _$$_BookEntityCopyWith<$Res>
       {int bookId,
       String title,
       String description,
-      Color lightThemeBaseColor,
-      Color dartThemeBaseColor,
+      Color lightThemeColor,
+      Color dartThemeColor,
       DateTime createdAt,
       DateTime updatedAt});
 }
@@ -175,8 +182,8 @@ class __$$_BookEntityCopyWithImpl<$Res>
     Object? bookId = null,
     Object? title = null,
     Object? description = null,
-    Object? lightThemeBaseColor = null,
-    Object? dartThemeBaseColor = null,
+    Object? lightThemeColor = null,
+    Object? dartThemeColor = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -193,13 +200,13 @@ class __$$_BookEntityCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      lightThemeBaseColor: null == lightThemeBaseColor
-          ? _value.lightThemeBaseColor
-          : lightThemeBaseColor // ignore: cast_nullable_to_non_nullable
+      lightThemeColor: null == lightThemeColor
+          ? _value.lightThemeColor
+          : lightThemeColor // ignore: cast_nullable_to_non_nullable
               as Color,
-      dartThemeBaseColor: null == dartThemeBaseColor
-          ? _value.dartThemeBaseColor
-          : dartThemeBaseColor // ignore: cast_nullable_to_non_nullable
+      dartThemeColor: null == dartThemeColor
+          ? _value.dartThemeColor
+          : dartThemeColor // ignore: cast_nullable_to_non_nullable
               as Color,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -220,8 +227,8 @@ class _$_BookEntity extends _BookEntity {
       {required this.bookId,
       required this.title,
       required this.description,
-      required this.lightThemeBaseColor,
-      required this.dartThemeBaseColor,
+      required this.lightThemeColor,
+      required this.dartThemeColor,
       required this.createdAt,
       required this.updatedAt})
       : super._();
@@ -233,9 +240,9 @@ class _$_BookEntity extends _BookEntity {
   @override
   final String description;
   @override
-  final Color lightThemeBaseColor;
+  final Color lightThemeColor;
   @override
-  final Color dartThemeBaseColor;
+  final Color dartThemeColor;
   @override
   final DateTime createdAt;
   @override
@@ -243,7 +250,7 @@ class _$_BookEntity extends _BookEntity {
 
   @override
   String toString() {
-    return 'BookEntity(bookId: $bookId, title: $title, description: $description, lightThemeBaseColor: $lightThemeBaseColor, dartThemeBaseColor: $dartThemeBaseColor, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'BookEntity(bookId: $bookId, title: $title, description: $description, lightThemeColor: $lightThemeColor, dartThemeColor: $dartThemeColor, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -255,10 +262,10 @@ class _$_BookEntity extends _BookEntity {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.lightThemeBaseColor, lightThemeBaseColor) ||
-                other.lightThemeBaseColor == lightThemeBaseColor) &&
-            (identical(other.dartThemeBaseColor, dartThemeBaseColor) ||
-                other.dartThemeBaseColor == dartThemeBaseColor) &&
+            (identical(other.lightThemeColor, lightThemeColor) ||
+                other.lightThemeColor == lightThemeColor) &&
+            (identical(other.dartThemeColor, dartThemeColor) ||
+                other.dartThemeColor == dartThemeColor) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -267,7 +274,7 @@ class _$_BookEntity extends _BookEntity {
 
   @override
   int get hashCode => Object.hash(runtimeType, bookId, title, description,
-      lightThemeBaseColor, dartThemeBaseColor, createdAt, updatedAt);
+      lightThemeColor, dartThemeColor, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -282,14 +289,14 @@ class _$_BookEntity extends _BookEntity {
             int bookId,
             String title,
             String description,
-            Color lightThemeBaseColor,
-            Color dartThemeBaseColor,
+            Color lightThemeColor,
+            Color dartThemeColor,
             DateTime createdAt,
             DateTime updatedAt)
         $default,
   ) {
-    return $default(bookId, title, description, lightThemeBaseColor,
-        dartThemeBaseColor, createdAt, updatedAt);
+    return $default(bookId, title, description, lightThemeColor, dartThemeColor,
+        createdAt, updatedAt);
   }
 
   @override
@@ -299,16 +306,16 @@ class _$_BookEntity extends _BookEntity {
             int bookId,
             String title,
             String description,
-            Color lightThemeBaseColor,
-            Color dartThemeBaseColor,
+            Color lightThemeColor,
+            Color dartThemeColor,
             DateTime createdAt,
             DateTime updatedAt)?
         $default, {
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(bookId, title, description, lightThemeBaseColor,
-          dartThemeBaseColor, createdAt, updatedAt);
+      return $default(bookId, title, description, lightThemeColor,
+          dartThemeColor, createdAt, updatedAt);
     }
     return orElse();
   }
@@ -347,23 +354,26 @@ abstract class _BookEntity extends BookEntity {
       {required final int bookId,
       required final String title,
       required final String description,
-      required final Color lightThemeBaseColor,
-      required final Color dartThemeBaseColor,
+      required final Color lightThemeColor,
+      required final Color dartThemeColor,
       required final DateTime createdAt,
       required final DateTime updatedAt}) = _$_BookEntity;
-
   const _BookEntity._() : super._();
 
   @override
   int get bookId;
   @override
   String get title;
+
   @override
   String get description;
+
   @override
-  Color get lightThemeBaseColor;
+  Color get lightThemeColor;
+
   @override
-  Color get dartThemeBaseColor;
+  Color get dartThemeColor;
+
   @override
   DateTime get createdAt;
   @override
