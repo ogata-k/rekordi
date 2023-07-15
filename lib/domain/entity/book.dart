@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'book.freezed.dart';
 
-/// 記録簿のグループ単位である本のエンティティ
+/// 記録のグループ単位である記録簿のエンティティ
 @freezed
 class BookEntity with _$BookEntity {
   const factory BookEntity({
