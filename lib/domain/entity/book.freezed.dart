@@ -17,19 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$BookEntity {
   int get bookId => throw _privateConstructorUsedError;
-
   String get title => throw _privateConstructorUsedError;
-
   String get description => throw _privateConstructorUsedError;
-
   Color get lightThemeColor => throw _privateConstructorUsedError;
-
   Color get dartThemeColor => throw _privateConstructorUsedError;
-
   DateTime get createdAt => throw _privateConstructorUsedError;
-
   DateTime get updatedAt => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
@@ -364,16 +357,12 @@ abstract class _BookEntity extends BookEntity {
   int get bookId;
   @override
   String get title;
-
   @override
   String get description;
-
   @override
   Color get lightThemeColor;
-
   @override
   Color get dartThemeColor;
-
   @override
   DateTime get createdAt;
   @override
