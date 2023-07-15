@@ -85,7 +85,7 @@ fvm flutter pub run build_runner build --delete-conflicting-outputs
 もしbuild_runnerを変更があったときに都度実行する場合は次のコマンドで変更を監視して実行することをお勧めします。
 
 ```
-fvm flutter pub run watch --delete-conflicting-outputs
+fvm flutter pub run build_runner watch --delete-conflicting-outputs
 ```
 
 ## 多言語化
