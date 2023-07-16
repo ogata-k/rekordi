@@ -133,4 +133,5 @@ fvm dart run drift_dev schema dump lib/infra/local_db/database.dart drift_schema
 fvm dart run drift_dev schema steps drift_schema/ lib/infra/local_db/schema_version.drift.dart
 ```
 
-７：データベースクラスのmigrationとしてstepByStep関数でバージョンごとの変化のマイグレーションを作成する
+７：データベースクラスのmigrationとしてstepByStep関数でバージョンごとの変化のマイグレーションを作成する。ロールバックも忘れずに対応する
+８：データベースクラスのallSchemaEntitiesが最終的にスキーマとして生成されていてほしいテーブル情報になっているように修正する
