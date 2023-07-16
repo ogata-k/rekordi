@@ -130,7 +130,7 @@ fvm dart run drift_dev schema dump lib/infra/local_db/database.dart drift_schema
 ６：出力したスキーマ情報をもとにマイグレーションのためのコードを生成する
 
 ```
-fvm dart run drift_dev schema steps drift_schema/ lib/infra/local_db/schema_version.dart
+fvm dart run drift_dev schema steps drift_schema/ lib/infra/local_db/schema_version.drift.dart
 ```
 
 ７：データベースクラスのmigrationとしてstepByStep関数でバージョンごとの変化のマイグレーションを作成する

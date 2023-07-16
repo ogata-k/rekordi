@@ -73,25 +73,18 @@ final class _S1 extends i0.VersionedSchema {
 
 class Shape0 extends i0.VersionedTable {
   Shape0({required super.source, required super.alias}) : super.aliased();
-
   i1.GeneratedColumn<int> get bookId =>
       columnsByName['book_id']! as i1.GeneratedColumn<int>;
-
   i1.GeneratedColumn<String> get title =>
       columnsByName['title']! as i1.GeneratedColumn<String>;
-
   i1.GeneratedColumn<String> get description =>
       columnsByName['description']! as i1.GeneratedColumn<String>;
-
   i1.GeneratedColumn<String> get lightThemeColor =>
       columnsByName['light_theme_color']! as i1.GeneratedColumn<String>;
-
   i1.GeneratedColumn<String> get darkThemeColor =>
       columnsByName['dark_theme_color']! as i1.GeneratedColumn<String>;
-
   i1.GeneratedColumn<DateTime> get createdAt =>
       columnsByName['created_at']! as i1.GeneratedColumn<DateTime>;
-
   i1.GeneratedColumn<DateTime> get updatedAt =>
       columnsByName['updated_at']! as i1.GeneratedColumn<DateTime>;
 }
@@ -102,58 +95,46 @@ i1.GeneratedColumn<int> _column_0(String aliasedName) =>
         type: i1.DriftSqlType.int,
         defaultConstraints:
             i1.GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-
 i1.GeneratedColumn<String> _column_1(String aliasedName) =>
     i1.GeneratedColumn<String>('title', aliasedName, false,
         additionalChecks: i1.GeneratedColumn.checkTextLength(
             minTextLength: 1, maxTextLength: 50),
         type: i1.DriftSqlType.string,
         defaultConstraints: i1.GeneratedColumn.constraintIsAlways('UNIQUE'));
-
 i1.GeneratedColumn<String> _column_2(String aliasedName) =>
     i1.GeneratedColumn<String>('description', aliasedName, false,
         additionalChecks:
             i1.GeneratedColumn.checkTextLength(maxTextLength: 500),
         type: i1.DriftSqlType.string);
-
 i1.GeneratedColumn<String> _column_3(String aliasedName) =>
     i1.GeneratedColumn<String>('light_theme_color', aliasedName, false,
         additionalChecks: i1.GeneratedColumn.checkTextLength(
             minTextLength: 9, maxTextLength: 9),
         type: i1.DriftSqlType.string);
-
 i1.GeneratedColumn<String> _column_4(String aliasedName) =>
     i1.GeneratedColumn<String>('dark_theme_color', aliasedName, false,
         additionalChecks: i1.GeneratedColumn.checkTextLength(
             minTextLength: 9, maxTextLength: 9),
         type: i1.DriftSqlType.string);
-
 i1.GeneratedColumn<DateTime> _column_5(String aliasedName) =>
     i1.GeneratedColumn<DateTime>('created_at', aliasedName, false,
         type: i1.DriftSqlType.dateTime);
-
 i1.GeneratedColumn<DateTime> _column_6(String aliasedName) =>
     i1.GeneratedColumn<DateTime>('updated_at', aliasedName, false,
         type: i1.DriftSqlType.dateTime);
 
 class Shape1 extends i0.VersionedTable {
   Shape1({required super.source, required super.alias}) : super.aliased();
-
   i1.GeneratedColumn<int> get footprintId =>
       columnsByName['footprint_id']! as i1.GeneratedColumn<int>;
-
   i1.GeneratedColumn<int> get bookId =>
       columnsByName['book_id']! as i1.GeneratedColumn<int>;
-
   i1.GeneratedColumn<String> get message =>
       columnsByName['message']! as i1.GeneratedColumn<String>;
-
   i1.GeneratedColumn<DateTime> get recordDate =>
       columnsByName['record_date']! as i1.GeneratedColumn<DateTime>;
-
   i1.GeneratedColumn<DateTime> get createdAt =>
       columnsByName['created_at']! as i1.GeneratedColumn<DateTime>;
-
   i1.GeneratedColumn<DateTime> get updatedAt =>
       columnsByName['updated_at']! as i1.GeneratedColumn<DateTime>;
 }
@@ -164,37 +145,28 @@ i1.GeneratedColumn<int> _column_7(String aliasedName) =>
         type: i1.DriftSqlType.int,
         defaultConstraints:
             i1.GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-
 i1.GeneratedColumn<int> _column_8(String aliasedName) =>
     i1.GeneratedColumn<int>('book_id', aliasedName, false,
         type: i1.DriftSqlType.int);
-
 i1.GeneratedColumn<String> _column_9(String aliasedName) =>
     i1.GeneratedColumn<String>('message', aliasedName, false,
         type: i1.DriftSqlType.string);
-
 i1.GeneratedColumn<DateTime> _column_10(String aliasedName) =>
     i1.GeneratedColumn<DateTime>('record_date', aliasedName, false,
         type: i1.DriftSqlType.dateTime);
 
 class Shape2 extends i0.VersionedTable {
   Shape2({required super.source, required super.alias}) : super.aliased();
-
   i1.GeneratedColumn<int> get attachmentId =>
       columnsByName['attachment_id']! as i1.GeneratedColumn<int>;
-
   i1.GeneratedColumn<int> get footprintId =>
       columnsByName['footprint_id']! as i1.GeneratedColumn<int>;
-
   i1.GeneratedColumn<String> get filename =>
       columnsByName['filename']! as i1.GeneratedColumn<String>;
-
   i1.GeneratedColumn<String> get filepath =>
       columnsByName['filepath']! as i1.GeneratedColumn<String>;
-
   i1.GeneratedColumn<int> get position =>
       columnsByName['position']! as i1.GeneratedColumn<int>;
-
   i1.GeneratedColumn<DateTime> get storedAt =>
       columnsByName['stored_at']! as i1.GeneratedColumn<DateTime>;
 }
@@ -205,32 +177,26 @@ i1.GeneratedColumn<int> _column_11(String aliasedName) =>
         type: i1.DriftSqlType.int,
         defaultConstraints:
             i1.GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-
 i1.GeneratedColumn<int> _column_12(String aliasedName) =>
     i1.GeneratedColumn<int>('footprint_id', aliasedName, false,
         type: i1.DriftSqlType.int);
-
 i1.GeneratedColumn<String> _column_13(String aliasedName) =>
     i1.GeneratedColumn<String>('filename', aliasedName, false,
         additionalChecks: i1.GeneratedColumn.checkTextLength(
             minTextLength: 1, maxTextLength: 255),
         type: i1.DriftSqlType.string);
-
 i1.GeneratedColumn<String> _column_14(String aliasedName) =>
     i1.GeneratedColumn<String>('filepath', aliasedName, false,
         additionalChecks: i1.GeneratedColumn.checkTextLength(
           minTextLength: 1,
         ),
         type: i1.DriftSqlType.string);
-
 i1.GeneratedColumn<int> _column_15(String aliasedName) =>
     i1.GeneratedColumn<int>('position', aliasedName, false,
         type: i1.DriftSqlType.int);
-
 i1.GeneratedColumn<DateTime> _column_16(String aliasedName) =>
     i1.GeneratedColumn<DateTime>('stored_at', aliasedName, false,
         type: i1.DriftSqlType.dateTime);
-
 i1.OnUpgrade stepByStep({
   required Future<void> Function(i1.Migrator m, _S1 schema) from0To1,
 }) {

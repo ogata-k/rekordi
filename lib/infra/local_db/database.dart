@@ -8,7 +8,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:rekordi/component/logger.dart';
 import 'package:rekordi/domain/domain_infra/local_database.dart';
-import 'package:rekordi/infra/local_db/schema_version.dart';
+import 'package:rekordi/infra/local_db/schema_version.drift.dart';
 import 'package:rekordi/infra/local_db/table/attachments.dart';
 import 'package:rekordi/infra/local_db/table/books.dart';
 import 'package:rekordi/infra/local_db/table/footprints.dart';
