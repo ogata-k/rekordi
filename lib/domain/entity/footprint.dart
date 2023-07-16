@@ -10,6 +10,7 @@ class FootprintEntity with _$FootprintEntity {
     required int footprintId,
     required int bookId,
     required String message,
+    required DateTime recordDate,
     required List<AttachmentEntity> attachments,
     required DateTime createdAt,
     required DateTime updatedAt,

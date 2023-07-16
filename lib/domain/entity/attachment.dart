@@ -10,6 +10,7 @@ class AttachmentEntity with _$AttachmentEntity {
     required int footprintId,
     required String filename,
     required String filepath,
+    required int position,
     required DateTime storedAt,
   }) = _AttachmentEntity;
 

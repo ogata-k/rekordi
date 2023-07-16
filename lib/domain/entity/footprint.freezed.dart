@@ -17,23 +17,21 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FootprintEntity {
   int get footprintId => throw _privateConstructorUsedError;
-
   int get bookId => throw _privateConstructorUsedError;
-
   String get message => throw _privateConstructorUsedError;
 
+  DateTime get recordDate => throw _privateConstructorUsedError;
+
   List<AttachmentEntity> get attachments => throw _privateConstructorUsedError;
-
   DateTime get createdAt => throw _privateConstructorUsedError;
-
   DateTime get updatedAt => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
             int footprintId,
             int bookId,
             String message,
+            DateTime recordDate,
             List<AttachmentEntity> attachments,
             DateTime createdAt,
             DateTime updatedAt)
@@ -47,6 +45,7 @@ mixin _$FootprintEntity {
             int footprintId,
             int bookId,
             String message,
+            DateTime recordDate,
             List<AttachmentEntity> attachments,
             DateTime createdAt,
             DateTime updatedAt)?
@@ -81,12 +80,12 @@ abstract class $FootprintEntityCopyWith<$Res> {
   factory $FootprintEntityCopyWith(
           FootprintEntity value, $Res Function(FootprintEntity) then) =
       _$FootprintEntityCopyWithImpl<$Res, FootprintEntity>;
-
   @useResult
   $Res call(
       {int footprintId,
       int bookId,
       String message,
+      DateTime recordDate,
       List<AttachmentEntity> attachments,
       DateTime createdAt,
       DateTime updatedAt});
@@ -99,7 +98,6 @@ class _$FootprintEntityCopyWithImpl<$Res, $Val extends FootprintEntity>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -109,6 +107,7 @@ class _$FootprintEntityCopyWithImpl<$Res, $Val extends FootprintEntity>
     Object? footprintId = null,
     Object? bookId = null,
     Object? message = null,
+    Object? recordDate = null,
     Object? attachments = null,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -126,6 +125,10 @@ class _$FootprintEntityCopyWithImpl<$Res, $Val extends FootprintEntity>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      recordDate: null == recordDate
+          ? _value.recordDate
+          : recordDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       attachments: null == attachments
           ? _value.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
@@ -148,13 +151,13 @@ abstract class _$$_FootprintEntityCopyWith<$Res>
   factory _$$_FootprintEntityCopyWith(
           _$_FootprintEntity value, $Res Function(_$_FootprintEntity) then) =
       __$$_FootprintEntityCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
       {int footprintId,
       int bookId,
       String message,
+      DateTime recordDate,
       List<AttachmentEntity> attachments,
       DateTime createdAt,
       DateTime updatedAt});
@@ -174,6 +177,7 @@ class __$$_FootprintEntityCopyWithImpl<$Res>
     Object? footprintId = null,
     Object? bookId = null,
     Object? message = null,
+    Object? recordDate = null,
     Object? attachments = null,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -191,6 +195,10 @@ class __$$_FootprintEntityCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      recordDate: null == recordDate
+          ? _value.recordDate
+          : recordDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       attachments: null == attachments
           ? _value._attachments
           : attachments // ignore: cast_nullable_to_non_nullable
@@ -214,6 +222,7 @@ class _$_FootprintEntity extends _FootprintEntity {
       {required this.footprintId,
       required this.bookId,
       required this.message,
+      required this.recordDate,
       required final List<AttachmentEntity> attachments,
       required this.createdAt,
       required this.updatedAt})
@@ -226,6 +235,8 @@ class _$_FootprintEntity extends _FootprintEntity {
   final int bookId;
   @override
   final String message;
+  @override
+  final DateTime recordDate;
   final List<AttachmentEntity> _attachments;
 
   @override
@@ -242,7 +253,7 @@ class _$_FootprintEntity extends _FootprintEntity {
 
   @override
   String toString() {
-    return 'FootprintEntity(footprintId: $footprintId, bookId: $bookId, message: $message, attachments: $attachments, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'FootprintEntity(footprintId: $footprintId, bookId: $bookId, message: $message, recordDate: $recordDate, attachments: $attachments, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -254,6 +265,8 @@ class _$_FootprintEntity extends _FootprintEntity {
                 other.footprintId == footprintId) &&
             (identical(other.bookId, bookId) || other.bookId == bookId) &&
             (identical(other.message, message) || other.message == message) &&
+            (identical(other.recordDate, recordDate) ||
+                other.recordDate == recordDate) &&
             const DeepCollectionEquality()
                 .equals(other._attachments, _attachments) &&
             (identical(other.createdAt, createdAt) ||
@@ -263,8 +276,15 @@ class _$_FootprintEntity extends _FootprintEntity {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, footprintId, bookId, message,
-      const DeepCollectionEquality().hash(_attachments), createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      footprintId,
+      bookId,
+      message,
+      recordDate,
+      const DeepCollectionEquality().hash(_attachments),
+      createdAt,
+      updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -279,13 +299,14 @@ class _$_FootprintEntity extends _FootprintEntity {
             int footprintId,
             int bookId,
             String message,
+            DateTime recordDate,
             List<AttachmentEntity> attachments,
             DateTime createdAt,
             DateTime updatedAt)
         $default,
   ) {
-    return $default(
-        footprintId, bookId, message, attachments, createdAt, updatedAt);
+    return $default(footprintId, bookId, message, recordDate, attachments,
+        createdAt, updatedAt);
   }
 
   @override
@@ -295,6 +316,7 @@ class _$_FootprintEntity extends _FootprintEntity {
             int footprintId,
             int bookId,
             String message,
+            DateTime recordDate,
             List<AttachmentEntity> attachments,
             DateTime createdAt,
             DateTime updatedAt)?
@@ -302,8 +324,8 @@ class _$_FootprintEntity extends _FootprintEntity {
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(
-          footprintId, bookId, message, attachments, createdAt, updatedAt);
+      return $default(footprintId, bookId, message, recordDate, attachments,
+          createdAt, updatedAt);
     }
     return orElse();
   }
@@ -342,6 +364,7 @@ abstract class _FootprintEntity extends FootprintEntity {
       {required final int footprintId,
       required final int bookId,
       required final String message,
+      required final DateTime recordDate,
       required final List<AttachmentEntity> attachments,
       required final DateTime createdAt,
       required final DateTime updatedAt}) = _$_FootprintEntity;
@@ -356,6 +379,9 @@ abstract class _FootprintEntity extends FootprintEntity {
 
   @override
   String get message;
+
+  @override
+  DateTime get recordDate;
 
   @override
   List<AttachmentEntity> get attachments;

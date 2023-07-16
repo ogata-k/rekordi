@@ -17,19 +17,17 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AttachmentEntity {
   int get attachmentId => throw _privateConstructorUsedError;
-
   int get footprintId => throw _privateConstructorUsedError;
-
   String get filename => throw _privateConstructorUsedError;
-
   String get filepath => throw _privateConstructorUsedError;
 
-  DateTime get storedAt => throw _privateConstructorUsedError;
+  int get position => throw _privateConstructorUsedError;
 
+  DateTime get storedAt => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(int attachmentId, int footprintId, String filename,
-            String filepath, DateTime storedAt)
+            String filepath, int position, DateTime storedAt)
         $default,
   ) =>
       throw _privateConstructorUsedError;
@@ -37,7 +35,7 @@ mixin _$AttachmentEntity {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(int attachmentId, int footprintId, String filename,
-            String filepath, DateTime storedAt)?
+            String filepath, int position, DateTime storedAt)?
         $default, {
     required TResult orElse(),
   }) =>
@@ -69,13 +67,13 @@ abstract class $AttachmentEntityCopyWith<$Res> {
   factory $AttachmentEntityCopyWith(
           AttachmentEntity value, $Res Function(AttachmentEntity) then) =
       _$AttachmentEntityCopyWithImpl<$Res, AttachmentEntity>;
-
   @useResult
   $Res call(
       {int attachmentId,
       int footprintId,
       String filename,
       String filepath,
+      int position,
       DateTime storedAt});
 }
 
@@ -86,7 +84,6 @@ class _$AttachmentEntityCopyWithImpl<$Res, $Val extends AttachmentEntity>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -97,6 +94,7 @@ class _$AttachmentEntityCopyWithImpl<$Res, $Val extends AttachmentEntity>
     Object? footprintId = null,
     Object? filename = null,
     Object? filepath = null,
+    Object? position = null,
     Object? storedAt = null,
   }) {
     return _then(_value.copyWith(
@@ -116,6 +114,10 @@ class _$AttachmentEntityCopyWithImpl<$Res, $Val extends AttachmentEntity>
           ? _value.filepath
           : filepath // ignore: cast_nullable_to_non_nullable
               as String,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as int,
       storedAt: null == storedAt
           ? _value.storedAt
           : storedAt // ignore: cast_nullable_to_non_nullable
@@ -130,7 +132,6 @@ abstract class _$$_AttachmentEntityCopyWith<$Res>
   factory _$$_AttachmentEntityCopyWith(
           _$_AttachmentEntity value, $Res Function(_$_AttachmentEntity) then) =
       __$$_AttachmentEntityCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -138,6 +139,7 @@ abstract class _$$_AttachmentEntityCopyWith<$Res>
       int footprintId,
       String filename,
       String filepath,
+      int position,
       DateTime storedAt});
 }
 
@@ -156,6 +158,7 @@ class __$$_AttachmentEntityCopyWithImpl<$Res>
     Object? footprintId = null,
     Object? filename = null,
     Object? filepath = null,
+    Object? position = null,
     Object? storedAt = null,
   }) {
     return _then(_$_AttachmentEntity(
@@ -175,6 +178,10 @@ class __$$_AttachmentEntityCopyWithImpl<$Res>
           ? _value.filepath
           : filepath // ignore: cast_nullable_to_non_nullable
               as String,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as int,
       storedAt: null == storedAt
           ? _value.storedAt
           : storedAt // ignore: cast_nullable_to_non_nullable
@@ -191,6 +198,7 @@ class _$_AttachmentEntity extends _AttachmentEntity {
       required this.footprintId,
       required this.filename,
       required this.filepath,
+      required this.position,
       required this.storedAt})
       : super._();
 
@@ -203,11 +211,13 @@ class _$_AttachmentEntity extends _AttachmentEntity {
   @override
   final String filepath;
   @override
+  final int position;
+  @override
   final DateTime storedAt;
 
   @override
   String toString() {
-    return 'AttachmentEntity(attachmentId: $attachmentId, footprintId: $footprintId, filename: $filename, filepath: $filepath, storedAt: $storedAt)';
+    return 'AttachmentEntity(attachmentId: $attachmentId, footprintId: $footprintId, filename: $filename, filepath: $filepath, position: $position, storedAt: $storedAt)';
   }
 
   @override
@@ -223,13 +233,15 @@ class _$_AttachmentEntity extends _AttachmentEntity {
                 other.filename == filename) &&
             (identical(other.filepath, filepath) ||
                 other.filepath == filepath) &&
+            (identical(other.position, position) ||
+                other.position == position) &&
             (identical(other.storedAt, storedAt) ||
                 other.storedAt == storedAt));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, attachmentId, footprintId, filename, filepath, storedAt);
+  int get hashCode => Object.hash(runtimeType, attachmentId, footprintId,
+      filename, filepath, position, storedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -241,22 +253,24 @@ class _$_AttachmentEntity extends _AttachmentEntity {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(int attachmentId, int footprintId, String filename,
-            String filepath, DateTime storedAt)
+            String filepath, int position, DateTime storedAt)
         $default,
   ) {
-    return $default(attachmentId, footprintId, filename, filepath, storedAt);
+    return $default(
+        attachmentId, footprintId, filename, filepath, position, storedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(int attachmentId, int footprintId, String filename,
-            String filepath, DateTime storedAt)?
+            String filepath, int position, DateTime storedAt)?
         $default, {
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(attachmentId, footprintId, filename, filepath, storedAt);
+      return $default(
+          attachmentId, footprintId, filename, filepath, position, storedAt);
     }
     return orElse();
   }
@@ -296,6 +310,7 @@ abstract class _AttachmentEntity extends AttachmentEntity {
       required final int footprintId,
       required final String filename,
       required final String filepath,
+      required final int position,
       required final DateTime storedAt}) = _$_AttachmentEntity;
 
   const _AttachmentEntity._() : super._();
@@ -311,6 +326,9 @@ abstract class _AttachmentEntity extends AttachmentEntity {
 
   @override
   String get filepath;
+
+  @override
+  int get position;
 
   @override
   DateTime get storedAt;

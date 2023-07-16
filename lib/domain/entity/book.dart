@@ -3,6 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'book.freezed.dart';
 
+// TODO このエンティティを返すようにDBのテーブルとDAOを作成し、LocalDBモデルがDAOを返せるようにインターフェースを修正する。DB設計についてはメモを参照
+
 /// 記録のグループ単位である記録簿のエンティティ
 @freezed
 class BookEntity with _$BookEntity {
