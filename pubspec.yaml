@@ -51,8 +51,8 @@ dependencies:
 
   # Permanent Data
   shared_preferences: 2.1.2
-  drift: 2.9.0
-  drift_dev: 2.9.0
+  drift: 2.10.0
+  drift_dev: 2.10.0
   sqlite3_flutter_libs: 0.5.15
   path_provider: 2.0.15
   path: 1.8.3

@@ -106,5 +106,31 @@ fvm flutter gen-l10n --help
 ```
 
 arbファイルの書き方は次を参照してください。
+
 * https://formatjs.io/docs/core-concepts/icu-syntax
 * https://qiita.com/yukihiroK/items/d431036401ae5bbc06f9
+
+## DBのマイグレーションの手順
+
+１：Tableクラスを継承したクラスを作成する。
+２：データベースクラスの@DriftDatabaseで宣言しているtablesに登録されていることを確認する
+３：コードの自動生成にあたる次のコマンドで最新の状態のテーブルクラスをデータベースで扱えるようにする。そしてエラーが出ないようにする。
+
+```
+fvm flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+４：データベースクラスのschemaVersionを一つ上げる。
+５：次のコマンドで増やしたschemaVersion時点のスキーマ情報を出力する
+
+```
+fvm dart run drift_dev schema dump lib/infra/local_db/database.dart drift_schema/
+```
+
+６：出力したスキーマ情報をもとにマイグレーションのためのコードを生成する
+
+```
+fvm dart run drift_dev schema steps drift_schema/ lib/infra/local_db/schema_version.dart
+```
+
+７：データベースクラスのmigrationとしてstepByStep関数でバージョンごとの変化のマイグレーションを作成する
