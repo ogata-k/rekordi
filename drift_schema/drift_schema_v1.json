@@ -67,36 +67,30 @@
           {
             "name": "light_theme_color",
             "getter_name": "lightThemeColor",
-            "moor_type": "string",
+            "moor_type": "int",
             "nullable": false,
             "customConstraints": null,
             "default_dart": null,
             "default_client_dart": null,
-            "dsl_features": [
-              {
-                "allowed-lengths": {
-                  "min": 9,
-                  "max": 9
-                }
-              }
-            ]
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const ColorConverter()",
+              "dart_type_name": "Color"
+            }
           },
           {
             "name": "dark_theme_color",
             "getter_name": "darkThemeColor",
-            "moor_type": "string",
+            "moor_type": "int",
             "nullable": false,
             "customConstraints": null,
             "default_dart": null,
             "default_client_dart": null,
-            "dsl_features": [
-              {
-                "allowed-lengths": {
-                  "min": 9,
-                  "max": 9
-                }
-              }
-            ]
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const ColorConverter()",
+              "dart_type_name": "Color"
+            }
           },
           {
             "name": "created_at",

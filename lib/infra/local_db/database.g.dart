@@ -37,21 +37,17 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
   static const VerificationMeta _lightThemeColorMeta =
       const VerificationMeta('lightThemeColor');
   @override
-  late final GeneratedColumn<String> lightThemeColor = GeneratedColumn<String>(
-      'light_theme_color', aliasedName, false,
-      additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 9, maxTextLength: 9),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<Color, int> lightThemeColor =
+      GeneratedColumn<int>('light_theme_color', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<Color>($BooksTable.$converterlightThemeColor);
   static const VerificationMeta _darkThemeColorMeta =
       const VerificationMeta('darkThemeColor');
   @override
-  late final GeneratedColumn<String> darkThemeColor = GeneratedColumn<String>(
-      'dark_theme_color', aliasedName, false,
-      additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 9, maxTextLength: 9),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<Color, int> darkThemeColor =
+      GeneratedColumn<int>('dark_theme_color', aliasedName, false,
+              type: DriftSqlType.int, requiredDuringInsert: true)
+          .withConverter<Color>($BooksTable.$converterdarkThemeColor);
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -101,22 +97,8 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
-    if (data.containsKey('light_theme_color')) {
-      context.handle(
-          _lightThemeColorMeta,
-          lightThemeColor.isAcceptableOrUnknown(
-              data['light_theme_color']!, _lightThemeColorMeta));
-    } else if (isInserting) {
-      context.missing(_lightThemeColorMeta);
-    }
-    if (data.containsKey('dark_theme_color')) {
-      context.handle(
-          _darkThemeColorMeta,
-          darkThemeColor.isAcceptableOrUnknown(
-              data['dark_theme_color']!, _darkThemeColorMeta));
-    } else if (isInserting) {
-      context.missing(_darkThemeColorMeta);
-    }
+    context.handle(_lightThemeColorMeta, const VerificationResult.success());
+    context.handle(_darkThemeColorMeta, const VerificationResult.success());
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
@@ -144,10 +126,12 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
           .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-      lightThemeColor: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}light_theme_color'])!,
-      darkThemeColor: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}dark_theme_color'])!,
+      lightThemeColor: $BooksTable.$converterlightThemeColor.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.int, data['${effectivePrefix}light_theme_color'])!),
+      darkThemeColor: $BooksTable.$converterdarkThemeColor.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.int, data['${effectivePrefix}dark_theme_color'])!),
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
       updatedAt: attachedDatabase.typeMapping
@@ -159,6 +143,11 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
   $BooksTable createAlias(String alias) {
     return $BooksTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<Color, int> $converterlightThemeColor =
+      const ColorConverter();
+  static TypeConverter<Color, int> $converterdarkThemeColor =
+      const ColorConverter();
 }
 
 class Book extends DataClass implements Insertable<Book> {
@@ -166,13 +155,14 @@ class Book extends DataClass implements Insertable<Book> {
   final String title;
   final String description;
 
-  /// #FFAABBCCの形の色データ
-  final String lightThemeColor;
+  /// FFAABBCCの形の色データ
+  final Color lightThemeColor;
 
-  /// #FFAABBCCの形の色データ
-  final String darkThemeColor;
+  /// FFAABBCCの形の色データ
+  final Color darkThemeColor;
   final DateTime createdAt;
   final DateTime updatedAt;
+
   const Book(
       {required this.bookId,
       required this.title,
@@ -187,8 +177,15 @@ class Book extends DataClass implements Insertable<Book> {
     map['book_id'] = Variable<int>(bookId);
     map['title'] = Variable<String>(title);
     map['description'] = Variable<String>(description);
-    map['light_theme_color'] = Variable<String>(lightThemeColor);
-    map['dark_theme_color'] = Variable<String>(darkThemeColor);
+    {
+      final converter = $BooksTable.$converterlightThemeColor;
+      map['light_theme_color'] =
+          Variable<int>(converter.toSql(lightThemeColor));
+    }
+    {
+      final converter = $BooksTable.$converterdarkThemeColor;
+      map['dark_theme_color'] = Variable<int>(converter.toSql(darkThemeColor));
+    }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
@@ -213,8 +210,8 @@ class Book extends DataClass implements Insertable<Book> {
       bookId: serializer.fromJson<int>(json['bookId']),
       title: serializer.fromJson<String>(json['title']),
       description: serializer.fromJson<String>(json['description']),
-      lightThemeColor: serializer.fromJson<String>(json['lightThemeColor']),
-      darkThemeColor: serializer.fromJson<String>(json['darkThemeColor']),
+      lightThemeColor: serializer.fromJson<Color>(json['lightThemeColor']),
+      darkThemeColor: serializer.fromJson<Color>(json['darkThemeColor']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -226,8 +223,8 @@ class Book extends DataClass implements Insertable<Book> {
       'bookId': serializer.toJson<int>(bookId),
       'title': serializer.toJson<String>(title),
       'description': serializer.toJson<String>(description),
-      'lightThemeColor': serializer.toJson<String>(lightThemeColor),
-      'darkThemeColor': serializer.toJson<String>(darkThemeColor),
+      'lightThemeColor': serializer.toJson<Color>(lightThemeColor),
+      'darkThemeColor': serializer.toJson<Color>(darkThemeColor),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -237,8 +234,8 @@ class Book extends DataClass implements Insertable<Book> {
           {int? bookId,
           String? title,
           String? description,
-          String? lightThemeColor,
-          String? darkThemeColor,
+          Color? lightThemeColor,
+          Color? darkThemeColor,
           DateTime? createdAt,
           DateTime? updatedAt}) =>
       Book(
@@ -284,10 +281,11 @@ class BooksCompanion extends UpdateCompanion<Book> {
   final Value<int> bookId;
   final Value<String> title;
   final Value<String> description;
-  final Value<String> lightThemeColor;
-  final Value<String> darkThemeColor;
+  final Value<Color> lightThemeColor;
+  final Value<Color> darkThemeColor;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
+
   const BooksCompanion({
     this.bookId = const Value.absent(),
     this.title = const Value.absent(),
@@ -301,8 +299,8 @@ class BooksCompanion extends UpdateCompanion<Book> {
     this.bookId = const Value.absent(),
     required String title,
     required String description,
-    required String lightThemeColor,
-    required String darkThemeColor,
+    required Color lightThemeColor,
+    required Color darkThemeColor,
     required DateTime createdAt,
     required DateTime updatedAt,
   })  : title = Value(title),
@@ -315,8 +313,8 @@ class BooksCompanion extends UpdateCompanion<Book> {
     Expression<int>? bookId,
     Expression<String>? title,
     Expression<String>? description,
-    Expression<String>? lightThemeColor,
-    Expression<String>? darkThemeColor,
+    Expression<int>? lightThemeColor,
+    Expression<int>? darkThemeColor,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
   }) {
@@ -335,8 +333,8 @@ class BooksCompanion extends UpdateCompanion<Book> {
       {Value<int>? bookId,
       Value<String>? title,
       Value<String>? description,
-      Value<String>? lightThemeColor,
-      Value<String>? darkThemeColor,
+      Value<Color>? lightThemeColor,
+      Value<Color>? darkThemeColor,
       Value<DateTime>? createdAt,
       Value<DateTime>? updatedAt}) {
     return BooksCompanion(
@@ -363,10 +361,14 @@ class BooksCompanion extends UpdateCompanion<Book> {
       map['description'] = Variable<String>(description.value);
     }
     if (lightThemeColor.present) {
-      map['light_theme_color'] = Variable<String>(lightThemeColor.value);
+      final converter = $BooksTable.$converterlightThemeColor;
+      map['light_theme_color'] =
+          Variable<int>(converter.toSql(lightThemeColor.value));
     }
     if (darkThemeColor.present) {
-      map['dark_theme_color'] = Variable<String>(darkThemeColor.value);
+      final converter = $BooksTable.$converterdarkThemeColor;
+      map['dark_theme_color'] =
+          Variable<int>(converter.toSql(darkThemeColor.value));
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);

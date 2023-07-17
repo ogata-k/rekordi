@@ -73,18 +73,25 @@ final class _S1 extends i0.VersionedSchema {
 
 class Shape0 extends i0.VersionedTable {
   Shape0({required super.source, required super.alias}) : super.aliased();
+
   i1.GeneratedColumn<int> get bookId =>
       columnsByName['book_id']! as i1.GeneratedColumn<int>;
+
   i1.GeneratedColumn<String> get title =>
       columnsByName['title']! as i1.GeneratedColumn<String>;
+
   i1.GeneratedColumn<String> get description =>
       columnsByName['description']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<String> get lightThemeColor =>
-      columnsByName['light_theme_color']! as i1.GeneratedColumn<String>;
-  i1.GeneratedColumn<String> get darkThemeColor =>
-      columnsByName['dark_theme_color']! as i1.GeneratedColumn<String>;
+
+  i1.GeneratedColumn<int> get lightThemeColor =>
+      columnsByName['light_theme_color']! as i1.GeneratedColumn<int>;
+
+  i1.GeneratedColumn<int> get darkThemeColor =>
+      columnsByName['dark_theme_color']! as i1.GeneratedColumn<int>;
+
   i1.GeneratedColumn<DateTime> get createdAt =>
       columnsByName['created_at']! as i1.GeneratedColumn<DateTime>;
+
   i1.GeneratedColumn<DateTime> get updatedAt =>
       columnsByName['updated_at']! as i1.GeneratedColumn<DateTime>;
 }
@@ -101,30 +108,32 @@ i1.GeneratedColumn<String> _column_1(String aliasedName) =>
             minTextLength: 1, maxTextLength: 50),
         type: i1.DriftSqlType.string,
         defaultConstraints: i1.GeneratedColumn.constraintIsAlways('UNIQUE'));
+
 i1.GeneratedColumn<String> _column_2(String aliasedName) =>
     i1.GeneratedColumn<String>('description', aliasedName, false,
         additionalChecks:
             i1.GeneratedColumn.checkTextLength(maxTextLength: 500),
         type: i1.DriftSqlType.string);
-i1.GeneratedColumn<String> _column_3(String aliasedName) =>
-    i1.GeneratedColumn<String>('light_theme_color', aliasedName, false,
-        additionalChecks: i1.GeneratedColumn.checkTextLength(
-            minTextLength: 9, maxTextLength: 9),
-        type: i1.DriftSqlType.string);
-i1.GeneratedColumn<String> _column_4(String aliasedName) =>
-    i1.GeneratedColumn<String>('dark_theme_color', aliasedName, false,
-        additionalChecks: i1.GeneratedColumn.checkTextLength(
-            minTextLength: 9, maxTextLength: 9),
-        type: i1.DriftSqlType.string);
+
+i1.GeneratedColumn<int> _column_3(String aliasedName) =>
+    i1.GeneratedColumn<int>('light_theme_color', aliasedName, false,
+        type: i1.DriftSqlType.int);
+
+i1.GeneratedColumn<int> _column_4(String aliasedName) =>
+    i1.GeneratedColumn<int>('dark_theme_color', aliasedName, false,
+        type: i1.DriftSqlType.int);
+
 i1.GeneratedColumn<DateTime> _column_5(String aliasedName) =>
     i1.GeneratedColumn<DateTime>('created_at', aliasedName, false,
         type: i1.DriftSqlType.dateTime);
+
 i1.GeneratedColumn<DateTime> _column_6(String aliasedName) =>
     i1.GeneratedColumn<DateTime>('updated_at', aliasedName, false,
         type: i1.DriftSqlType.dateTime);
 
 class Shape1 extends i0.VersionedTable {
   Shape1({required super.source, required super.alias}) : super.aliased();
+
   i1.GeneratedColumn<int> get footprintId =>
       columnsByName['footprint_id']! as i1.GeneratedColumn<int>;
   i1.GeneratedColumn<int> get bookId =>

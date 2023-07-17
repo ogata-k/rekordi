@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:rekordi/infra/local_db/util.dart';
 
 /// booksテーブル：記録帳
 /// 記録(footprints)の所属する記録帳のこと
@@ -16,11 +17,11 @@ class Books extends Table {
 
   TextColumn get description => text().withLength(max: 500)();
 
-  /// #FFAABBCCの形の色データ
-  TextColumn get lightThemeColor => text().withLength(min: 9, max: 9)();
+  /// FFAABBCCの形の色データ
+  IntColumn get lightThemeColor => integer().map(const ColorConverter())();
 
-  /// #FFAABBCCの形の色データ
-  TextColumn get darkThemeColor => text().withLength(min: 9, max: 9)();
+  /// FFAABBCCの形の色データ
+  IntColumn get darkThemeColor => integer().map(const ColorConverter())();
 
   DateTimeColumn get createdAt => dateTime()();
 
