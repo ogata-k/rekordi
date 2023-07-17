@@ -7,9 +7,7 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-
   $BooksTable(this.attachedDatabase, [this._alias]);
-
   static const VerificationMeta _bookIdMeta = const VerificationMeta('bookId');
   @override
   late final GeneratedColumn<int> bookId = GeneratedColumn<int>(
@@ -66,7 +64,6 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
       'updated_at', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
-
   @override
   List<GeneratedColumn> get $columns => [
         bookId,
@@ -77,13 +74,10 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
         createdAt,
         updatedAt
       ];
-
   @override
   String get aliasedName => _alias ?? 'books';
-
   @override
   String get actualTableName => 'books';
-
   @override
   VerificationContext validateIntegrity(Insertable<Book> instance,
       {bool isInserting = false}) {
@@ -140,7 +134,6 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
 
   @override
   Set<GeneratedColumn> get $primaryKey => {bookId};
-
   @override
   Book map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -180,7 +173,6 @@ class Book extends DataClass implements Insertable<Book> {
   final String darkThemeColor;
   final DateTime createdAt;
   final DateTime updatedAt;
-
   const Book(
       {required this.bookId,
       required this.title,
@@ -189,7 +181,6 @@ class Book extends DataClass implements Insertable<Book> {
       required this.darkThemeColor,
       required this.createdAt,
       required this.updatedAt});
-
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -228,7 +219,6 @@ class Book extends DataClass implements Insertable<Book> {
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
-
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
@@ -260,7 +250,6 @@ class Book extends DataClass implements Insertable<Book> {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
-
   @override
   String toString() {
     return (StringBuffer('Book(')
@@ -278,7 +267,6 @@ class Book extends DataClass implements Insertable<Book> {
   @override
   int get hashCode => Object.hash(bookId, title, description, lightThemeColor,
       darkThemeColor, createdAt, updatedAt);
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -300,7 +288,6 @@ class BooksCompanion extends UpdateCompanion<Book> {
   final Value<String> darkThemeColor;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
-
   const BooksCompanion({
     this.bookId = const Value.absent(),
     this.title = const Value.absent(),
@@ -310,7 +297,6 @@ class BooksCompanion extends UpdateCompanion<Book> {
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
-
   BooksCompanion.insert({
     this.bookId = const Value.absent(),
     required String title,
@@ -325,7 +311,6 @@ class BooksCompanion extends UpdateCompanion<Book> {
         darkThemeColor = Value(darkThemeColor),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
-
   static Insertable<Book> custom({
     Expression<int>? bookId,
     Expression<String>? title,
@@ -412,9 +397,7 @@ class $FootprintsTable extends Footprints
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-
   $FootprintsTable(this.attachedDatabase, [this._alias]);
-
   static const VerificationMeta _footprintIdMeta =
       const VerificationMeta('footprintId');
   @override
@@ -454,17 +437,13 @@ class $FootprintsTable extends Footprints
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
       'updated_at', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
-
   @override
   List<GeneratedColumn> get $columns =>
       [footprintId, bookId, message, recordDate, createdAt, updatedAt];
-
   @override
   String get aliasedName => _alias ?? 'footprints';
-
   @override
   String get actualTableName => 'footprints';
-
   @override
   VerificationContext validateIntegrity(Insertable<Footprint> instance,
       {bool isInserting = false}) {
@@ -513,7 +492,6 @@ class $FootprintsTable extends Footprints
 
   @override
   Set<GeneratedColumn> get $primaryKey => {footprintId};
-
   @override
   Footprint map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -546,7 +524,6 @@ class Footprint extends DataClass implements Insertable<Footprint> {
   final DateTime recordDate;
   final DateTime createdAt;
   final DateTime updatedAt;
-
   const Footprint(
       {required this.footprintId,
       required this.bookId,
@@ -554,7 +531,6 @@ class Footprint extends DataClass implements Insertable<Footprint> {
       required this.recordDate,
       required this.createdAt,
       required this.updatedAt});
-
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -590,7 +566,6 @@ class Footprint extends DataClass implements Insertable<Footprint> {
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
-
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
@@ -619,7 +594,6 @@ class Footprint extends DataClass implements Insertable<Footprint> {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
-
   @override
   String toString() {
     return (StringBuffer('Footprint(')
@@ -636,7 +610,6 @@ class Footprint extends DataClass implements Insertable<Footprint> {
   @override
   int get hashCode => Object.hash(
       footprintId, bookId, message, recordDate, createdAt, updatedAt);
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -656,7 +629,6 @@ class FootprintsCompanion extends UpdateCompanion<Footprint> {
   final Value<DateTime> recordDate;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
-
   const FootprintsCompanion({
     this.footprintId = const Value.absent(),
     this.bookId = const Value.absent(),
@@ -665,7 +637,6 @@ class FootprintsCompanion extends UpdateCompanion<Footprint> {
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
-
   FootprintsCompanion.insert({
     this.footprintId = const Value.absent(),
     required int bookId,
@@ -678,7 +649,6 @@ class FootprintsCompanion extends UpdateCompanion<Footprint> {
         recordDate = Value(recordDate),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
-
   static Insertable<Footprint> custom({
     Expression<int>? footprintId,
     Expression<int>? bookId,
@@ -757,9 +727,7 @@ class $AttachmentsTable extends Attachments
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-
   $AttachmentsTable(this.attachedDatabase, [this._alias]);
-
   static const VerificationMeta _attachmentIdMeta =
       const VerificationMeta('attachmentId');
   @override
@@ -807,17 +775,13 @@ class $AttachmentsTable extends Attachments
   late final GeneratedColumn<DateTime> storedAt = GeneratedColumn<DateTime>(
       'stored_at', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
-
   @override
   List<GeneratedColumn> get $columns =>
       [attachmentId, footprintId, filename, filepath, position, storedAt];
-
   @override
   String get aliasedName => _alias ?? 'attachments';
-
   @override
   String get actualTableName => 'attachments';
-
   @override
   VerificationContext validateIntegrity(Insertable<Attachment> instance,
       {bool isInserting = false}) {
@@ -866,7 +830,6 @@ class $AttachmentsTable extends Attachments
 
   @override
   Set<GeneratedColumn> get $primaryKey => {attachmentId};
-
   @override
   Attachment map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -899,7 +862,6 @@ class Attachment extends DataClass implements Insertable<Attachment> {
   final String filepath;
   final int position;
   final DateTime storedAt;
-
   const Attachment(
       {required this.attachmentId,
       required this.footprintId,
@@ -907,7 +869,6 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       required this.filepath,
       required this.position,
       required this.storedAt});
-
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -943,7 +904,6 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       storedAt: serializer.fromJson<DateTime>(json['storedAt']),
     );
   }
-
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
@@ -972,7 +932,6 @@ class Attachment extends DataClass implements Insertable<Attachment> {
         position: position ?? this.position,
         storedAt: storedAt ?? this.storedAt,
       );
-
   @override
   String toString() {
     return (StringBuffer('Attachment(')
@@ -989,7 +948,6 @@ class Attachment extends DataClass implements Insertable<Attachment> {
   @override
   int get hashCode => Object.hash(
       attachmentId, footprintId, filename, filepath, position, storedAt);
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1009,7 +967,6 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
   final Value<String> filepath;
   final Value<int> position;
   final Value<DateTime> storedAt;
-
   const AttachmentsCompanion({
     this.attachmentId = const Value.absent(),
     this.footprintId = const Value.absent(),
@@ -1018,7 +975,6 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
     this.position = const Value.absent(),
     this.storedAt = const Value.absent(),
   });
-
   AttachmentsCompanion.insert({
     this.attachmentId = const Value.absent(),
     required int footprintId,
@@ -1031,7 +987,6 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
         filepath = Value(filepath),
         position = Value(position),
         storedAt = Value(storedAt);
-
   static Insertable<Attachment> custom({
     Expression<int>? attachmentId,
     Expression<int>? footprintId,
@@ -1110,15 +1065,12 @@ abstract class _$Database extends GeneratedDatabase {
   late final $BooksTable books = $BooksTable(this);
   late final $FootprintsTable footprints = $FootprintsTable(this);
   late final $AttachmentsTable attachments = $AttachmentsTable(this);
-
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
-
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [books, footprints, attachments];
-
   @override
   DriftDatabaseOptions get options =>
       const DriftDatabaseOptions(storeDateTimeAsText: true);

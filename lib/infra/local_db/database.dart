@@ -51,25 +51,15 @@ class Database extends _$Database {
         books,
         footprints,
         Index(
-          'footprints_book_id_index',
+          'footprints_book_id_record_date_index',
           // ignore: lines_longer_than_80_chars
-          'CREATE INDEX footprints_book_id_index ON footprints (book_id)',
-        ),
-        Index(
-          'footprints_record_record__date_index',
-          // ignore: lines_longer_than_80_chars
-          'CREATE INDEX footprints_record_date_index ON footprints (record_date)',
+          'CREATE INDEX footprints_book_id_record_date_index ON footprints (book_id,record_date)',
         ),
         attachments,
         Index(
           'attachments_footprint_id_index',
           // ignore: lines_longer_than_80_chars
           'CREATE INDEX attachments_footprint_id_index ON attachments (footprint_id)',
-        ),
-        Index(
-          'attachments_position_index',
-          // ignore: lines_longer_than_80_chars
-          'CREATE INDEX attachments_position_index ON attachments (position)',
         ),
       ];
 
@@ -129,16 +119,9 @@ class Database extends _$Database {
             await m.createTable(schema.footprints);
             await m.createIndex(
               Index(
-                'footprints_book_id_index',
+                'footprints_book_id_record_date_index',
                 // ignore: lines_longer_than_80_chars
-                'CREATE INDEX footprints_book_id_index ON footprints (book_id)',
-              ),
-            );
-            await m.createIndex(
-              Index(
-                'footprints_record_date_index',
-                // ignore: lines_longer_than_80_chars
-                'CREATE INDEX footprints_date_index ON footprints (record_date)',
+                'CREATE INDEX footprints_book_id_record_date_index ON footprints (book_id, record_date)',
               ),
             );
 
@@ -148,13 +131,6 @@ class Database extends _$Database {
                 'attachments_footprint_id_index',
                 // ignore: lines_longer_than_80_chars
                 'CREATE INDEX attachments_footprint_id_index ON attachments (footprint_id)',
-              ),
-            );
-            await m.createIndex(
-              Index(
-                'attachments_position_index',
-                // ignore: lines_longer_than_80_chars
-                'CREATE INDEX attachments_position_index ON attachments (position)',
               ),
             );
           });
