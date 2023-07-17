@@ -7,9 +7,6 @@ class Attachments extends Table {
   @override
   String? get tableName => 'attachments';
 
-  @override
-  Set<Column<Object>>? get primaryKey => {attachmentId};
-
   IntColumn get attachmentId => integer().autoIncrement()();
 
   IntColumn get footprintId => integer()();

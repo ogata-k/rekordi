@@ -7,9 +7,6 @@ class Footprints extends Table {
   @override
   String? get tableName => 'footprints';
 
-  @override
-  Set<Column<Object>>? get primaryKey => {footprintId};
-
   IntColumn get footprintId => integer().autoIncrement()();
 
   IntColumn get bookId => integer()();

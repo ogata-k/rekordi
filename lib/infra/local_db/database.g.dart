@@ -162,7 +162,6 @@ class Book extends DataClass implements Insertable<Book> {
   final Color darkThemeColor;
   final DateTime createdAt;
   final DateTime updatedAt;
-
   const Book(
       {required this.bookId,
       required this.title,
@@ -285,7 +284,6 @@ class BooksCompanion extends UpdateCompanion<Book> {
   final Value<Color> darkThemeColor;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
-
   const BooksCompanion({
     this.bookId = const Value.absent(),
     this.title = const Value.absent(),
@@ -1067,12 +1065,17 @@ abstract class _$Database extends GeneratedDatabase {
   late final $BooksTable books = $BooksTable(this);
   late final $FootprintsTable footprints = $FootprintsTable(this);
   late final $AttachmentsTable attachments = $AttachmentsTable(this);
+  late final BooksDao booksDao = BooksDao(this as Database);
+  late final FootprintsDao footprintsDao = FootprintsDao(this as Database);
+
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [books, footprints, attachments];
+
   @override
   DriftDatabaseOptions get options =>
       const DriftDatabaseOptions(storeDateTimeAsText: true);

@@ -10,3 +10,9 @@ class GeneralException implements Exception {
     return '$runtimeType($title: $description)';
   }
 }
+
+/// 指定したものが見つからなかった場合のエラー
+class NotFoundException extends GeneralException {
+  NotFoundException({String description = 'Specified data is not founded'})
+      : super('Not founded data', description);
+}

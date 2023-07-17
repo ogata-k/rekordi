@@ -6,6 +6,8 @@ import 'package:rekordi/component/router.dart';
 import 'package:rekordi/component/router.dart' as component_router;
 import 'package:rekordi/domain/domain_infra/local_database.dart';
 import 'package:rekordi/domain/domain_infra/preferences.dart';
+import 'package:rekordi/domain/repository/book.dart';
+import 'package:rekordi/domain/repository/footprint.dart';
 import 'package:rekordi/domain/repository/preferences.dart';
 import 'package:rekordi/infra/component/locator.dart';
 import 'package:rekordi/infra/component/logger.dart' show LoggingLogger;
@@ -33,18 +35,32 @@ class InitializeAppUsecase extends BaseUsecase {
       ..registerSingleton<AppLogger>(
         () => AppLogger(AppLocator().get<component_logger.Logger>())
           ..initialize(kReleaseMode ? LogLevel.info : LogLevel.debug, true),
-      )
-      ..registerSingleton<AppRouter>(
-        () => AppRouter(AppLocator().get<component_router.Router>()),
-      )
-      // ここからはRepositoryの登録
+      )..registerSingleton<AppRouter>(
+          () => AppRouter(AppLocator().get<component_router.Router>()),
+    )
+    // ここからはRepositoryの登録
       ..registerAsyncSingleton<PreferencesRepository>(
-        () async {
+            () async {
           return PreferencesRepository(
             await AppLocator().getAsync<Preferences>(),
           );
         },
-      );
+      )
+      ..registerSingleton<BookRepository>(
+            () =>
+            BookRepository(
+              dbRepository: AppLocator()
+                  .get<LocalDatabase>()
+                  .bookDbRepository,
+            ),
+      )..registerSingleton<FootprintRepository>(
+          () =>
+          FootprintRepository(
+            dbRepository: AppLocator()
+                .get<LocalDatabase>()
+                .footprintDbRepository,
+          ),
+    );
 
     // 下記は非同期だが初期化が完了していて欲しいので、初期化が完了するまで待つ
     await AppLocator().waitToOk<PreferencesRepository>();

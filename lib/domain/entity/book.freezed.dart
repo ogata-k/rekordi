@@ -17,12 +17,19 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$BookEntity {
   int get bookId => throw _privateConstructorUsedError;
+
   String get title => throw _privateConstructorUsedError;
+
   String get description => throw _privateConstructorUsedError;
+
   Color get lightThemeColor => throw _privateConstructorUsedError;
+
   Color get dartThemeColor => throw _privateConstructorUsedError;
+
   DateTime get createdAt => throw _privateConstructorUsedError;
+
   DateTime get updatedAt => throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
@@ -78,6 +85,7 @@ abstract class $BookEntityCopyWith<$Res> {
   factory $BookEntityCopyWith(
           BookEntity value, $Res Function(BookEntity) then) =
       _$BookEntityCopyWithImpl<$Res, BookEntity>;
+
   @useResult
   $Res call(
       {int bookId,
@@ -96,6 +104,7 @@ class _$BookEntityCopyWithImpl<$Res, $Val extends BookEntity>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -149,6 +158,7 @@ abstract class _$$_BookEntityCopyWith<$Res>
   factory _$$_BookEntityCopyWith(
           _$_BookEntity value, $Res Function(_$_BookEntity) then) =
       __$$_BookEntityCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -351,22 +361,30 @@ abstract class _BookEntity extends BookEntity {
       required final Color dartThemeColor,
       required final DateTime createdAt,
       required final DateTime updatedAt}) = _$_BookEntity;
+
   const _BookEntity._() : super._();
 
   @override
   int get bookId;
+
   @override
   String get title;
+
   @override
   String get description;
+
   @override
   Color get lightThemeColor;
+
   @override
   Color get dartThemeColor;
+
   @override
   DateTime get createdAt;
+
   @override
   DateTime get updatedAt;
+
   @override
   @JsonKey(ignore: true)
   _$$_BookEntityCopyWith<_$_BookEntity> get copyWith =>

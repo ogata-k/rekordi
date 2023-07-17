@@ -8,11 +8,19 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:rekordi/component/logger.dart';
 import 'package:rekordi/domain/domain_infra/local_database.dart';
+import 'package:rekordi/domain/repository/db_repository/book.dart';
+import 'package:rekordi/domain/repository/db_repository/footprint.dart';
+import 'package:rekordi/infra/local_db/dao/books.dart';
+import 'package:rekordi/infra/local_db/dao/footprints.dart';
 import 'package:rekordi/infra/local_db/schema_version.drift.dart';
 import 'package:rekordi/infra/local_db/table/attachments.dart';
 import 'package:rekordi/infra/local_db/table/books.dart';
 import 'package:rekordi/infra/local_db/table/footprints.dart';
+import 'package:rekordi/infra/local_db/type_converter.dart';
 import 'package:rekordi/util/error.dart';
+
+// 自動生成でも変換後の型を使えるようにexportする
+export 'package:rekordi/infra/local_db/type_converter.dart';
 
 part 'database.g.dart';
 
@@ -32,12 +40,31 @@ class InfraLocalDatabase extends LocalDatabase {
   Future<void> close() async {
     await _instance.close();
   }
+
+  @override
+  BookDbRepository get bookDbRepository =>
+      DbRepositoryBooksDao(_instance.booksDao);
+
+  @override
+  // ignore: lines_longer_than_80_chars
+  FootprintDbRepository get footprintDbRepository =>
+      DbRepositoryFootprintsDao(_instance.footprintsDao);
 }
 
 typedef Migration = Future<void> Function(Migrator m);
 
 /// App Database infra
-@DriftDatabase(tables: [Books, Footprints, Attachments], daos: [])
+@DriftDatabase(
+  tables: [
+    Books,
+    Footprints,
+    Attachments,
+  ],
+  daos: [
+    BooksDao,
+    FootprintsDao,
+  ],
+)
 class Database extends _$Database {
   Database() : super(_openConnection());
 
