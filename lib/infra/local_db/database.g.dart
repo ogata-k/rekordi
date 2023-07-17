@@ -1067,15 +1067,12 @@ abstract class _$Database extends GeneratedDatabase {
   late final $AttachmentsTable attachments = $AttachmentsTable(this);
   late final BooksDao booksDao = BooksDao(this as Database);
   late final FootprintsDao footprintsDao = FootprintsDao(this as Database);
-
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
-
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [books, footprints, attachments];
-
   @override
   DriftDatabaseOptions get options =>
       const DriftDatabaseOptions(storeDateTimeAsText: true);

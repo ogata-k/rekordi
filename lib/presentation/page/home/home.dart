@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekordi/component/locator.dart';
 import 'package:rekordi/component/router.dart';
+import 'package:rekordi/domain/entity/book.dart';
+import 'package:rekordi/domain/repository/book.dart';
 import 'package:rekordi/presentation/model/app_theme_mode.dart';
 import 'package:rekordi/presentation/page/base.dart';
 import 'package:rekordi/presentation/page/error/error.dart';
 import 'package:rekordi/presentation/resource/l10n/l10n.dart';
+import 'package:rekordi/presentation/usecase/book/watch_all.dart';
 
 // @todo 実際のページ
 
@@ -76,72 +80,105 @@ class _HomePageState extends State<_HomePage> {
         ],
         title: Text(L10n.of(context).appName),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Consumer(
-              builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                final ThemeMode appThemeMode =
-                    ref.watch(appThemeModeStateProvider);
+      body: Column(
+        // Column is also a layout widget. It takes a list of children and
+        // arranges them vertically. By default, it sizes itself to fit its
+        // children horizontally, and tries to be as tall as its parent.
+        //
+        // Column has various properties to control how it sizes itself and
+        // how it positions its children. Here we use mainAxisAlignment to
+        // center the children vertically; the main axis here is the vertical
+        // axis because Columns are vertical (the cross axis would be
+        // horizontal).
+        //
+        // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+        // action in the IDE, or press "p" in the console), to see the
+        // wireframe for each widget.
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const SizedBox(height: 16),
+          const Text(
+            'You have pushed the button this many times:',
+          ),
+          Text(
+            '$_counter',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          Consumer(
+            builder: (BuildContext context, WidgetRef ref, Widget? child) {
+              final ThemeMode appThemeMode =
+                  ref.watch(appThemeModeStateProvider);
 
-                return DropdownButton<ThemeMode>(
-                  value: appThemeMode,
-                  items: [
-                    DropdownMenuItem<ThemeMode>(
-                      value: ThemeMode.light,
-                      child: Text(ThemeMode.light.toString()),
-                    ),
-                    DropdownMenuItem<ThemeMode>(
-                      value: ThemeMode.dark,
-                      child: Text(ThemeMode.dark.toString()),
-                    ),
-                    DropdownMenuItem<ThemeMode>(
-                      value: ThemeMode.system,
-                      child: Text(ThemeMode.system.toString()),
-                    )
-                  ],
-                  onChanged: (ThemeMode? value) {
-                    ref
-                        .read(appThemeModeStateProvider.notifier)
-                        .setThemeMode(value);
-                  },
-                );
-              },
+              return DropdownButton<ThemeMode>(
+                value: appThemeMode,
+                items: [
+                  DropdownMenuItem<ThemeMode>(
+                    value: ThemeMode.light,
+                    child: Text(ThemeMode.light.toString()),
+                  ),
+                  DropdownMenuItem<ThemeMode>(
+                    value: ThemeMode.dark,
+                    child: Text(ThemeMode.dark.toString()),
+                  ),
+                  DropdownMenuItem<ThemeMode>(
+                    value: ThemeMode.system,
+                    child: Text(ThemeMode.system.toString()),
+                  )
+                ],
+                onChanged: (ThemeMode? value) {
+                  ref
+                      .read(appThemeModeStateProvider.notifier)
+                      .setThemeMode(value);
+                },
+              );
+            },
+          ),
+          OutlinedButton(
+            onPressed: () {
+              router().push(
+                context,
+                ErrorPageExtra(error: Exception('Dummy Error from Home')),
+              );
+            },
+            child: const Text('Open This Home Page'),
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: Container(
+              color: Colors.grey,
+              padding: const EdgeInsets.all(16),
+              child: StreamBuilder<List<BookEntity>>(
+                stream: WatchAllUseCase(locator().get<BookRepository>()).call(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView(
+                      children: snapshot.data!.map((e) {
+                        return Card(
+                          child: Text(e.toString()),
+                        );
+                      }).toList(),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    showDialog<dynamic>(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('ERROR'),
+                          content: Text(snapshot.error.toString()),
+                        );
+                      },
+                    );
+                    return Container();
+                  }
+
+                  return const CircularProgressIndicator();
+                },
+              ),
             ),
-            OutlinedButton(
-              onPressed: () {
-                router().push(
-                  context,
-                  ErrorPageExtra(error: Exception('Dummy Error from Home')),
-                );
-              },
-              child: const Text('Open This Home Page'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

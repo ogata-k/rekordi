@@ -3,7 +3,6 @@ import 'package:rekordi/domain/entity/book.dart';
 import 'package:rekordi/domain/repository/db_repository/book.dart';
 import 'package:rekordi/infra/local_db/database.dart';
 import 'package:rekordi/infra/local_db/table/books.dart';
-import 'package:rekordi/util/exception.dart';
 
 part 'books.g.dart';
 
@@ -29,10 +28,6 @@ class DbRepositoryBooksDao extends BookDbRepository {
       _dao.watchAll(order: order).map(
             (items) => items.map((e) => e.toEntity()).toList(),
           );
-
-  @override
-  Stream<BookEntity> watchOneOrFail(int bookId) =>
-      _dao.watchOneOrFail(bookId).map((e) => e.toEntity());
 
   @override
   Stream<BookEntity?> watchOneOrNull(int bookId) =>
@@ -74,21 +69,6 @@ class BooksDao extends DatabaseAccessor<Database> with _$BooksDaoMixin {
             }
           ]))
         .watch();
-  }
-
-  /// 指定したIDの記録帳を一件取得して監視。
-  /// 見つからなかったらエラー
-  Stream<Book> watchOneOrFail(int bookId) {
-    return (select(books)..where((t) => t.bookId.equals(bookId)))
-        .watchSingleOrNull()
-        .map(
-      (v) {
-        if (v == null) {
-          throw NotFoundException();
-        }
-        return v;
-      },
-    );
   }
 
   /// 指定したIDの記録帳を一件取得して監視
