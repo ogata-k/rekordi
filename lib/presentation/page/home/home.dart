@@ -8,6 +8,7 @@ import 'package:rekordi/presentation/model/app_theme_mode.dart';
 import 'package:rekordi/presentation/page/base.dart';
 import 'package:rekordi/presentation/page/error/error.dart';
 import 'package:rekordi/presentation/resource/l10n/l10n.dart';
+import 'package:rekordi/presentation/resource/theme/theme.dart';
 import 'package:rekordi/presentation/usecase/book/watch_all.dart';
 
 // @todo 実際のページ
@@ -102,7 +103,7 @@ class _HomePageState extends State<_HomePage> {
           ),
           Text(
             '$_counter',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: AppTheme.of(context).basic.textTheme.headlineMedium,
           ),
           Consumer(
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
