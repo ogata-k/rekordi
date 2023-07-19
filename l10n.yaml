@@ -3,7 +3,7 @@ template-arb-file: app_ja.arb
 # output-dirはビルド時に自動生成しない（synthetic-package: false）の時のみ有効
 output-dir: lib/presentation/resource/l10n
 output-localization-file: l10n.dart
-output-class: L10n
+output-class: AppL10n
 synthetic-package: false
 preferred-supported-locales: ja
 nullable-getter: false

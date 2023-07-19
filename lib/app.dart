@@ -20,8 +20,8 @@ class RekordiApp extends StatelessWidget {
         final ThemeMode appThemeMode = ref.watch(appThemeModeStateProvider);
 
         return MaterialApp.router(
-          localizationsDelegates: L10n.localizationsDelegates,
-          supportedLocales: L10n.supportedLocales,
+          localizationsDelegates: AppL10n.localizationsDelegates,
+          supportedLocales: AppL10n.supportedLocales,
           theme: themeBuilder.buildLight(),
           darkTheme: themeBuilder.buildDark(),
           themeMode: appThemeMode,

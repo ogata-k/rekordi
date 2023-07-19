@@ -73,12 +73,12 @@ class _HomePageState extends State<_HomePage> {
             onPressed: () {
               showAboutDialog(
                 context: context,
-                applicationName: L10n.of(context).appName,
+                applicationName: AppL10n.of(context).appName,
               );
             },
           ),
         ],
-        title: Text(L10n.of(context).appName),
+        title: Text(AppL10n.of(context).appName),
       ),
       body: Column(
         // Column is also a layout widget. It takes a list of children and
