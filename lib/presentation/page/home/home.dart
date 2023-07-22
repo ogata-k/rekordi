@@ -8,6 +8,7 @@ import 'package:rekordi/presentation/model/app_theme_mode.dart';
 import 'package:rekordi/presentation/page/base.dart';
 import 'package:rekordi/presentation/page/error/error.dart';
 import 'package:rekordi/presentation/resource/l10n/l10n.dart';
+import 'package:rekordi/presentation/resource/theme/const/padding.dart';
 import 'package:rekordi/presentation/resource/theme/theme.dart';
 import 'package:rekordi/presentation/usecase/book/watch_all.dart';
 
@@ -97,7 +98,7 @@ class _HomePageState extends State<_HomePage> {
         // wireframe for each widget.
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(height: 16),
+          const SizedBox(height: PaddingConst.middle),
           const Text(
             'You have pushed the button this many times:',
           ),
@@ -143,11 +144,11 @@ class _HomePageState extends State<_HomePage> {
             },
             child: const Text('Open This Home Page'),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: PaddingConst.middle),
           Expanded(
             child: Container(
               color: Colors.grey,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(PaddingConst.middle),
               child: StreamBuilder<List<BookEntity>>(
                 stream: WatchAllUseCase(locator().get<BookRepository>()).call(),
                 builder: (context, snapshot) {
