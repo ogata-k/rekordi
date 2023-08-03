@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekordi/component/locator.dart';
+import 'package:rekordi/component/logger.dart';
 import 'package:rekordi/component/router.dart';
 import 'package:rekordi/domain/entity/book.dart';
 import 'package:rekordi/domain/repository/book.dart';
 import 'package:rekordi/presentation/model/app_theme_mode.dart';
+import 'package:rekordi/presentation/model/cache_value_stream_controller.dart';
 import 'package:rekordi/presentation/page/base.dart';
 import 'package:rekordi/presentation/page/error/error.dart';
 import 'package:rekordi/presentation/resource/l10n/l10n.dart';
@@ -25,46 +29,55 @@ class HomePageExtra extends BasePageExtra {
   String get absolutePagePath => '/home';
 }
 
+class HomePageController extends BasePageController {
+  HomePageController(int initialCount)
+      : _countStreamController =
+            StreamController<int>().withCache(initialCount);
+
+  /// Streamバージョン
+  final CacheValueStreamController<int> _countStreamController;
+
+  Stream<int> get countStream => _countStreamController.stream;
+
+  int get currentCount => _countStreamController.currentValue;
+
+  /// Stream用のカウントインクリメント
+  void incrementCountOnStream() {
+    _countStreamController.add(currentCount + 1);
+  }
+
+  /// Provider用のカウントインクリメント
+  void incrementCountOnProvider(WidgetRef ref) {
+    final int currentCount = ref.read(counterProvider);
+    ref.read(counterProvider.notifier).state = currentCount + 1;
+  }
+
+  @override
+  void dispose() {
+    _countStreamController.close();
+  }
+}
+
+const int _initialCount = 0;
+
+final StateProvider<int> counterProvider =
+    StateProvider((ref) => _initialCount);
+
 /// ホーム画面となるページ
-class HomePage extends BasePage<HomePageExtra> {
+class HomePage extends BasePage<HomePageExtra, HomePageController> {
   const HomePage({Key? key, required HomePageExtra extra})
       : super(key: key, extra: extra);
 
   @override
-  Widget build(BuildContext context) {
-    return _HomePage(key: key);
-  }
-}
-
-class _HomePage extends StatefulWidget {
-  const _HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<_HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<_HomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  HomePageController createController(BuildContext context) {
+    return HomePageController(_initialCount);
   }
 
   @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+  Widget buildPage(BuildContext context, HomePageController controller) {
+    final appTheme = AppTheme.of(context);
+    final appL10n = AppL10n.of(context);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -75,37 +88,68 @@ class _HomePageState extends State<_HomePage> {
             onPressed: () {
               showAboutDialog(
                 context: context,
-                applicationName: AppL10n.of(context).appName,
+                applicationName: appL10n.appName,
               );
             },
           ),
         ],
-        title: Text(AppL10n.of(context).appName),
+        title: Text(appL10n.appName),
       ),
       body: Column(
-        // Column is also a layout widget. It takes a list of children and
-        // arranges them vertically. By default, it sizes itself to fit its
-        // children horizontally, and tries to be as tall as its parent.
-        //
-        // Column has various properties to control how it sizes itself and
-        // how it positions its children. Here we use mainAxisAlignment to
-        // center the children vertically; the main axis here is the vertical
-        // axis because Columns are vertical (the cross axis would be
-        // horizontal).
-        //
-        // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-        // action in the IDE, or press "p" in the console), to see the
-        // wireframe for each widget.
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          // 横幅いっぱいを保つためにあらかじめ横幅をMAXに指定しておく
+          const SizedBox(width: PaddingConst.auto),
+
           const SizedBox(height: PaddingConst.middle),
+          const Text(
+            ':STREAM VERSION:',
+          ),
           const Text(
             'You have pushed the button this many times:',
           ),
-          Text(
-            '$_counter',
-            style: AppTheme.of(context).basic.textTheme.headlineMedium,
+          StreamBuilder<int>(
+            initialData: controller.currentCount,
+            stream: controller.countStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                logger().error(snapshot.error, {
+                  'current_count': controller.currentCount,
+                  'controller': controller
+                });
+                return Text(
+                  '-',
+                  style: appTheme.basic.textTheme.headlineMedium,
+                );
+              }
+
+              final int count =
+                  snapshot.hasData ? snapshot.data! : _initialCount;
+              return Text(
+                '$count',
+                style: appTheme.basic.textTheme.headlineMedium,
+              );
+            },
           ),
+          const SizedBox(height: PaddingConst.middle),
+          const Text(
+            ':PROVIDER VERSION:',
+          ),
+          const Text(
+            'You have pushed the button this many times:',
+          ),
+          Consumer(
+            builder: (BuildContext context, WidgetRef ref, Widget? child) {
+              final int count = ref.watch(counterProvider);
+              return Text(
+                '$count',
+                style: appTheme.basic.textTheme.headlineMedium,
+              );
+            },
+          ),
+          const SizedBox(height: PaddingConst.large),
           Consumer(
             builder: (BuildContext context, WidgetRef ref, Widget? child) {
               final ThemeMode appThemeMode =
@@ -145,48 +189,76 @@ class _HomePageState extends State<_HomePage> {
             child: const Text('Open This Home Page'),
           ),
           const SizedBox(height: PaddingConst.middle),
-          Expanded(
-            child: Container(
-              color: Colors.grey,
-              padding: const EdgeInsets.all(PaddingConst.middle),
-              child: StreamBuilder<List<BookEntity>>(
-                stream: WatchAllUseCase(locator().get<BookRepository>()).call(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView(
+          StreamBuilder<List<BookEntity>>(
+            stream: WatchAllUseCase(locator().get<BookRepository>()).call(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Expanded(
+                  child: Container(
+                    color: Colors.grey,
+                    padding: const EdgeInsets.all(PaddingConst.middle),
+                    child: ListView(
                       children: snapshot.data!.map((e) {
                         return Card(
                           child: Text(e.toString()),
                         );
                       }).toList(),
-                    );
-                  }
+                    ),
+                  ),
+                );
+              }
 
-                  if (snapshot.hasError) {
-                    showDialog<dynamic>(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('ERROR'),
-                          content: Text(snapshot.error.toString()),
-                        );
-                      },
+              if (snapshot.hasError) {
+                showDialog<dynamic>(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('ERROR'),
+                      content: Text(snapshot.error.toString()),
                     );
-                    return Container();
-                  }
+                  },
+                );
+                return Container(
+                  color: Colors.grey,
+                  padding: const EdgeInsets.all(PaddingConst.middle),
+                );
+              }
 
-                  return const CircularProgressIndicator();
-                },
-              ),
-            ),
+              return Container(
+                color: Colors.grey,
+                padding: const EdgeInsets.all(PaddingConst.middle),
+                child: const CircularProgressIndicator(),
+              );
+            },
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            onPressed: controller.incrementCountOnStream,
+            tooltip: 'Increment for Stream',
+            child: Text(
+              'S +1',
+              style: appTheme.basic.textTheme.labelLarge,
+            ),
+          ),
+          const SizedBox(height: PaddingConst.middle),
+          Consumer(
+            builder: (context, ref, child) {
+              return FloatingActionButton(
+                onPressed: () => controller.incrementCountOnProvider(ref),
+                tooltip: 'Increment for Provider',
+                child: Text(
+                  'P +1',
+                  style: appTheme.basic.textTheme.labelLarge,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

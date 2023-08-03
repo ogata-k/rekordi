@@ -16,13 +16,25 @@ class ErrorPageExtra extends BasePageExtra {
   String get absolutePagePath => '/error';
 }
 
+class ErrorPageController extends BasePageController {
+  @override
+  void dispose() {
+    // none
+  }
+}
+
 /// エラー画面となるページ
-class ErrorPage extends BasePage<ErrorPageExtra> {
+class ErrorPage extends BasePage<ErrorPageExtra, ErrorPageController> {
   const ErrorPage({Key? key, required ErrorPageExtra extra})
       : super(key: key, extra: extra);
 
   @override
-  Widget build(BuildContext context) {
+  ErrorPageController createController(BuildContext context) {
+    return ErrorPageController();
+  }
+
+  @override
+  Widget buildPage(BuildContext context, ErrorPageController controller) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
