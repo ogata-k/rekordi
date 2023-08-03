@@ -236,9 +236,8 @@ class HomePage extends BasePage<HomePageExtra, HomePageController> {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FloatingActionButton(
+          ElevatedButton(
             onPressed: controller.incrementCountOnStream,
-            tooltip: 'Increment for Stream',
             child: Text(
               'S +1',
               style: appTheme.basic.textTheme.labelLarge,
@@ -247,9 +246,8 @@ class HomePage extends BasePage<HomePageExtra, HomePageController> {
           const SizedBox(height: PaddingConst.middle),
           Consumer(
             builder: (context, ref, child) {
-              return FloatingActionButton(
+              return ElevatedButton(
                 onPressed: () => controller.incrementCountOnProvider(ref),
-                tooltip: 'Increment for Provider',
                 child: Text(
                   'P +1',
                   style: appTheme.basic.textTheme.labelLarge,
