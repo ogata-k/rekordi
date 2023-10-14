@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:rekordi/component/locator.dart';
+import 'package:rekordi/domain/domain_component/router.dart' as cr;
 import 'package:rekordi/presentation/page/base.dart';
 
 /// 簡単に扱うためのヘルパ
@@ -9,7 +10,7 @@ AppRouter router() => locator().get<AppRouter>();
 class AppRouter {
   const AppRouter(this._instance);
 
-  final Router _instance;
+  final cr.Router _instance;
 
   /// 指定された[extra]を解析して得られたパスをもとに遷移する。
   Future<T?> push<Extra extends BasePageExtra, T extends Object?>(
@@ -55,47 +56,4 @@ class AppRouter {
   /// 画面一番上のダイアログを取り除く
   void closeDialog<T extends Object>(BuildContext context, [T? result]) =>
       _instance.closeDialog(context, result);
-}
-
-abstract class Router {
-  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
-  Future<T?> push<T extends Object?>(
-    BuildContext context,
-    String path,
-    Object extra,
-  );
-
-  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
-  /// 遷移元を置き換えながら遷移する。
-  Future<T?> pushWithReplace<T extends Object?>(
-    BuildContext context,
-    String path,
-    Object extra,
-  );
-
-  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
-  /// 画面のスタックを全部削除して遷移する。
-  Future<T?> pushWithClearStack<T extends Object?>(
-    BuildContext context,
-    String path,
-    Object extra,
-  );
-
-  /// 画面が取り除くことができるならtrue
-  bool canPop(BuildContext context);
-
-  /// 画面を取り除く
-  void pop<T extends Object>(BuildContext context, [T? result]);
-
-  /// 指定された[pathList]の中のパスになるまで画面を取り除く
-  void popUntilThePath(BuildContext context, List<String> pathList);
-
-  /// 指定された[nameList]の中のルーティング名になるまで画面を取り除く
-  void popUntilTheName(BuildContext context, List<String> nameList);
-
-  /// 最初の画面まで取り除く
-  void popUntilFirst(BuildContext context);
-
-  /// 画面一番上のダイアログを取り除く
-  void closeDialog<T extends Object>(BuildContext context, [T? result]);
 }

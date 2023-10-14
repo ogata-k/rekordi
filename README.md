@@ -37,7 +37,7 @@ samples, guidance on mobile development, and a full API reference.
 - lib : このプロジェクトの実装をまとめたフォルダ。今回は簡易的なクリーンアーキテクチャを採用。
     - component : 横断的に使われる可能性のある機能を宣言するフォルダ。実態はinfraで定義する。アプリ用に提供するためのクラスもここに定義し、Appという接頭辞で区別する。
     - domain : ビジネスロジックの実装をするフォルダ。
-        - domain_exception : 必要があるときにハンドリングしたいエラーを定義するフォルダ。
+        - domain_component : componentの抽象クラスの定義
         - domain_infra : domainで使用するinfraが実装していて欲しい抽象クラスを定義
         - entity : domain内で利用するステートレスなモデルを定義するフォルダ。状態の通知が必要な単位ごとに分ける。
         - repository : infraの実装を使って呼び出すステートレスなクラスをまとめたフォルダ。

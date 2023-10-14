@@ -52,6 +52,9 @@ class HomePageController extends BasePageController {
     ref.read(counterProvider.notifier).state = currentCount + 1;
   }
 
+  Stream<List<BookEntity>> allBookWatchStream() =>
+      WatchAllBookUseCase(locator().get<BookRepository>()).call();
+
   @override
   void dispose() {
     _countStreamController.close();
@@ -190,7 +193,7 @@ class HomePage extends BasePage<HomePageExtra, HomePageController> {
           ),
           const SizedBox(height: PaddingConst.middle),
           StreamBuilder<List<BookEntity>>(
-            stream: WatchAllUseCase(locator().get<BookRepository>()).call(),
+            stream: controller.allBookWatchStream(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Expanded(

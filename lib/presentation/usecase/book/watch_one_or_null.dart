@@ -4,8 +4,8 @@ import 'package:rekordi/presentation/usecase/base_usecase.dart';
 
 /// 指定したIDの記録帳を一件取得して監視するユースケース
 /// 見つからなかったらnull
-class WatchOneOrNullUseCase extends BaseUsecase {
-  WatchOneOrNullUseCase(this.repository);
+class WatchOneBookOrNullUseCase extends BaseUsecase {
+  WatchOneBookOrNullUseCase(this.repository);
 
   final BookRepository repository;
 

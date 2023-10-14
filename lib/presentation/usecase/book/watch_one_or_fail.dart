@@ -5,8 +5,8 @@ import 'package:rekordi/util/exception.dart';
 
 /// 指定したIDの記録帳を一件取得して監視するユースケース
 /// 見つからなかったらエラー
-class WatchOneOrFailUseCase extends BaseUsecase {
-  WatchOneOrFailUseCase(this.repository);
+class WatchOneBookOrFailUseCase extends BaseUsecase {
+  WatchOneBookOrFailUseCase(this.repository);
 
   final BookRepository repository;
 
