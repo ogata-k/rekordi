@@ -24,7 +24,7 @@ export 'package:rekordi/infra/repository/db/type_converter.dart';
 part 'database.g.dart';
 
 /// infraのLocalDatabase実装
-class InfraLocalDatabase implements LocalDatabase {
+class InfraLocalDatabase implements ILocalDatabase {
   InfraLocalDatabase(this._instance);
 
   /// 自身のインスタンスを返却する
@@ -41,12 +41,12 @@ class InfraLocalDatabase implements LocalDatabase {
   }
 
   @override
-  BookDbRepository get bookDbRepository =>
+  IBookDbRepository get bookDbRepository =>
       DbRepositoryBooksDao(_instance.booksDao);
 
   @override
   // ignore: lines_longer_than_80_chars
-  FootprintDbRepository get footprintDbRepository =>
+  IFootprintDbRepository get footprintDbRepository =>
       DbRepositoryFootprintsDao(_instance.footprintsDao);
 }
 

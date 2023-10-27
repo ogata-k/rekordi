@@ -5,10 +5,11 @@ export 'package:rekordi/domain/repository/db/interface/book.dart'
     show BookOrder;
 
 /// 記録帳用のリポジトリ
-class BookRepository {
-  BookRepository({required BookDbRepository dbRepository}) : _db = dbRepository;
+class BookDbRepository {
+  BookDbRepository({required IBookDbRepository dbRepository})
+      : _db = dbRepository;
 
-  final BookDbRepository _db;
+  final IBookDbRepository _db;
 
   /// 全件取得して監視
   Stream<List<BookEntity>> watchAll({BookOrder order = BookOrder.titleAsc}) =>

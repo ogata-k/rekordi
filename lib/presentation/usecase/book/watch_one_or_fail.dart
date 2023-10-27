@@ -8,7 +8,7 @@ import 'package:rekordi/util/exception.dart';
 class WatchOneBookOrFailUseCase extends BaseUsecase {
   WatchOneBookOrFailUseCase(this.repository);
 
-  final BookRepository repository;
+  final BookDbRepository repository;
 
   Stream<BookEntity> call(int bookId) =>
       repository.watchOneOrNull(bookId).map((e) {

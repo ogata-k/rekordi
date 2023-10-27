@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-abstract interface class Router {
+abstract interface class IRouter {
   /// 指定された[extra]を解析して得られたパスをもとに遷移する。
   Future<T?> push<T extends Object?>(
     BuildContext context,

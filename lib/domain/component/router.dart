@@ -10,7 +10,7 @@ AppRouter router() => locator().get<AppRouter>();
 class AppRouter {
   const AppRouter(this._instance);
 
-  final cr.Router _instance;
+  final cr.IRouter _instance;
 
   /// 指定された[extra]を解析して得られたパスをもとに遷移する。
   Future<T?> push<Extra extends BasePageExtra, T extends Object?>(

@@ -5,7 +5,7 @@ typedef FactoryFuncAsync<T> = Future<T> Function();
 typedef DisposingFunc<T> = FutureOr<void> Function(T arg);
 
 /// サービスロケータのロケーター抽象クラス
-abstract interface class Locator {
+abstract interface class ILocator {
   /// 登録したシングルトンインスタンスを取得する
   T get<T extends Object>({String? instanceName});
 

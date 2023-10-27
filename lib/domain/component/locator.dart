@@ -8,13 +8,13 @@ AppLocator locator() => AppLocator();
 
 /// このアプリ用のサービスロケーターのロケータークラス
 class AppLocator {
-  static Locator _instance = throw NotInitializeError(
+  static ILocator _instance = throw NotInitializeError(
     description: 'Not initialized AppLocator inner instance',
   );
 
   /// AppLocatorを初期化する
   // ignore: use_setters_to_change_properties
-  static void initialize(Locator locator) {
+  static void initialize(ILocator locator) {
     _instance = locator;
   }
 

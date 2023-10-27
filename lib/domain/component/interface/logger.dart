@@ -13,7 +13,7 @@ enum LogLevel {
   off,
 }
 
-abstract interface class Logger {
+abstract interface class ILogger {
   /// 初期化
   // ignore: avoid_positional_boolean_parameters
   void initialize(LogLevel level, bool useLineInfo);

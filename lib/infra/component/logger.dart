@@ -5,7 +5,7 @@ import 'package:rekordi/util/error.dart';
 import 'package:stack_trace/stack_trace.dart' show Frame, Trace;
 
 /// loggingパッケージのLogger具象クラス
-class LoggingLogger implements dc.Logger {
+class LoggingLogger implements dc.ILogger {
   static const String _loggerName = 'Rekordi';
   final lg.Logger _logger = lg.Logger(_loggerName);
 

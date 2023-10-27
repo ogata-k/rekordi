@@ -53,7 +53,7 @@ class HomePageController extends BasePageController {
   }
 
   Stream<List<BookEntity>> allBookWatchStream() =>
-      WatchAllBookUseCase(locator().get<BookRepository>()).call();
+      WatchAllBookUseCase(locator().get<BookDbRepository>()).call();
 
   @override
   void dispose() {

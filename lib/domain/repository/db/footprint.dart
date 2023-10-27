@@ -5,11 +5,11 @@ export 'package:rekordi/domain/repository/db/interface/footprint.dart'
     show FootprintOrder;
 
 /// 記録用のリポジトリ
-class FootprintRepository {
-  FootprintRepository({required FootprintDbRepository dbRepository})
+class FootprintDbRepository {
+  FootprintDbRepository({required IFootprintDbRepository dbRepository})
       : _db = dbRepository;
 
-  final FootprintDbRepository _db;
+  final IFootprintDbRepository _db;
 
   /// 指定した日にちの記録一覧
   Stream<List<FootprintEntity>> watchAllAtRecordDate(

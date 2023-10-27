@@ -6,7 +6,7 @@ import 'package:rekordi/presentation/usecase/base_usecase.dart';
 class WatchAllBookUseCase extends BaseUsecase {
   WatchAllBookUseCase(this.repository);
 
-  final BookRepository repository;
+  final BookDbRepository repository;
 
   Stream<List<BookEntity>> call({BookOrder order = BookOrder.titleAsc}) =>
       repository.watchAll(order: order);

@@ -7,7 +7,7 @@ import 'package:rekordi/presentation/usecase/base_usecase.dart';
 class WatchOneBookOrNullUseCase extends BaseUsecase {
   WatchOneBookOrNullUseCase(this.repository);
 
-  final BookRepository repository;
+  final BookDbRepository repository;
 
   Stream<BookEntity?> call(int bookId) => repository.watchOneOrNull(bookId);
 }

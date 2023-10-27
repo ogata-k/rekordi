@@ -21,7 +21,7 @@ extension on Book {
       );
 }
 
-class DbRepositoryBooksDao implements BookDbRepository {
+class DbRepositoryBooksDao implements IBookDbRepository {
   DbRepositoryBooksDao(this._dao);
 
   final BooksDao _dao;

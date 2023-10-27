@@ -8,7 +8,7 @@ AppLogger logger() => locator().get<AppLogger>();
 class AppLogger {
   const AppLogger(this._instance);
 
-  final Logger _instance;
+  final ILogger _instance;
 
   /// ロガーの初期化
   // ignore: avoid_positional_boolean_parameters

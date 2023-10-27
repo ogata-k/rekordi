@@ -6,7 +6,7 @@ import 'package:rekordi/util/exception.dart';
 class PreferencesRepository {
   PreferencesRepository(this._instance);
 
-  final Preferences _instance;
+  final IPreferences _instance;
 
   static const String _appThemeMode = 'app_theme_mode';
 
