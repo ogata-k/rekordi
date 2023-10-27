@@ -17,17 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AttachmentEntity {
   int get attachmentId => throw _privateConstructorUsedError;
-
   int get footprintId => throw _privateConstructorUsedError;
-
   String get filename => throw _privateConstructorUsedError;
-
   String get filepath => throw _privateConstructorUsedError;
-
   int get position => throw _privateConstructorUsedError;
-
   DateTime get storedAt => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(int attachmentId, int footprintId, String filename,
@@ -71,7 +65,6 @@ abstract class $AttachmentEntityCopyWith<$Res> {
   factory $AttachmentEntityCopyWith(
           AttachmentEntity value, $Res Function(AttachmentEntity) then) =
       _$AttachmentEntityCopyWithImpl<$Res, AttachmentEntity>;
-
   @useResult
   $Res call(
       {int attachmentId,
@@ -89,7 +82,6 @@ class _$AttachmentEntityCopyWithImpl<$Res, $Val extends AttachmentEntity>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -138,7 +130,6 @@ abstract class _$$_AttachmentEntityCopyWith<$Res>
   factory _$$_AttachmentEntityCopyWith(
           _$_AttachmentEntity value, $Res Function(_$_AttachmentEntity) then) =
       __$$_AttachmentEntityCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -319,27 +310,20 @@ abstract class _AttachmentEntity extends AttachmentEntity {
       required final String filepath,
       required final int position,
       required final DateTime storedAt}) = _$_AttachmentEntity;
-
   const _AttachmentEntity._() : super._();
 
   @override
   int get attachmentId;
-
   @override
   int get footprintId;
-
   @override
   String get filename;
-
   @override
   String get filepath;
-
   @override
   int get position;
-
   @override
   DateTime get storedAt;
-
   @override
   @JsonKey(ignore: true)
   _$$_AttachmentEntityCopyWith<_$_AttachmentEntity> get copyWith =>

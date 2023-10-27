@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' show ThemeMode;
-import 'package:rekordi/domain/repository/preferences.dart';
+import 'package:rekordi/domain/repository/file/preferences.dart';
 import 'package:rekordi/presentation/usecase/base_usecase.dart';
 
 /// アプリのテーマがダークテーマかライトテーマかを取得する。

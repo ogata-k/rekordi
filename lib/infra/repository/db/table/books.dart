@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:rekordi/infra/local_db/type_converter.dart';
+import 'package:rekordi/infra/repository/db/type_converter.dart';
 
 /// booksテーブル：記録帳
 /// 記録(footprints)の所属する記録帳のこと

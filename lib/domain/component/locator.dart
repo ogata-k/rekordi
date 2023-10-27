@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:rekordi/domain/domain_component/locator.dart';
+import 'package:rekordi/domain/component/interface/locator.dart';
 import 'package:rekordi/util/error.dart';
 
 /// 簡単に扱うためのヘルパ

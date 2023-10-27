@@ -1,11 +1,8 @@
 import 'package:rekordi/domain/entity/footprint.dart';
-import 'package:rekordi/domain/repository/db_repository/footprint.dart';
+import 'package:rekordi/domain/repository/db/interface/footprint.dart';
 
-/// 記録のソート順
-enum FootprintOrder {
-  createdAtAsc,
-  createdAtDesc,
-}
+export 'package:rekordi/domain/repository/db/interface/footprint.dart'
+    show FootprintOrder;
 
 /// 記録用のリポジトリ
 class FootprintRepository {

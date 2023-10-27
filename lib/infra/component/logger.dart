@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart' as lg;
-import 'package:rekordi/domain/domain_component/logger.dart' as dc;
+import 'package:rekordi/domain/component/interface/logger.dart' as dc;
 import 'package:rekordi/util/error.dart';
 import 'package:stack_trace/stack_trace.dart' show Frame, Trace;
 

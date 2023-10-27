@@ -115,10 +115,7 @@
         ],
         "is_virtual": false,
         "without_rowid": false,
-        "constraints": [],
-        "explicit_pk": [
-          "book_id"
-        ]
+        "constraints": []
       }
     },
     {
@@ -195,10 +192,7 @@
         ],
         "is_virtual": false,
         "without_rowid": false,
-        "constraints": [],
-        "explicit_pk": [
-          "footprint_id"
-        ]
+        "constraints": []
       }
     },
     {
@@ -289,10 +283,7 @@
         ],
         "is_virtual": false,
         "without_rowid": false,
-        "constraints": [],
-        "explicit_pk": [
-          "attachment_id"
-        ]
+        "constraints": []
       }
     }
   ]

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rekordi/component/router.dart';
+import 'package:rekordi/domain/component/router.dart';
 import 'package:rekordi/presentation/page/base.dart';
 
 // @todo 実際のエラーページ

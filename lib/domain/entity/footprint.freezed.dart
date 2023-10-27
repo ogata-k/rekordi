@@ -17,19 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FootprintEntity {
   int get footprintId => throw _privateConstructorUsedError;
-
   int get bookId => throw _privateConstructorUsedError;
-
   String get message => throw _privateConstructorUsedError;
-
   DateTime get recordDate => throw _privateConstructorUsedError;
-
   List<AttachmentEntity> get attachments => throw _privateConstructorUsedError;
-
   DateTime get createdAt => throw _privateConstructorUsedError;
-
   DateTime get updatedAt => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
@@ -85,7 +78,6 @@ abstract class $FootprintEntityCopyWith<$Res> {
   factory $FootprintEntityCopyWith(
           FootprintEntity value, $Res Function(FootprintEntity) then) =
       _$FootprintEntityCopyWithImpl<$Res, FootprintEntity>;
-
   @useResult
   $Res call(
       {int footprintId,
@@ -104,7 +96,6 @@ class _$FootprintEntityCopyWithImpl<$Res, $Val extends FootprintEntity>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -158,7 +149,6 @@ abstract class _$$_FootprintEntityCopyWith<$Res>
   factory _$$_FootprintEntityCopyWith(
           _$_FootprintEntity value, $Res Function(_$_FootprintEntity) then) =
       __$$_FootprintEntityCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -246,7 +236,6 @@ class _$_FootprintEntity extends _FootprintEntity {
   @override
   final DateTime recordDate;
   final List<AttachmentEntity> _attachments;
-
   @override
   List<AttachmentEntity> get attachments {
     if (_attachments is EqualUnmodifiableListView) return _attachments;
@@ -376,30 +365,22 @@ abstract class _FootprintEntity extends FootprintEntity {
       required final List<AttachmentEntity> attachments,
       required final DateTime createdAt,
       required final DateTime updatedAt}) = _$_FootprintEntity;
-
   const _FootprintEntity._() : super._();
 
   @override
   int get footprintId;
-
   @override
   int get bookId;
-
   @override
   String get message;
-
   @override
   DateTime get recordDate;
-
   @override
   List<AttachmentEntity> get attachments;
-
   @override
   DateTime get createdAt;
-
   @override
   DateTime get updatedAt;
-
   @override
   @JsonKey(ignore: true)
   _$$_FootprintEntityCopyWith<_$_FootprintEntity> get copyWith =>

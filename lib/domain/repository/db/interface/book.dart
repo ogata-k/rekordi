@@ -1,10 +1,15 @@
 import 'package:rekordi/domain/entity/book.dart';
-import 'package:rekordi/domain/repository/book.dart';
 
-export 'package:rekordi/domain/repository/book.dart' show BookOrder;
+/// 記録帳のソート順
+enum BookOrder {
+  titleAsc,
+  titleDesc,
+  createdAtAsc,
+  createdAtDesc,
+}
 
 /// 記録帳用のDBリポジトリ
-abstract class BookDbRepository {
+abstract interface class BookDbRepository {
   /// 全件取得して監視
   Stream<List<BookEntity>> watchAll({BookOrder order = BookOrder.titleAsc});
 

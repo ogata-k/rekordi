@@ -6,26 +6,25 @@ import 'package:drift_dev/api/migrations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:rekordi/component/logger.dart';
-import 'package:rekordi/domain/domain_infra/local_database.dart';
-import 'package:rekordi/domain/repository/db_repository/book.dart';
-import 'package:rekordi/domain/repository/db_repository/footprint.dart';
-import 'package:rekordi/infra/local_db/dao/books.dart';
-import 'package:rekordi/infra/local_db/dao/footprints.dart';
-import 'package:rekordi/infra/local_db/schema_version.drift.dart';
-import 'package:rekordi/infra/local_db/table/attachments.dart';
-import 'package:rekordi/infra/local_db/table/books.dart';
-import 'package:rekordi/infra/local_db/table/footprints.dart';
-import 'package:rekordi/infra/local_db/type_converter.dart';
+import 'package:rekordi/domain/component/logger.dart';
+import 'package:rekordi/domain/repository/db/interface/book.dart';
+import 'package:rekordi/domain/repository/db/interface/footprint.dart';
+import 'package:rekordi/domain/repository/db/interface/local_database.dart';
+import 'package:rekordi/infra/repository/db/dao/books.dart';
+import 'package:rekordi/infra/repository/db/dao/footprints.dart';
+import 'package:rekordi/infra/repository/db/schema_version.drift.dart';
+import 'package:rekordi/infra/repository/db/table/attachments.dart';
+import 'package:rekordi/infra/repository/db/table/books.dart';
+import 'package:rekordi/infra/repository/db/table/footprints.dart';
 import 'package:rekordi/util/error.dart';
 
 // 自動生成でも変換後の型を使えるようにexportする
-export 'package:rekordi/infra/local_db/type_converter.dart';
+export 'package:rekordi/infra/repository/db/type_converter.dart';
 
 part 'database.g.dart';
 
 /// infraのLocalDatabase実装
-class InfraLocalDatabase extends LocalDatabase {
+class InfraLocalDatabase implements LocalDatabase {
   InfraLocalDatabase(this._instance);
 
   /// 自身のインスタンスを返却する

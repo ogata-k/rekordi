@@ -1,19 +1,19 @@
 import 'package:flutter/foundation.dart';
-import 'package:rekordi/component/locator.dart';
-import 'package:rekordi/component/logger.dart' as c_logger;
-import 'package:rekordi/component/router.dart' as c_router;
-import 'package:rekordi/domain/domain_component/logger.dart' as dc_logger;
-import 'package:rekordi/domain/domain_component/router.dart' as dc_router;
-import 'package:rekordi/domain/domain_infra/local_database.dart';
-import 'package:rekordi/domain/domain_infra/preferences.dart';
-import 'package:rekordi/domain/repository/book.dart';
-import 'package:rekordi/domain/repository/footprint.dart';
-import 'package:rekordi/domain/repository/preferences.dart';
+import 'package:rekordi/domain/component/interface/logger.dart' as dc_logger;
+import 'package:rekordi/domain/component/interface/router.dart' as dc_router;
+import 'package:rekordi/domain/component/locator.dart';
+import 'package:rekordi/domain/component/logger.dart' as c_logger;
+import 'package:rekordi/domain/component/router.dart' as c_router;
+import 'package:rekordi/domain/repository/db/book.dart';
+import 'package:rekordi/domain/repository/db/footprint.dart';
+import 'package:rekordi/domain/repository/db/interface/local_database.dart';
+import 'package:rekordi/domain/repository/file/interface/preferences.dart';
+import 'package:rekordi/domain/repository/file/preferences.dart';
 import 'package:rekordi/infra/component/locator.dart';
 import 'package:rekordi/infra/component/logger.dart' show LoggingLogger;
 import 'package:rekordi/infra/component/router.dart';
-import 'package:rekordi/infra/local_db/database.dart';
-import 'package:rekordi/infra/preferences/preferences.dart';
+import 'package:rekordi/infra/repository/db/database.dart';
+import 'package:rekordi/infra/repository/file/preferences.dart';
 import 'package:rekordi/presentation/usecase/base_usecase.dart';
 
 /// アプリを初期化するためのユースケース

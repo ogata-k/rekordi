@@ -1,11 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:rekordi/domain/entity/attachment.dart';
 import 'package:rekordi/domain/entity/footprint.dart';
-import 'package:rekordi/domain/repository/db_repository/footprint.dart';
-import 'package:rekordi/infra/local_db/database.dart';
-import 'package:rekordi/infra/local_db/query_util.dart';
-import 'package:rekordi/infra/local_db/table/attachments.dart';
-import 'package:rekordi/infra/local_db/table/footprints.dart';
+import 'package:rekordi/domain/repository/db/interface/footprint.dart';
+import 'package:rekordi/infra/repository/db/database.dart';
+import 'package:rekordi/infra/repository/db/query_util.dart';
+import 'package:rekordi/infra/repository/db/table/attachments.dart';
+import 'package:rekordi/infra/repository/db/table/footprints.dart';
 
 part 'footprints.g.dart';
 
@@ -32,7 +32,7 @@ extension on Attachment {
       );
 }
 
-class DbRepositoryFootprintsDao extends FootprintDbRepository {
+class DbRepositoryFootprintsDao implements FootprintDbRepository {
   DbRepositoryFootprintsDao(this._dao);
 
   final FootprintsDao _dao;

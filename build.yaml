@@ -3,8 +3,8 @@ targets:
     builders:
       drift_dev:
         generate_for:
-          - lib/infra/local_db/**/*.dart
-          - lib/infra/local_db/*.dart
+          - lib/infra/repository/db/**/*.dart
+          - lib/infra/repository/db/*.dart
         options:
           store_date_time_values_as_text: true
       freezed:

@@ -1,13 +1,8 @@
 import 'package:rekordi/domain/entity/book.dart';
-import 'package:rekordi/domain/repository/db_repository/book.dart';
+import 'package:rekordi/domain/repository/db/interface/book.dart';
 
-/// 記録帳のソート順
-enum BookOrder {
-  titleAsc,
-  titleDesc,
-  createdAtAsc,
-  createdAtDesc,
-}
+export 'package:rekordi/domain/repository/db/interface/book.dart'
+    show BookOrder;
 
 /// 記録帳用のリポジトリ
 class BookRepository {

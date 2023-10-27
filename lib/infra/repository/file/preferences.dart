@@ -1,8 +1,8 @@
-import 'package:rekordi/domain/domain_infra/preferences.dart';
+import 'package:rekordi/domain/repository/file/interface/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart' as plugin;
 
 /// アプリの環境設定をローカルファイルで管理するためのクラス
-class SharedPreferences extends Preferences {
+class SharedPreferences implements Preferences {
   SharedPreferences(this._instance);
 
   final plugin.SharedPreferences _instance;

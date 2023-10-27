@@ -1,5 +1,5 @@
-import 'package:rekordi/component/locator.dart';
-import 'package:rekordi/domain/domain_component/logger.dart';
+import 'package:rekordi/domain/component/interface/logger.dart';
+import 'package:rekordi/domain/component/locator.dart';
 
 /// 簡単に扱うためのヘルパ
 AppLogger logger() => locator().get<AppLogger>();

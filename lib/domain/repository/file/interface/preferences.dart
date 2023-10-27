@@ -1,5 +1,5 @@
 /// アプリの環境設定をローカルファイルで管理するための抽象クラス
-abstract class Preferences {
+abstract interface class Preferences {
   /// [key]に保存してある[bool]値を取得
   bool? getBool(String key);
 

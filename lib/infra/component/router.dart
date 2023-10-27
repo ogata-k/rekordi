@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart' as gr;
-import 'package:rekordi/domain/domain_component/router.dart' as dc;
+import 'package:rekordi/domain/component/interface/router.dart' as dc;
 import 'package:rekordi/util/error.dart';
 
 /// AppRouterで扱える形式に変換するための具象クラス

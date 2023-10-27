@@ -1,8 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:rekordi/domain/entity/book.dart';
-import 'package:rekordi/domain/repository/db_repository/book.dart';
-import 'package:rekordi/infra/local_db/database.dart';
-import 'package:rekordi/infra/local_db/table/books.dart';
+import 'package:rekordi/domain/repository/db/interface/book.dart';
+import 'package:rekordi/infra/repository/db/database.dart';
+import 'package:rekordi/infra/repository/db/table/books.dart';
+
+// 自動生成でも変換後の型を使えるようにexportする
+export 'package:rekordi/infra/repository/db/type_converter.dart';
 
 part 'books.g.dart';
 
@@ -18,7 +21,7 @@ extension on Book {
       );
 }
 
-class DbRepositoryBooksDao extends BookDbRepository {
+class DbRepositoryBooksDao implements BookDbRepository {
   DbRepositoryBooksDao(this._dao);
 
   final BooksDao _dao;

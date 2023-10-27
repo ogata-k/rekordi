@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rekordi/component/locator.dart';
-import 'package:rekordi/domain/repository/preferences.dart';
+import 'package:rekordi/domain/component/locator.dart';
+import 'package:rekordi/domain/repository/file/preferences.dart';
 import 'package:rekordi/presentation/usecase/preferences/get_theme_mode.dart';
 import 'package:rekordi/presentation/usecase/preferences/update_theme_mode.dart';
 

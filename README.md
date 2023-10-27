@@ -124,13 +124,13 @@ fvm flutter pub run build_runner build --delete-conflicting-outputs
 ５：次のコマンドで増やしたschemaVersion時点のスキーマ情報を出力する
 
 ```
-fvm dart run drift_dev schema dump lib/infra/local_db/database.dart drift_schema/
+fvm dart run drift_dev schema dump lib/infra/repository/db/database.dart drift_schema/
 ```
 
 ６：出力したスキーマ情報をもとにマイグレーションのためのコードを生成する
 
 ```
-fvm dart run drift_dev schema steps drift_schema/ lib/infra/local_db/schema_version.drift.dart
+fvm dart run drift_dev schema steps drift_schema/ lib/infra/repository/db/schema_version.drift.dart
 ```
 
 ７：データベースクラスのmigrationとしてstepByStep関数でバージョンごとの変化のマイグレーションを作成する。ロールバックも忘れずに対応する

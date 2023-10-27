@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:rekordi/component/locator.dart';
-import 'package:rekordi/domain/domain_component/router.dart' as cr;
+import 'package:rekordi/domain/component/interface/router.dart' as cr;
+import 'package:rekordi/domain/component/locator.dart';
 import 'package:rekordi/presentation/page/base.dart';
 
 /// 簡単に扱うためのヘルパ

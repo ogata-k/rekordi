@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rekordi/component/locator.dart';
-import 'package:rekordi/component/logger.dart';
-import 'package:rekordi/component/router.dart';
+import 'package:rekordi/domain/component/locator.dart';
+import 'package:rekordi/domain/component/logger.dart';
+import 'package:rekordi/domain/component/router.dart';
 import 'package:rekordi/domain/entity/book.dart';
-import 'package:rekordi/domain/repository/book.dart';
+import 'package:rekordi/domain/repository/db/book.dart';
 import 'package:rekordi/presentation/model/app_theme_mode.dart';
 import 'package:rekordi/presentation/model/cache_value_stream_controller.dart';
 import 'package:rekordi/presentation/page/base.dart';

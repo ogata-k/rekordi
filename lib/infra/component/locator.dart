@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart' as get_it;
-import 'package:rekordi/domain/domain_component/locator.dart';
+import 'package:rekordi/domain/component/interface/locator.dart';
 
 /// サービスロケータのロケータークラス
 class GetItLocator implements Locator {

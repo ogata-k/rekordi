@@ -1,5 +1,5 @@
 import 'package:rekordi/domain/entity/book.dart';
-import 'package:rekordi/domain/repository/book.dart';
+import 'package:rekordi/domain/repository/db/book.dart';
 import 'package:rekordi/presentation/usecase/base_usecase.dart';
 import 'package:rekordi/util/exception.dart';
 
