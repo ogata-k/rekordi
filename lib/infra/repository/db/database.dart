@@ -16,7 +16,7 @@ import 'package:rekordi/infra/repository/db/schema_version.drift.dart';
 import 'package:rekordi/infra/repository/db/table/attachments.dart';
 import 'package:rekordi/infra/repository/db/table/books.dart';
 import 'package:rekordi/infra/repository/db/table/footprints.dart';
-import 'package:rekordi/util/error.dart';
+import 'package:rekordi/util/error/unreachable_error.dart';
 
 // 自動生成でも変換後の型を使えるようにexportする
 export 'package:rekordi/infra/repository/db/type_converter.dart';

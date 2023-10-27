@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:rekordi/domain/component/interface/locator.dart';
-import 'package:rekordi/util/error.dart';
+import 'package:rekordi/util/error/not_initialize_error.dart';
 
 /// 簡単に扱うためのヘルパ
 AppLocator locator() => AppLocator();

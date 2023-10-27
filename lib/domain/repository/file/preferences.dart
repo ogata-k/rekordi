@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' show ThemeMode;
 import 'package:rekordi/domain/repository/file/interface/preferences.dart';
-import 'package:rekordi/util/exception.dart';
+import 'package:rekordi/util/exception/fail_delete_exception.dart';
+import 'package:rekordi/util/exception/fail_update_exception.dart';
 
 /// アプリの環境設定をローカルファイルで管理するためのクラス
 class PreferencesRepository {
