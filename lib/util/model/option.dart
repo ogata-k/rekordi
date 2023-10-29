@@ -41,6 +41,9 @@ abstract class Option<S> {
         ),
       );
 
+  /// Noneの場合に[fn]を実行する。
+  void ifNone(void Function() fn);
+
   /// Someの場合値を返す。Noneの場合[RuntimeException]を投げる。
   S getSomeOrThrow();
 
@@ -65,6 +68,12 @@ abstract class Option<S> {
         foldFn,
       );
 
+  /// Someの場合に[fn]を実行する。
+  void ifSome(void Function(S value) fn);
+
+  /// Noneの場合に[onNone]を実行し、Someの場合に[onSome]を実行する。
+  void ifNoneSome(void Function() onNone, void Function(S value) onSome);
+
   /// Noneの場合[onNone]で変換して値を返し、Someの場合[onSome]で変換して値を返す。
   V fold<V>(V Function() onNone, V Function(S value) onSome);
 }
@@ -82,6 +91,11 @@ class _None<S> extends Option<S> {
   bool isSome() => false;
 
   @override
+  void ifNone(void Function() fn) {
+    fn();
+  }
+
+  @override
   S getSomeOrThrow() => throw RuntimeException(
         'Option is not Some',
         'This Option value: $this is not Some value.',
@@ -95,6 +109,14 @@ class _None<S> extends Option<S> {
 
   @override
   Option<SV> mapSome<SV>(SV Function(S value) mapFn) => const _None();
+
+  @override
+  void ifSome(void Function(S value) fn) {}
+
+  @override
+  void ifNoneSome(void Function() onNone, void Function(S value) onSome) {
+    onNone();
+  }
 
   @override
   V fold<V>(V Function() onNone, V Function(S value) onSome) => onNone();
@@ -115,6 +137,9 @@ class _Some<S> extends Option<S> {
   bool isSome() => true;
 
   @override
+  void ifNone(void Function() fn) {}
+
+  @override
   S getSomeOrThrow() => value;
 
   @override
@@ -125,6 +150,16 @@ class _Some<S> extends Option<S> {
 
   @override
   Option<SV> mapSome<SV>(SV Function(S value) mapFn) => _Some(mapFn(value));
+
+  @override
+  void ifSome(void Function(S value) fn) {
+    fn(value);
+  }
+
+  @override
+  void ifNoneSome(void Function() onNone, void Function(S value) onSome) {
+    onSome(value);
+  }
 
   @override
   V fold<V>(V Function() onNone, V Function(S value) onSome) => onSome(value);
