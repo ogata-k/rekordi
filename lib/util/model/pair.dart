@@ -60,3 +60,6 @@ extension PairT1T2LiftFutureExt<T1, T2> on Pair<Future<T1>, Future<T2>> {
   /// Item1とItem2の[Future]を[Pair]の外に持ち上げる
   Future<Pair<T1, T2>> liftT1T2Future() async => Pair(await item1, await item2);
 }
+
+typedef WithVoidCallback<T> = Pair<T, void Function()>;
+typedef WithAsyncVoidCallback<T> = Pair<T, Future<void> Function()>;
