@@ -16,7 +16,16 @@ class ErrorPageExtra extends BasePageExtra {
   String get absolutePagePath => '/error';
 }
 
-class ErrorPageController extends BasePageController {
+class ErrorPageModel extends BasePageModel with ChangeNotifier {}
+
+class ErrorPageController extends BasePageController<ErrorPageModel> {
+  const ErrorPageController(ErrorPageModel model) : super(model);
+
+  @override
+  void start(BuildContext context) {
+    // none
+  }
+
   @override
   void dispose() {
     // none
@@ -24,13 +33,14 @@ class ErrorPageController extends BasePageController {
 }
 
 /// エラー画面となるページ
-class ErrorPage extends BasePage<ErrorPageExtra, ErrorPageController> {
+class ErrorPage
+    extends BasePage<ErrorPageExtra, ErrorPageModel, ErrorPageController> {
   const ErrorPage({Key? key, required ErrorPageExtra extra})
       : super(key: key, extra: extra);
 
   @override
-  ErrorPageController createController(BuildContext context) {
-    return ErrorPageController();
+  ErrorPageController createController(ErrorPageExtra extra) {
+    return ErrorPageController(ErrorPageModel());
   }
 
   @override
@@ -54,5 +64,10 @@ class ErrorPage extends BasePage<ErrorPageExtra, ErrorPageController> {
         child: Text(extra.error?.toString() ?? 'UNKNOWN'),
       ),
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // none
   }
 }

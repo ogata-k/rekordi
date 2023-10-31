@@ -8,76 +8,110 @@ abstract class BasePageExtra {
   String get absolutePagePath;
 }
 
+/// コントローラーで扱うモデル
+/// このモデルが自動的に更新をページに通知する形でリビルドを要求する
+abstract class BasePageModel {}
+
 /// ページのコントローラー
-abstract class BasePageController {
-  const BasePageController();
+abstract class BasePageController<M extends BasePageModel> {
+  const BasePageController(this._model);
+
+  final M _model;
+
+  M get model => _model;
+
+  void start(BuildContext context);
 
   void dispose();
 }
 
 /// ページの基本となる抽象クラス
-abstract class BasePage<E extends BasePageExtra, C extends BasePageController>
-    extends StatelessWidget {
+abstract class BasePage<E extends BasePageExtra, M extends BasePageModel,
+    C extends BasePageController<M>> extends StatelessWidget {
   const BasePage({Key? key, required this.extra}) : super(key: key);
 
   final E extra;
 
   /// コントローラーの初期化
-  C createController(BuildContext context);
+  C createController(E extra);
+
+  /// アプリのライフサイクルハンドラ
+  void didChangeAppLifecycleState(AppLifecycleState state);
 
   /// ページの描画
   Widget buildPage(BuildContext context, C controller);
 
   @override
   Widget build(BuildContext context) {
-    return _DisposablePageState<C>(
-      create: () => createController(context),
-      dispose: (state) => state.dispose(),
-      build: (state) {
-        return buildPage(context, state);
-      },
+    return _HandlePageControllerWidget<E, M, C>(
+      extra: this.extra,
+      create: createController,
+      didChangeAppLifecycleState: didChangeAppLifecycleState,
+      build: buildPage,
     );
   }
 }
 
-/// disposeを自動実行するPage用Widget
-class _DisposablePageState<S extends Object> extends StatefulWidget {
-  const _DisposablePageState({
+/// PageControllerを扱うためのWidget
+class _HandlePageControllerWidget<
+    E extends BasePageExtra,
+    M extends BasePageModel,
+    C extends BasePageController<M>> extends StatefulWidget {
+  const _HandlePageControllerWidget({
     Key? key,
+    required this.extra,
     required this.create,
-    required this.dispose,
+    required this.didChangeAppLifecycleState,
     required this.build,
   }) : super(key: key);
 
-  /// ページのcontextを使う
-  final S Function() create;
-  final void Function(S state) dispose;
+  final E extra;
 
   /// ページのcontextを使う
-  final Widget Function(S state) build;
+  final C Function(E extra) create;
+
+  /// ページのcontextを使う
+  final Widget Function(BuildContext context, C state) build;
+
+  /// アプリのライフサイクルハンドラ
+  final void Function(AppLifecycleState state) didChangeAppLifecycleState;
 
   @override
-  _DisposablePageStateState<S> createState() => _DisposablePageStateState<S>();
+  _HandlePageControllerWidgetState<E, M, C> createState() =>
+      _HandlePageControllerWidgetState<E, M, C>();
 }
 
-class _DisposablePageStateState<S extends Object>
-    extends State<_DisposablePageState<S>> {
-  late S state;
+class _HandlePageControllerWidgetState<E extends BasePageExtra,
+        M extends BasePageModel, C extends BasePageController<M>>
+    extends State<_HandlePageControllerWidget<E, M, C>>
+    with WidgetsBindingObserver {
+  late C state;
 
   @override
   void initState() {
     super.initState();
-    state = widget.create();
+    WidgetsBinding.instance.addObserver(this);
+    state = widget.create(widget.extra);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      state.start(context);
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    widget.didChangeAppLifecycleState(state);
   }
 
   @override
   void dispose() {
-    widget.dispose(state);
+    state.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.build(state);
+    return widget.build(context, state);
   }
 }

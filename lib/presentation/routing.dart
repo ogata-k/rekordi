@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekordi/presentation/page/error/error.dart';
-import 'package:rekordi/presentation/page/home/home.dart';
+import 'package:rekordi/presentation/page/home/home_page/home.dart';
 
 /// エラーページを構築
 Page<dynamic> _buildErrorPage(
