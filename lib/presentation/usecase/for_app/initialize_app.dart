@@ -1,4 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:rekordi/domain/component/event_bus.dart' as c_event_bus;
+import 'package:rekordi/domain/component/interface/event_bus.dart'
+    as dc_event_bus;
 import 'package:rekordi/domain/component/interface/logger.dart' as dc_logger;
 import 'package:rekordi/domain/component/interface/router.dart' as dc_router;
 import 'package:rekordi/domain/component/locator.dart';
@@ -9,6 +12,7 @@ import 'package:rekordi/domain/repository/db/footprint.dart';
 import 'package:rekordi/domain/repository/db/interface/local_database.dart';
 import 'package:rekordi/domain/repository/file/interface/preferences.dart';
 import 'package:rekordi/domain/repository/file/preferences.dart';
+import 'package:rekordi/infra/component/event_bus.dart';
 import 'package:rekordi/infra/component/locator.dart';
 import 'package:rekordi/infra/component/logger.dart' show LoggingLogger;
 import 'package:rekordi/infra/component/router.dart';
@@ -27,6 +31,7 @@ class InitializeAppUsecase extends BaseUsecase {
       //
       ..registerSingleton<dc_logger.ILogger>(LoggingLogger.new)
       ..registerSingleton<dc_router.IRouter>(ComponentGoRouter.new)
+      ..registerSingleton<dc_event_bus.IEventBus>(EventBus.new)
       //
       // ここからはリポジトリ用のインフラの登録
       //
@@ -46,7 +51,10 @@ class InitializeAppUsecase extends BaseUsecase {
           ),
       )
       ..registerSingleton<c_router.AppRouter>(
-            () => c_router.AppRouter(locator().get<dc_router.IRouter>()),
+        () => c_router.AppRouter(locator().get<dc_router.IRouter>()),
+      )
+      ..registerSingleton<c_event_bus.AppEventBus>(
+        () => c_event_bus.AppEventBus(locator().get<dc_event_bus.IEventBus>()),
       )
       //
       // ここからはRepositoryの登録

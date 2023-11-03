@@ -43,6 +43,8 @@ dependencies:
   # Architecture
   ## DI
   get_it: 7.6.0
+  ## Event Listener
+  event_bus: 2.0.0
   ## Handling state with context
   flutter_riverpod: 2.3.6
 
