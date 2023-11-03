@@ -24,7 +24,7 @@ export 'package:rekordi/infra/repository/db/type_converter.dart';
 part 'database.g.dart';
 
 /// infraのLocalDatabase実装
-class InfraLocalDatabase implements ILocalDatabase {
+class InfraLocalDatabase extends ILocalDatabase {
   InfraLocalDatabase(this._instance);
 
   /// 自身のインスタンスを返却する

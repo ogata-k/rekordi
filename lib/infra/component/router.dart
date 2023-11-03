@@ -4,7 +4,7 @@ import 'package:rekordi/domain/component/interface/router.dart' as dc;
 import 'package:rekordi/util/error/not_support_error.dart';
 
 /// AppRouterで扱える形式に変換するための具象クラス
-class ComponentGoRouter implements dc.IRouter {
+class ComponentGoRouter extends dc.IRouter {
   ComponentGoRouter();
 
   @override

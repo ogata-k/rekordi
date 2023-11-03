@@ -1,5 +1,5 @@
 /// アプリの環境設定をローカルファイルで管理するための抽象クラス
-abstract interface class IPreferences {
+abstract class IPreferences {
   /// [key]に保存してある[bool]値を取得
   bool? getBool(String key);
 

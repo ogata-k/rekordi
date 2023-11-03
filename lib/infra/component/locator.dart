@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart' as get_it;
 import 'package:rekordi/domain/component/interface/locator.dart';
 
 /// サービスロケータのロケータークラス
-class GetItLocator implements ILocator {
+class GetItLocator extends ILocator {
   get_it.GetIt get _instance => get_it.GetIt.instance;
 
   @override

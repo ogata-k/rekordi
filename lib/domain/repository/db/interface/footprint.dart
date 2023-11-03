@@ -8,7 +8,7 @@ enum FootprintOrder {
 
 /// 記録用のDBリポジトリ
 // ignore: one_member_abstracts
-abstract interface class IFootprintDbRepository {
+abstract class IFootprintDbRepository {
   /// 指定した日にちの記録一覧
   Stream<List<FootprintEntity>> watchAllAtRecordDate(
     int bookId,

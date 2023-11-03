@@ -32,7 +32,7 @@ extension on Attachment {
       );
 }
 
-class DbRepositoryFootprintsDao implements IFootprintDbRepository {
+class DbRepositoryFootprintsDao extends IFootprintDbRepository {
   DbRepositoryFootprintsDao(this._dao);
 
   final FootprintsDao _dao;

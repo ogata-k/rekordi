@@ -9,7 +9,7 @@ enum BookOrder {
 }
 
 /// 記録帳用のDBリポジトリ
-abstract interface class IBookDbRepository {
+abstract class IBookDbRepository {
   /// 全件取得して監視
   Stream<List<BookEntity>> watchAll({BookOrder order = BookOrder.titleAsc});
 
