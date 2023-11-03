@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:rekordi/domain/component/interface/router.dart' as cr;
 import 'package:rekordi/domain/component/locator.dart';
-import 'package:rekordi/presentation/page/base.dart';
+import 'package:rekordi/presentation/page/view.dart';
 
 /// 簡単に扱うためのヘルパ
 AppRouter router() => locator().get<AppRouter>();
@@ -13,7 +13,7 @@ class AppRouter {
   final cr.IRouter _instance;
 
   /// 指定された[extra]を解析して得られたパスをもとに遷移する。
-  Future<T?> push<Extra extends BasePageExtra, T extends Object?>(
+  Future<T?> push<Extra extends IPageExtra, T extends Object?>(
     BuildContext context,
     Extra extra,
   ) =>
@@ -21,7 +21,7 @@ class AppRouter {
 
   /// 指定された[extra]を解析して得られたパスをもとに遷移する。
   /// 遷移元を置き換えながら遷移する。
-  Future<T?> pushWithReplace<Extra extends BasePageExtra, T extends Object?>(
+  Future<T?> pushWithReplace<Extra extends IPageExtra, T extends Object?>(
     BuildContext context,
     Extra extra,
   ) =>
@@ -29,7 +29,7 @@ class AppRouter {
 
   /// 指定された[extra]を解析して得られたパスをもとに遷移する。
   /// 画面のスタックを全部削除して遷移する。
-  Future<T?> pushWithClearStack<Extra extends BasePageExtra, T extends Object?>(
+  Future<T?> pushWithClearStack<Extra extends IPageExtra, T extends Object?>(
     BuildContext context,
     Extra extra,
   ) =>

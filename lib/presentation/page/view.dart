@@ -1,34 +1,19 @@
 import 'package:flutter/widgets.dart';
+import 'package:rekordi/presentation/page/controller.dart';
+import 'package:rekordi/presentation/page/model.dart';
 
 /// ページのエクストラデータ
-abstract class BasePageExtra {
-  const BasePageExtra();
+abstract class IPageExtra {
+  const IPageExtra();
 
   /// 絶対パス。呼び出し先を指定するときに利用する。
   String get absolutePagePath;
 }
 
-/// コントローラーで扱うモデル
-/// このモデルが自動的に更新をページに通知する形でリビルドを要求する
-abstract class BasePageModel {}
-
-/// ページのコントローラー
-abstract class BasePageController<M extends BasePageModel> {
-  const BasePageController(this._model);
-
-  final M _model;
-
-  M get model => _model;
-
-  void start(BuildContext context);
-
-  void dispose();
-}
-
 /// ページの基本となる抽象クラス
-abstract class BasePage<E extends BasePageExtra, M extends BasePageModel,
-    C extends BasePageController<M>> extends StatelessWidget {
-  const BasePage({Key? key, required this.extra}) : super(key: key);
+abstract class IPage<E extends IPageExtra, M extends IPageModel,
+    C extends IPageController<M>> extends StatelessWidget {
+  const IPage({Key? key, required this.extra}) : super(key: key);
 
   final E extra;
 
@@ -53,10 +38,8 @@ abstract class BasePage<E extends BasePageExtra, M extends BasePageModel,
 }
 
 /// PageControllerを扱うためのWidget
-class _HandlePageControllerWidget<
-    E extends BasePageExtra,
-    M extends BasePageModel,
-    C extends BasePageController<M>> extends StatefulWidget {
+class _HandlePageControllerWidget<E extends IPageExtra, M extends IPageModel,
+    C extends IPageController<M>> extends StatefulWidget {
   const _HandlePageControllerWidget({
     Key? key,
     required this.extra,
@@ -81,8 +64,8 @@ class _HandlePageControllerWidget<
       _HandlePageControllerWidgetState<E, M, C>();
 }
 
-class _HandlePageControllerWidgetState<E extends BasePageExtra,
-        M extends BasePageModel, C extends BasePageController<M>>
+class _HandlePageControllerWidgetState<E extends IPageExtra,
+        M extends IPageModel, C extends IPageController<M>>
     extends State<_HandlePageControllerWidget<E, M, C>>
     with WidgetsBindingObserver {
   late C state;

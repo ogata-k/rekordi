@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekordi/domain/component/router.dart';
 import 'package:rekordi/presentation/model/app_theme_mode.dart';
-import 'package:rekordi/presentation/page/base.dart';
-import 'package:rekordi/presentation/page/error/error.dart';
+import 'package:rekordi/presentation/page/error/view.dart';
+import 'package:rekordi/presentation/page/home/controller.dart';
+import 'package:rekordi/presentation/page/home/model.dart';
+import 'package:rekordi/presentation/page/view.dart';
 import 'package:rekordi/presentation/resource/l10n/l10n.dart';
 import 'package:rekordi/presentation/resource/theme/const/padding.dart';
 import 'package:rekordi/presentation/resource/theme/theme.dart';
@@ -11,7 +13,7 @@ import 'package:rekordi/presentation/widget/listening.dart';
 
 // @todo 実際のページ
 
-class HomePageExtra extends BasePageExtra {
+class HomePageExtra extends IPageExtra {
   const HomePageExtra() : super();
 
   factory HomePageExtra.defaultExtra() => const HomePageExtra();
@@ -22,40 +24,10 @@ class HomePageExtra extends BasePageExtra {
   String get absolutePagePath => '/home';
 }
 
-class HomePageModel extends BasePageModel with ChangeNotifier {
-  HomePageModel(int initialCount) : _count = initialCount;
-
-  int _count;
-
-  int get currentCount => _count;
-
-  void increment() {
-    _count += 1;
-    notifyListeners();
-  }
-}
-
-class HomePageController extends BasePageController<HomePageModel> {
-  const HomePageController(HomePageModel model) : super(model);
-
-  @override
-  void start(BuildContext context) {
-    // none
-  }
-
-  @override
-  void dispose() {
-    // none
-  }
-
-  void incrementCount() => model.increment();
-}
-
 const int _initialCount = 0;
 
 /// ホーム画面となるページ
-class HomePage
-    extends BasePage<HomePageExtra, HomePageModel, HomePageController> {
+class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
   const HomePage({Key? key, required HomePageExtra extra})
       : super(key: key, extra: extra);
 

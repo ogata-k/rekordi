@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rekordi/domain/component/router.dart';
-import 'package:rekordi/presentation/page/base.dart';
+import 'package:rekordi/presentation/page/error/controller.dart';
+import 'package:rekordi/presentation/page/error/model.dart';
+import 'package:rekordi/presentation/page/view.dart';
 
 // @todo 実際のエラーページ
 
-class ErrorPageExtra extends BasePageExtra {
+class ErrorPageExtra extends IPageExtra {
   ErrorPageExtra({required this.error});
 
   final Exception? error;
@@ -16,25 +18,9 @@ class ErrorPageExtra extends BasePageExtra {
   String get absolutePagePath => '/error';
 }
 
-class ErrorPageModel extends BasePageModel with ChangeNotifier {}
-
-class ErrorPageController extends BasePageController<ErrorPageModel> {
-  const ErrorPageController(ErrorPageModel model) : super(model);
-
-  @override
-  void start(BuildContext context) {
-    // none
-  }
-
-  @override
-  void dispose() {
-    // none
-  }
-}
-
 /// エラー画面となるページ
 class ErrorPage
-    extends BasePage<ErrorPageExtra, ErrorPageModel, ErrorPageController> {
+    extends IPage<ErrorPageExtra, ErrorPageModel, ErrorPageController> {
   const ErrorPage({Key? key, required ErrorPageExtra extra})
       : super(key: key, extra: extra);
 
