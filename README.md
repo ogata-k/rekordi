@@ -34,30 +34,25 @@ samples, guidance on mobile development, and a full API reference.
 - asset : このプロジェクトで利用するアセットの置き場所。
 - dev_resource : 開発時にしか利用しないリソースを定義するフォルダ。
 - ios : このプロジェクトのios関連の設定や実装が入るフォルダ。
-- lib : このプロジェクトの実装をまとめたフォルダ。今回は簡易的なクリーンアーキテクチャを採用。
-    - component : 横断的に使われる可能性のある機能を宣言するフォルダ。実態はinfraで定義する。アプリ用に提供するためのクラスもここに定義し、Appという接頭辞で区別する。
-    - domain : ビジネスロジックの実装をするフォルダ。
-        - domain_component : componentの抽象クラスの定義
-        - domain_infra : domainで使用するinfraが実装していて欲しい抽象クラスを定義
-        - entity : domain内で利用するステートレスなモデルを定義するフォルダ。状態の通知が必要な単位ごとに分ける。
-        - repository : infraの実装を使って呼び出すステートレスなクラスをまとめたフォルダ。
+- lib : このプロジェクトの実装をまとめたフォルダ。今回は簡易的なMVC＋クリーンアーキテクチャを採用。
+    - domain : ビジネスロジックのフォルダ。
+        - component : コンポーネント。主にUIの表には出てこないが、裏で効果的に機能するもの。
+        - entity : domain内のモデル
+        - repository : usecaseで呼び出すためのリポジトリ
     - infra : ネットワーク通信やDB処理やネイティブ実装に強く依存する実装などをまとめて管理するフォルダ。必要ならチャネルを使ってネイティブ実装を呼び出して連携なども行う。
-        - component : lib/componentで定義されたクラスの実装を定義する。
-        - local_db :
-          明示的にエラーを返すローカルなDBの実装をするフォルダ。必要があるならハンドリングしたいエラーはlib/domain/domain_exceptionに定義してあるので、それを返す。返却する値はlib/domain/modelを返す。
-            - dao : local_db内でデータアクセスの指定をまとめたアクセスオブジェクト。
-            - table : local_db内でテーブルの定義などに利用するモデル。
-    - presentation : UIに関する実装を集めたフォルダ。
-        - model : 状態を保持および管理するためのモデルを配置するフォルダ。基本的にここ以外でWidgetの状態管理を除いて状態を管理しない。
-          modelで状態の更新がある場合はChangeNotifier(ValueNotifierでも可)
-          を継承したクラスで実装して自分経由で更新したのは自分のnotifyListener()
-          を呼ぶ。もし他人も更新させる必要がある場合はEventBusで更新があったことを通知する実装にする予定。
-        - page : 画面遷移で表示する画面を定義するフォルダ。何かしらの方法で、画面の状態管理とデータの状態管理とユースケースは分けて実装すること。
-        - resource : リソースの一覧を定義するフォルダ。
-        - usecase : domainの実装などを宣言したユースケースを実装をまとめるフォルダ。ここで定義されるクラス内のメソッドは一つ。
-        - widget : pageで利用する各Widgetを定義する。スタイルやテーマはできるだけ共通の定義を利用すること。
+        - component : domainのcomponentの実態
+        - repository : domainのrepositoryの実態
+    - presentation : UIに関するフォルダ。
+        - event : コントローラーが監視しているリスナーにわたるイベント
+        - model : presentationで共通して利用するモデル。
+        - page : アプリに表示する画面。各画面ごとにフォルダを切って、その中でmodel, view, controllerを定義する。
+        - resource : 言語リソースやテーマリソースの配置場所
+        - usecase : page/modelが扱う各１機能のこと。
+        - widget : UI部品
+        - routing.dart : pageの画面遷移の定義
     - util : domain, infra, presentation全てで利用するようなヘルパーを定義するフォルダ。
-    - main.dart : エントリーポイントのmainファイル。いわゆるDirty Mainで、各種DIや初期化を実施する。DIは引数形式のDIで依存性を注入する想定。
+    - app.dart : アプリWidget本体
+    - main.dart : エントリーポイントのmainファイル。いわゆるDirty Mainで、各種DIや初期化を実施する。DIは引数形式のDIで依存性を注入する。
 - test : このプロジェクトのテストをまとめたフォルダ。
 - analysis_options : このプロジェクトで使用するFlutterのリント設定を記述したファイル
 - l10n.yaml : 言語ファイルに関連する設定ファイル。
