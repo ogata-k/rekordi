@@ -144,11 +144,12 @@ class _$BookEntityCopyWithImpl<$Res, $Val extends BookEntity>
 }
 
 /// @nodoc
-abstract class _$$_BookEntityCopyWith<$Res>
+abstract class _$$BookEntityImplCopyWith<$Res>
     implements $BookEntityCopyWith<$Res> {
-  factory _$$_BookEntityCopyWith(
-          _$_BookEntity value, $Res Function(_$_BookEntity) then) =
-      __$$_BookEntityCopyWithImpl<$Res>;
+  factory _$$BookEntityImplCopyWith(
+          _$BookEntityImpl value, $Res Function(_$BookEntityImpl) then) =
+      __$$BookEntityImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -162,11 +163,11 @@ abstract class _$$_BookEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BookEntityCopyWithImpl<$Res>
-    extends _$BookEntityCopyWithImpl<$Res, _$_BookEntity>
-    implements _$$_BookEntityCopyWith<$Res> {
-  __$$_BookEntityCopyWithImpl(
-      _$_BookEntity _value, $Res Function(_$_BookEntity) _then)
+class __$$BookEntityImplCopyWithImpl<$Res>
+    extends _$BookEntityCopyWithImpl<$Res, _$BookEntityImpl>
+    implements _$$BookEntityImplCopyWith<$Res> {
+  __$$BookEntityImplCopyWithImpl(
+      _$BookEntityImpl _value, $Res Function(_$BookEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -180,7 +181,7 @@ class __$$_BookEntityCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$_BookEntity(
+    return _then(_$BookEntityImpl(
       bookId: null == bookId
           ? _value.bookId
           : bookId // ignore: cast_nullable_to_non_nullable
@@ -215,8 +216,8 @@ class __$$_BookEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BookEntity extends _BookEntity {
-  const _$_BookEntity(
+class _$BookEntityImpl extends _BookEntity {
+  const _$BookEntityImpl(
       {required this.bookId,
       required this.title,
       required this.description,
@@ -250,7 +251,7 @@ class _$_BookEntity extends _BookEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BookEntity &&
+            other is _$BookEntityImpl &&
             (identical(other.bookId, bookId) || other.bookId == bookId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
@@ -272,8 +273,8 @@ class _$_BookEntity extends _BookEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BookEntityCopyWith<_$_BookEntity> get copyWith =>
-      __$$_BookEntityCopyWithImpl<_$_BookEntity>(this, _$identity);
+  _$$BookEntityImplCopyWith<_$BookEntityImpl> get copyWith =>
+      __$$BookEntityImplCopyWithImpl<_$BookEntityImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -350,7 +351,7 @@ abstract class _BookEntity extends BookEntity {
       required final Color lightThemeColor,
       required final Color dartThemeColor,
       required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$_BookEntity;
+      required final DateTime updatedAt}) = _$BookEntityImpl;
   const _BookEntity._() : super._();
 
   @override
@@ -365,10 +366,12 @@ abstract class _BookEntity extends BookEntity {
   Color get dartThemeColor;
   @override
   DateTime get createdAt;
+
   @override
   DateTime get updatedAt;
+
   @override
   @JsonKey(ignore: true)
-  _$$_BookEntityCopyWith<_$_BookEntity> get copyWith =>
+  _$$BookEntityImplCopyWith<_$BookEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

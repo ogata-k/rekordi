@@ -144,11 +144,12 @@ class _$FootprintEntityCopyWithImpl<$Res, $Val extends FootprintEntity>
 }
 
 /// @nodoc
-abstract class _$$_FootprintEntityCopyWith<$Res>
+abstract class _$$FootprintEntityImplCopyWith<$Res>
     implements $FootprintEntityCopyWith<$Res> {
-  factory _$$_FootprintEntityCopyWith(
-          _$_FootprintEntity value, $Res Function(_$_FootprintEntity) then) =
-      __$$_FootprintEntityCopyWithImpl<$Res>;
+  factory _$$FootprintEntityImplCopyWith(_$FootprintEntityImpl value,
+          $Res Function(_$FootprintEntityImpl) then) =
+      __$$FootprintEntityImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -162,11 +163,11 @@ abstract class _$$_FootprintEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_FootprintEntityCopyWithImpl<$Res>
-    extends _$FootprintEntityCopyWithImpl<$Res, _$_FootprintEntity>
-    implements _$$_FootprintEntityCopyWith<$Res> {
-  __$$_FootprintEntityCopyWithImpl(
-      _$_FootprintEntity _value, $Res Function(_$_FootprintEntity) _then)
+class __$$FootprintEntityImplCopyWithImpl<$Res>
+    extends _$FootprintEntityCopyWithImpl<$Res, _$FootprintEntityImpl>
+    implements _$$FootprintEntityImplCopyWith<$Res> {
+  __$$FootprintEntityImplCopyWithImpl(
+      _$FootprintEntityImpl _value, $Res Function(_$FootprintEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -180,7 +181,7 @@ class __$$_FootprintEntityCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$_FootprintEntity(
+    return _then(_$FootprintEntityImpl(
       footprintId: null == footprintId
           ? _value.footprintId
           : footprintId // ignore: cast_nullable_to_non_nullable
@@ -215,8 +216,8 @@ class __$$_FootprintEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FootprintEntity extends _FootprintEntity {
-  const _$_FootprintEntity(
+class _$FootprintEntityImpl extends _FootprintEntity {
+  const _$FootprintEntityImpl(
       {required this.footprintId,
       required this.bookId,
       required this.message,
@@ -257,7 +258,7 @@ class _$_FootprintEntity extends _FootprintEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FootprintEntity &&
+            other is _$FootprintEntityImpl &&
             (identical(other.footprintId, footprintId) ||
                 other.footprintId == footprintId) &&
             (identical(other.bookId, bookId) || other.bookId == bookId) &&
@@ -286,8 +287,9 @@ class _$_FootprintEntity extends _FootprintEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FootprintEntityCopyWith<_$_FootprintEntity> get copyWith =>
-      __$$_FootprintEntityCopyWithImpl<_$_FootprintEntity>(this, _$identity);
+  _$$FootprintEntityImplCopyWith<_$FootprintEntityImpl> get copyWith =>
+      __$$FootprintEntityImplCopyWithImpl<_$FootprintEntityImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -364,7 +366,7 @@ abstract class _FootprintEntity extends FootprintEntity {
       required final DateTime recordDate,
       required final List<AttachmentEntity> attachments,
       required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$_FootprintEntity;
+      required final DateTime updatedAt}) = _$FootprintEntityImpl;
   const _FootprintEntity._() : super._();
 
   @override
@@ -379,10 +381,12 @@ abstract class _FootprintEntity extends FootprintEntity {
   List<AttachmentEntity> get attachments;
   @override
   DateTime get createdAt;
+
   @override
   DateTime get updatedAt;
+
   @override
   @JsonKey(ignore: true)
-  _$$_FootprintEntityCopyWith<_$_FootprintEntity> get copyWith =>
+  _$$FootprintEntityImplCopyWith<_$FootprintEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

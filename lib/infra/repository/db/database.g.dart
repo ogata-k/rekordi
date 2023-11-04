@@ -70,10 +70,14 @@ class $BooksTable extends Books with TableInfo<$BooksTable, Book> {
         createdAt,
         updatedAt
       ];
+
   @override
-  String get aliasedName => _alias ?? 'books';
+  String get aliasedName => _alias ?? actualTableName;
+
   @override
-  String get actualTableName => 'books';
+  String get actualTableName => $name;
+  static const String $name = 'books';
+
   @override
   VerificationContext validateIntegrity(Insertable<Book> instance,
       {bool isInserting = false}) {
@@ -360,11 +364,13 @@ class BooksCompanion extends UpdateCompanion<Book> {
     }
     if (lightThemeColor.present) {
       final converter = $BooksTable.$converterlightThemeColor;
+
       map['light_theme_color'] =
           Variable<int>(converter.toSql(lightThemeColor.value));
     }
     if (darkThemeColor.present) {
       final converter = $BooksTable.$converterdarkThemeColor;
+
       map['dark_theme_color'] =
           Variable<int>(converter.toSql(darkThemeColor.value));
     }
@@ -437,13 +443,18 @@ class $FootprintsTable extends Footprints
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
       'updated_at', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
+
   @override
   List<GeneratedColumn> get $columns =>
       [footprintId, bookId, message, recordDate, createdAt, updatedAt];
+
   @override
-  String get aliasedName => _alias ?? 'footprints';
+  String get aliasedName => _alias ?? actualTableName;
+
   @override
-  String get actualTableName => 'footprints';
+  String get actualTableName => $name;
+  static const String $name = 'footprints';
+
   @override
   VerificationContext validateIntegrity(Insertable<Footprint> instance,
       {bool isInserting = false}) {
@@ -775,13 +786,18 @@ class $AttachmentsTable extends Attachments
   late final GeneratedColumn<DateTime> storedAt = GeneratedColumn<DateTime>(
       'stored_at', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
+
   @override
   List<GeneratedColumn> get $columns =>
       [attachmentId, footprintId, filename, filepath, position, storedAt];
+
   @override
-  String get aliasedName => _alias ?? 'attachments';
+  String get aliasedName => _alias ?? actualTableName;
+
   @override
-  String get actualTableName => 'attachments';
+  String get actualTableName => $name;
+  static const String $name = 'attachments';
+
   @override
   VerificationContext validateIntegrity(Insertable<Attachment> instance,
       {bool isInserting = false}) {

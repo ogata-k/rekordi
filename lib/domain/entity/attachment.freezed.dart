@@ -125,11 +125,12 @@ class _$AttachmentEntityCopyWithImpl<$Res, $Val extends AttachmentEntity>
 }
 
 /// @nodoc
-abstract class _$$_AttachmentEntityCopyWith<$Res>
+abstract class _$$AttachmentEntityImplCopyWith<$Res>
     implements $AttachmentEntityCopyWith<$Res> {
-  factory _$$_AttachmentEntityCopyWith(
-          _$_AttachmentEntity value, $Res Function(_$_AttachmentEntity) then) =
-      __$$_AttachmentEntityCopyWithImpl<$Res>;
+  factory _$$AttachmentEntityImplCopyWith(_$AttachmentEntityImpl value,
+          $Res Function(_$AttachmentEntityImpl) then) =
+      __$$AttachmentEntityImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -142,11 +143,11 @@ abstract class _$$_AttachmentEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AttachmentEntityCopyWithImpl<$Res>
-    extends _$AttachmentEntityCopyWithImpl<$Res, _$_AttachmentEntity>
-    implements _$$_AttachmentEntityCopyWith<$Res> {
-  __$$_AttachmentEntityCopyWithImpl(
-      _$_AttachmentEntity _value, $Res Function(_$_AttachmentEntity) _then)
+class __$$AttachmentEntityImplCopyWithImpl<$Res>
+    extends _$AttachmentEntityCopyWithImpl<$Res, _$AttachmentEntityImpl>
+    implements _$$AttachmentEntityImplCopyWith<$Res> {
+  __$$AttachmentEntityImplCopyWithImpl(_$AttachmentEntityImpl _value,
+      $Res Function(_$AttachmentEntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -159,7 +160,7 @@ class __$$_AttachmentEntityCopyWithImpl<$Res>
     Object? position = null,
     Object? storedAt = null,
   }) {
-    return _then(_$_AttachmentEntity(
+    return _then(_$AttachmentEntityImpl(
       attachmentId: null == attachmentId
           ? _value.attachmentId
           : attachmentId // ignore: cast_nullable_to_non_nullable
@@ -190,8 +191,8 @@ class __$$_AttachmentEntityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AttachmentEntity extends _AttachmentEntity {
-  const _$_AttachmentEntity(
+class _$AttachmentEntityImpl extends _AttachmentEntity {
+  const _$AttachmentEntityImpl(
       {required this.attachmentId,
       required this.footprintId,
       required this.filename,
@@ -222,7 +223,7 @@ class _$_AttachmentEntity extends _AttachmentEntity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AttachmentEntity &&
+            other is _$AttachmentEntityImpl &&
             (identical(other.attachmentId, attachmentId) ||
                 other.attachmentId == attachmentId) &&
             (identical(other.footprintId, footprintId) ||
@@ -244,8 +245,9 @@ class _$_AttachmentEntity extends _AttachmentEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AttachmentEntityCopyWith<_$_AttachmentEntity> get copyWith =>
-      __$$_AttachmentEntityCopyWithImpl<_$_AttachmentEntity>(this, _$identity);
+  _$$AttachmentEntityImplCopyWith<_$AttachmentEntityImpl> get copyWith =>
+      __$$AttachmentEntityImplCopyWithImpl<_$AttachmentEntityImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -309,7 +311,7 @@ abstract class _AttachmentEntity extends AttachmentEntity {
       required final String filename,
       required final String filepath,
       required final int position,
-      required final DateTime storedAt}) = _$_AttachmentEntity;
+      required final DateTime storedAt}) = _$AttachmentEntityImpl;
   const _AttachmentEntity._() : super._();
 
   @override
@@ -322,10 +324,12 @@ abstract class _AttachmentEntity extends AttachmentEntity {
   String get filepath;
   @override
   int get position;
+
   @override
   DateTime get storedAt;
+
   @override
   @JsonKey(ignore: true)
-  _$$_AttachmentEntityCopyWith<_$_AttachmentEntity> get copyWith =>
+  _$$AttachmentEntityImplCopyWith<_$AttachmentEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
