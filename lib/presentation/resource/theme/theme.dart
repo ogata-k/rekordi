@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:rekordi/presentation/resource/theme/const/color.dart';
 
 /// Theme builder
 class AppThemeBuilder {
@@ -10,51 +10,27 @@ class AppThemeBuilder {
   ) =>
       AppThemeBuilder._((Brightness brightness) {
         final ColorScheme colorScheme = colorSchemeBuilder(brightness);
-        final Typography typography = Typography.material2021(
-          platform: defaultTargetPlatform,
-          colorScheme: colorScheme,
-        );
-        final TextTheme textTheme = colorScheme.brightness == Brightness.light
-            ? typography.black
-            : typography.white;
-
-        ThemeData theme = ThemeData.from(
+        final ThemeData theme = ThemeData.from(
           useMaterial3: true,
           colorScheme: colorScheme,
-        ).copyWith(
-          // Typographyも設定するために意図的に指定
-          typography: typography,
-          textTheme: textTheme,
-        );
-
-        theme = theme.copyWith(
-          appBarTheme: theme.appBarTheme.copyWith(
-            centerTitle: true,
-            toolbarHeight: 52.0,
-            backgroundColor: theme.useMaterial3
-                ? colorScheme.inversePrimary
-                : theme.appBarTheme.backgroundColor,
-          ),
         );
 
         return theme.copyWith(
+          appBarTheme: theme.appBarTheme.copyWith(
+            toolbarHeight: 48.0,
+          ),
           // 拡張テーマのデフォルト値を指定する
           // 最後に指定してもろもろの設定が適用されたThemeDataを使うようにする
           extensions: AppTheme._generateBaseExtension(theme),
         );
       });
 
-  factory AppThemeBuilder.fromSeed(Color seedColor) =>
-      AppThemeBuilder.fromColorScheme(
-        (Brightness brightness) => ColorScheme.fromSeed(
-          brightness: brightness,
-          seedColor: seedColor,
-        ),
-      );
-
   /// アプリの[Theme]を構築するインスタンスを作成
-  factory AppThemeBuilder.appDefault() =>
-      AppThemeBuilder.fromSeed(const Color(0xFF80D8FF));
+  factory AppThemeBuilder.appDefault() => AppThemeBuilder.fromColorScheme(
+        (Brightness brightness) => brightness == Brightness.light
+            ? ColorConst.lightColorScheme
+            : ColorConst.darkColorScheme,
+      );
 
   /// core builder function
   final ThemeData Function(Brightness brightness) _builder;

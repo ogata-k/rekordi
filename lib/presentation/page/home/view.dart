@@ -28,8 +28,7 @@ const int _initialCount = 0;
 
 /// ホーム画面となるページ
 class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
-  const HomePage({Key? key, required HomePageExtra extra})
-      : super(key: key, extra: extra);
+  const HomePage({super.key, required super.extra});
 
   @override
   HomePageController createController(
@@ -61,79 +60,80 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
         ],
         title: Text(appL10n.appName),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          // 横幅いっぱいを保つためにあらかじめ横幅をMAXに指定しておく
-          const SizedBox(width: PaddingConst.auto),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            // 横幅いっぱいを保つためにあらかじめ横幅をMAXに指定しておく
+            const SizedBox(width: PaddingConst.auto),
 
-          const SizedBox(height: PaddingConst.middle),
-          const Text(
-            ':MVC VERSION:',
-          ),
-          const Text(
-            'You have pushed the button this many times:',
-          ),
-          ListeningWidget(
-            listening: controller.model,
-            builder: (context, listening, child) {
-              return Text(
-                '${listening.currentCount}',
-                style: appTheme.basic.textTheme.headlineMedium,
-              );
-            },
-          ),
-          const SizedBox(height: PaddingConst.large),
-          // @todo Consumerを排除したい。この実装ならEventBusに流して、流されたことを検知したら更新するでもうまくいくはず。
-          Consumer(
-            builder: (BuildContext context, WidgetRef ref, Widget? child) {
-              final ThemeMode appThemeMode =
-                  ref.watch(appThemeModeStateProvider);
+            const SizedBox(height: PaddingConst.middle),
+            const Text(
+              ':MVC VERSION:',
+            ),
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            ListeningWidget(
+              listening: controller.model,
+              builder: (context, listening, child) {
+                return Text(
+                  '${listening.currentCount}',
+                  style: appTheme.basic.textTheme.headlineMedium,
+                );
+              },
+            ),
+            const SizedBox(height: PaddingConst.large),
+            // @todo Consumerを排除したい。この実装ならEventBusに流して、流されたことを検知したら更新するでもうまくいくはず。
+            Consumer(
+              builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                final ThemeMode appThemeMode =
+                    ref.watch(appThemeModeStateProvider);
 
-              return DropdownButton<ThemeMode>(
-                value: appThemeMode,
-                items: [
-                  DropdownMenuItem<ThemeMode>(
-                    value: ThemeMode.light,
-                    child: Text(ThemeMode.light.toString()),
-                  ),
-                  DropdownMenuItem<ThemeMode>(
-                    value: ThemeMode.dark,
-                    child: Text(ThemeMode.dark.toString()),
-                  ),
-                  DropdownMenuItem<ThemeMode>(
-                    value: ThemeMode.system,
-                    child: Text(ThemeMode.system.toString()),
-                  )
-                ],
-                onChanged: (ThemeMode? value) {
-                  ref
-                      .read(appThemeModeStateProvider.notifier)
-                      .setThemeMode(value);
-                },
-              );
-            },
-          ),
-          OutlinedButton(
-            onPressed: () {
-              router().push(
-                context,
-                ErrorPageExtra(error: Exception('Dummy Error from Home')),
-              );
-            },
-            child: const Text('Open This Home Page'),
-          ),
-          const SizedBox(height: PaddingConst.middle),
-        ],
-      ),
-      floatingActionButton: ElevatedButton(
-        onPressed: controller.incrementCount,
-        child: Text(
-          '+1',
-          style: appTheme.basic.textTheme.labelLarge,
+                return DropdownButton<ThemeMode>(
+                  value: appThemeMode,
+                  items: [
+                    DropdownMenuItem<ThemeMode>(
+                      value: ThemeMode.light,
+                      child: Text(ThemeMode.light.toString()),
+                    ),
+                    DropdownMenuItem<ThemeMode>(
+                      value: ThemeMode.dark,
+                      child: Text(ThemeMode.dark.toString()),
+                    ),
+                    DropdownMenuItem<ThemeMode>(
+                      value: ThemeMode.system,
+                      child: Text(ThemeMode.system.toString()),
+                    ),
+                  ],
+                  onChanged: (ThemeMode? value) {
+                    ref
+                        .read(appThemeModeStateProvider.notifier)
+                        .setThemeMode(value);
+                  },
+                );
+              },
+            ),
+            OutlinedButton(
+              onPressed: () {
+                router().push(
+                  context,
+                  ErrorPageExtra(error: Exception('Dummy Error from Home')),
+                );
+              },
+              child: const Text('Open This Home Page'),
+            ),
+            // dummy space
+            const SizedBox(height: 1000),
+            const Text('End: Home Page'),
+          ],
         ),
+      ),
+      floatingActionButton: FilledButton(
+        onPressed: controller.incrementCount,
+        child: const Text('+1'),
       ),
     );
   }
