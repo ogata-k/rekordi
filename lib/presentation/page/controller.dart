@@ -3,7 +3,8 @@ import 'package:state_notifier/state_notifier.dart';
 
 /// ページのコントローラー
 abstract class IPageController<Model> extends StateNotifier<Model> {
-  IPageController(super._state);
+  // ignore: use_super_parameters
+  IPageController(Model model) : super(model);
 
   /// 自分の実行したアクションに関してほかのControllerにイベントを通知する。
   /// また、ほかのControllerで通知されるイベントを監視する。
