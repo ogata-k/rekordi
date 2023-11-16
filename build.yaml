@@ -10,6 +10,7 @@ targets:
       freezed:
         generate_for:
           - lib/domain/entity/*.dart
+          - lib/presentation/page/**/model.dart
         options:
           # Disable the generation of copyWith/== for the entire project
           copy_with: true

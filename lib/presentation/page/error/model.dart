@@ -1,4 +1,13 @@
-import 'package:flutter/widgets.dart';
-import 'package:rekordi/presentation/page/model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ErrorPageModel extends IPageModel with ChangeNotifier {}
+part 'model.freezed.dart';
+
+part 'model.g.dart';
+
+@freezed
+class ErrorPageModel with _$ErrorPageModel {
+  const factory ErrorPageModel() = _ErrorPageModel;
+
+  factory ErrorPageModel.fromJson(Map<String, dynamic> json) =>
+      _$ErrorPageModelFromJson(json);
+}

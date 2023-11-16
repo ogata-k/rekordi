@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
+import 'package:provider/provider.dart';
 import 'package:rekordi/presentation/page/controller.dart';
-import 'package:rekordi/presentation/page/model.dart';
+
+export 'package:provider/provider.dart' show Consumer, Selector;
 
 /// ページのエクストラデータ
 abstract class IPageExtra {
@@ -11,90 +14,30 @@ abstract class IPageExtra {
 }
 
 /// ページの基本となる抽象クラス
-abstract class IPage<E extends IPageExtra, M extends IPageModel,
-    C extends IPageController<M>> extends StatelessWidget {
-  const IPage({Key? key, required this.extra}) : super(key: key);
+abstract class IPage<Extra extends IPageExtra, Model,
+    Controller extends IPageController<Model>> extends StatelessWidget {
+  const IPage({super.key, required this.extra});
 
-  final E extra;
+  final Extra extra;
 
   /// コントローラーの初期化
-  C createController(E extra);
+  Controller createController(BuildContext context);
 
-  /// アプリのライフサイクルハンドラ
-  void didChangeAppLifecycleState(AppLifecycleState state);
+  /// buildPageに渡すControllerに依存しないWidget
+  Widget? buildChild(BuildContext context) => null;
 
   /// ページの描画
-  Widget buildPage(BuildContext context, C controller);
+  Widget buildPage(BuildContext context, Widget? child);
+
+  /// buildPage内で利用できるControllerのgetter
+  Controller getController(BuildContext context) => context.read<Controller>();
 
   @override
   Widget build(BuildContext context) {
-    return _HandlePageControllerWidget<E, M, C>(
-      extra: this.extra,
+    return StateNotifierProvider<Controller, Model>(
       create: createController,
-      didChangeAppLifecycleState: didChangeAppLifecycleState,
-      build: buildPage,
+      builder: buildPage,
+      child: buildChild(context),
     );
-  }
-}
-
-/// PageControllerを扱うためのWidget
-class _HandlePageControllerWidget<E extends IPageExtra, M extends IPageModel,
-    C extends IPageController<M>> extends StatefulWidget {
-  const _HandlePageControllerWidget({
-    Key? key,
-    required this.extra,
-    required this.create,
-    required this.didChangeAppLifecycleState,
-    required this.build,
-  }) : super(key: key);
-
-  final E extra;
-
-  /// ページのcontextを使う
-  final C Function(E extra) create;
-
-  /// ページのcontextを使う
-  final Widget Function(BuildContext context, C state) build;
-
-  /// アプリのライフサイクルハンドラ
-  final void Function(AppLifecycleState state) didChangeAppLifecycleState;
-
-  @override
-  _HandlePageControllerWidgetState<E, M, C> createState() =>
-      _HandlePageControllerWidgetState<E, M, C>();
-}
-
-class _HandlePageControllerWidgetState<E extends IPageExtra,
-        M extends IPageModel, C extends IPageController<M>>
-    extends State<_HandlePageControllerWidget<E, M, C>>
-    with WidgetsBindingObserver {
-  late C state;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    state = widget.create(widget.extra);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      state.start(context);
-    });
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    widget.didChangeAppLifecycleState(state);
-  }
-
-  @override
-  void dispose() {
-    state.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.build(context, state);
   }
 }

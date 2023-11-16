@@ -1,15 +1,13 @@
-import 'package:flutter/widgets.dart';
-import 'package:rekordi/presentation/page/model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class HomePageModel extends IPageModel with ChangeNotifier {
-  HomePageModel(int initialCount) : _count = initialCount;
+part 'model.freezed.dart';
 
-  int _count;
+part 'model.g.dart';
 
-  int get currentCount => _count;
+@freezed
+class HomePageModel with _$HomePageModel {
+  const factory HomePageModel({required int count}) = _HomePageModel;
 
-  void increment() {
-    _count += 1;
-    notifyListeners();
-  }
+  factory HomePageModel.fromJson(Map<String, dynamic> json) =>
+      _$HomePageModelFromJson(json);
 }

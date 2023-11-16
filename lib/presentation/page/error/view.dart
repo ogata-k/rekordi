@@ -21,16 +21,15 @@ class ErrorPageExtra extends IPageExtra {
 /// エラー画面となるページ
 class ErrorPage
     extends IPage<ErrorPageExtra, ErrorPageModel, ErrorPageController> {
-  const ErrorPage({Key? key, required ErrorPageExtra extra})
-      : super(key: key, extra: extra);
+  const ErrorPage({super.key, required super.extra});
 
   @override
-  ErrorPageController createController(ErrorPageExtra extra) {
-    return ErrorPageController(ErrorPageModel());
+  ErrorPageController createController(BuildContext context) {
+    return ErrorPageController(const ErrorPageModel());
   }
 
   @override
-  Widget buildPage(BuildContext context, ErrorPageController controller) {
+  Widget? buildChild(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -53,7 +52,7 @@ class ErrorPage
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // none
+  Widget buildPage(BuildContext context, Widget? child) {
+    return child!;
   }
 }

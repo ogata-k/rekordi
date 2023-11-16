@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekordi/domain/component/router.dart';
-import 'package:rekordi/presentation/model/app_theme_mode.dart';
 import 'package:rekordi/presentation/page/error/view.dart';
 import 'package:rekordi/presentation/page/home/controller.dart';
 import 'package:rekordi/presentation/page/home/model.dart';
@@ -9,7 +7,6 @@ import 'package:rekordi/presentation/page/view.dart';
 import 'package:rekordi/presentation/resource/l10n/l10n.dart';
 import 'package:rekordi/presentation/resource/theme/const/padding.dart';
 import 'package:rekordi/presentation/resource/theme/theme.dart';
-import 'package:rekordi/presentation/widget/listening.dart';
 
 // @todo 実際のページ
 
@@ -31,15 +28,13 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
   const HomePage({super.key, required super.extra});
 
   @override
-  HomePageController createController(
-    HomePageExtra extra,
-  ) {
-    final model = HomePageModel(_initialCount);
+  HomePageController createController(BuildContext context) {
+    const model = HomePageModel(count: _initialCount);
     return HomePageController(model);
   }
 
   @override
-  Widget buildPage(BuildContext context, HomePageController controller) {
+  Widget buildPage(BuildContext context, Widget? child) {
     final appTheme = AppTheme.of(context);
     final appL10n = AppL10n.of(context);
 
@@ -76,46 +71,16 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
             const Text(
               'You have pushed the button this many times:',
             ),
-            ListeningWidget(
-              listening: controller.model,
-              builder: (context, listening, child) {
+            Consumer<HomePageModel>(
+              builder: (context, model, child) {
                 return Text(
-                  '${listening.currentCount}',
+                  '${model.count}',
                   style: appTheme.basic.textTheme.headlineMedium,
                 );
               },
             ),
             const SizedBox(height: PaddingConst.large),
-            // @todo Consumerを排除したい。この実装ならEventBusに流して、流されたことを検知したら更新するでもうまくいくはず。
-            Consumer(
-              builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                final ThemeMode appThemeMode =
-                    ref.watch(appThemeModeStateProvider);
-
-                return DropdownButton<ThemeMode>(
-                  value: appThemeMode,
-                  items: [
-                    DropdownMenuItem<ThemeMode>(
-                      value: ThemeMode.light,
-                      child: Text(ThemeMode.light.toString()),
-                    ),
-                    DropdownMenuItem<ThemeMode>(
-                      value: ThemeMode.dark,
-                      child: Text(ThemeMode.dark.toString()),
-                    ),
-                    DropdownMenuItem<ThemeMode>(
-                      value: ThemeMode.system,
-                      child: Text(ThemeMode.system.toString()),
-                    ),
-                  ],
-                  onChanged: (ThemeMode? value) {
-                    ref
-                        .read(appThemeModeStateProvider.notifier)
-                        .setThemeMode(value);
-                  },
-                );
-              },
-            ),
+            // TODO ThemeMode切り替えボタン
             OutlinedButton(
               onPressed: () {
                 router().push(
@@ -132,14 +97,9 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
         ),
       ),
       floatingActionButton: FilledButton(
-        onPressed: controller.incrementCount,
+        onPressed: getController(context).increment,
         child: const Text('+1'),
       ),
     );
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // none
   }
 }
