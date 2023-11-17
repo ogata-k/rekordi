@@ -25,6 +25,7 @@ class InitializeLocatorUsecase extends BaseUsecase {
             ..initialize(
               kReleaseMode ? LogLevel.info : LogLevel.fine,
               true,
+              (level, message) {},
             );
         },
       )

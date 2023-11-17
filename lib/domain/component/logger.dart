@@ -11,9 +11,10 @@ class AppLogger {
   final ILogger _instance;
 
   /// ロガーの初期化
-  // ignore: avoid_positional_boolean_parameters
-  void initialize(LogLevel level, bool useLineInfo) =>
-      _instance.initialize(level, useLineInfo);
+  // ignore: avoid_positional_boolean_parameters, lines_longer_than_80_chars
+  void initialize(LogLevel level, bool useLineInfo,
+          void Function(LogLevel level, String message) callback) =>
+      _instance.initialize(level, useLineInfo, callback);
 
   /// [LogLevel.finest]のログ
   void finest(

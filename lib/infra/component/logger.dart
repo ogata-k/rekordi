@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart' as lg;
 import 'package:rekordi/domain/component/interface/logger.dart' as dc;
+import 'package:rekordi/domain/component/interface/logger.dart';
 import 'package:rekordi/util/error/unreachable_error.dart';
 import 'package:stack_trace/stack_trace.dart' show Frame, Trace;
 
@@ -73,7 +74,11 @@ class LoggingLogger extends dc.ILogger {
   }
 
   @override
-  void initialize(dc.LogLevel level, bool useLineInfo) {
+  void initialize(
+    dc.LogLevel level,
+    bool useLineInfo,
+    void Function(LogLevel level, String message) callback,
+  ) {
     lg.Logger.root.level = _toLoggingLevel(level);
     lg.Logger.root.onRecord.listen((lg.LogRecord rec) {
       String message =
@@ -97,7 +102,9 @@ class LoggingLogger extends dc.ILogger {
           message += '\n${rec.stackTrace}';
         }
       }
+
       _printLog(message);
+      callback(level, message);
     });
   }
 
