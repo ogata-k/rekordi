@@ -11,9 +11,11 @@ import 'package:rekordi/presentation/resource/theme/theme.dart';
 // @todo 実際のページ
 
 class HomePageExtra extends IPageExtra {
-  const HomePageExtra() : super();
+  const HomePageExtra({required this.pageTitle}) : super();
 
-  factory HomePageExtra.defaultExtra() => const HomePageExtra();
+  factory HomePageExtra.defaultExtra() => const HomePageExtra(pageTitle: null);
+
+  final String? pageTitle;
 
   static const routingPath = '/home';
 
@@ -53,7 +55,7 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
             },
           ),
         ],
-        title: Text(appL10n.appName),
+        title: Text(extra.pageTitle ?? appL10n.appName),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -88,7 +90,31 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
                   ErrorPageExtra(error: Exception('Dummy Error from Home')),
                 );
               },
-              child: const Text('Open This Home Page'),
+              child: const Text('Open Error Page'),
+            ),
+            const SizedBox(height: 10),
+            OutlinedButton(
+              onPressed: () {
+                router().push(context, const HomePageExtra(pageTitle: 'PUSH'));
+              },
+              child: const Text('push'),
+            ),
+            const SizedBox(height: 10),
+            OutlinedButton(
+              onPressed: () {
+                router().go(context, const HomePageExtra(pageTitle: 'GO'));
+              },
+              child: const Text('go'),
+            ),
+            const SizedBox(height: 10),
+            OutlinedButton(
+              onPressed: () {
+                router().pushReplacement(
+                  context,
+                  const HomePageExtra(pageTitle: 'REPLACEMENT'),
+                );
+              },
+              child: const Text('replacement'),
             ),
             // dummy space
             const SizedBox(height: 1000),

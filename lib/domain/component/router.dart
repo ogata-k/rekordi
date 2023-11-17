@@ -20,20 +20,20 @@ class AppRouter {
       _instance.push(context, extra.absolutePagePath, extra);
 
   /// 指定された[extra]を解析して得られたパスをもとに遷移する。
-  /// 遷移元を置き換えながら遷移する。
-  Future<T?> pushWithReplace<Extra extends IPageExtra, T extends Object?>(
+  /// 画面のスタックを全部削除して遷移する。
+  void go<Extra extends IPageExtra>(
     BuildContext context,
     Extra extra,
   ) =>
-      _instance.pushWithReplace(context, extra.absolutePagePath, extra);
+      _instance.go(context, extra.absolutePagePath, extra);
 
   /// 指定された[extra]を解析して得られたパスをもとに遷移する。
-  /// 画面のスタックを全部削除して遷移する。
-  Future<T?> pushWithClearStack<Extra extends IPageExtra, T extends Object?>(
+  /// 遷移元を置き換えながら遷移する。
+  Future<T?> pushReplacement<Extra extends IPageExtra, T extends Object?>(
     BuildContext context,
     Extra extra,
   ) =>
-      _instance.pushWithClearStack(context, extra.absolutePagePath, extra);
+      _instance.pushReplacement(context, extra.absolutePagePath, extra);
 
   /// 画面が取り除くことができるならtrue
   bool canPop(BuildContext context) => _instance.canPop(context);
@@ -41,17 +41,6 @@ class AppRouter {
   /// 画面を取り除く
   void pop<T extends Object>(BuildContext context, [T? result]) =>
       _instance.pop(context, result);
-
-  /// 指定された[pathList]の中のパスになるまで画面を取り除く
-  void popUntilThePath(BuildContext context, List<String> pathList) =>
-      _instance.popUntilThePath(context, pathList);
-
-  /// 指定された[nameList]の中のルーティング名になるまで画面を取り除く
-  void popUntilTheName(BuildContext context, List<String> nameList) =>
-      _instance.popUntilTheName(context, nameList);
-
-  /// 最初の画面まで取り除く
-  void popUntilFirst(BuildContext context) => _instance.popUntilFirst(context);
 
   /// 画面一番上のダイアログを取り除く
   void closeDialog<T extends Object>(BuildContext context, [T? result]) =>
