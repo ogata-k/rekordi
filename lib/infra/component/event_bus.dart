@@ -4,7 +4,8 @@ import 'package:event_bus/event_bus.dart' as peb;
 import 'package:rekordi/domain/component/interface/event_bus.dart';
 
 class EventBus extends IEventBus {
-  EventBus() : _bus = peb.EventBus(sync: true);
+  // ignore: avoid_positional_boolean_parameters
+  EventBus(bool sync) : _bus = peb.EventBus(sync: sync);
 
   final peb.EventBus _bus;
 

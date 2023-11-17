@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:rekordi/app.dart';
-import 'package:rekordi/presentation/usecase/for_app/initialize_app.dart';
+import 'package:rekordi/presentation/usecase/init_app/initialize_app_async.dart';
+import 'package:rekordi/presentation/usecase/init_app/initialize_locator.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await InitializeAppUsecase().call(minimize: false);
+
+  InitializeLocatorUsecase().call();
+  await InitializeAppAsyncUsecase().call();
 
   runApp(const RekordiApp());
 }
