@@ -81,8 +81,7 @@ class LoggingLogger extends dc.ILogger {
           '[${rec.loggerName}: ${rec.sequenceNumber}]  ${rec.time}  ${_toComponentLogLevel(rec.level).name.toUpperCase()}  ${rec.message}';
 
       if (useLineInfo) {
-        final Frame currentLineInfo =
-            Trace.current(rec.loggerName == _loggerName ? 11 : 9).frames.first;
+        final Frame currentLineInfo = Trace.current(11).frames.first;
         message +=
             // ignore: lines_longer_than_80_chars
             ' (${currentLineInfo.uri}:${currentLineInfo.line}:${currentLineInfo.column})';
