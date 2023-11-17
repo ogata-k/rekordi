@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart' show ThemeMode;
 import 'package:rekordi/domain/repository/file/preferences.dart';
-import 'package:rekordi/presentation/usecase/base_usecase.dart';
+import 'package:rekordi/presentation/usecase/usecase.dart';
 
 /// アプリのテーマがダークテーマかライトテーマかを更新する。
-class UpdateThemeModeUsecase extends BaseUsecase {
-  UpdateThemeModeUsecase(this.preferences);
+class UpdateThemeModeAsyncUsecase extends IUsecase {
+  UpdateThemeModeAsyncUsecase(this.preferences);
 
   final PreferencesRepository preferences;
 

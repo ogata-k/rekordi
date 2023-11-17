@@ -8,10 +8,10 @@ import 'package:rekordi/domain/repository/file/preferences.dart';
 import 'package:rekordi/infra/component/locator.dart';
 import 'package:rekordi/infra/repository/db/database.dart';
 import 'package:rekordi/infra/repository/file/preferences.dart';
-import 'package:rekordi/presentation/usecase/base_usecase.dart';
+import 'package:rekordi/presentation/usecase/usecase.dart';
 
 /// アプリを初期化するためのユースケース
-class InitializeAppAsyncUsecase extends BaseUsecase {
+class InitializeAppAsyncUsecase extends IUsecase {
   Future<void> call() async {
     AppLocator.initialize(GetItLocator());
 
