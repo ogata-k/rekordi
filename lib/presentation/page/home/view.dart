@@ -75,7 +75,7 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
               builder: (context, model, child) {
                 return Text(
                   '${model.count}',
-                  style: appTheme.basic.textTheme.headlineMedium,
+                  style: appTheme.data.textTheme.headlineMedium,
                 );
               },
             ),

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:rekordi/presentation/resource/theme/const/color.dart';
 
+typedef ExtensionsBuilder = List<ThemeExtension<dynamic>> Function(
+  ThemeData theme,
+  Brightness brightness,
+);
+
 /// Theme builder
 class AppThemeBuilder {
   const AppThemeBuilder._(this._builder);
 
   factory AppThemeBuilder.fromColorScheme(
     ColorScheme Function(Brightness brightness) colorSchemeBuilder,
+    ExtensionsBuilder buildExtensions,
   ) =>
       AppThemeBuilder._((Brightness brightness) {
         final ColorScheme colorScheme = colorSchemeBuilder(brightness);
@@ -21,7 +27,7 @@ class AppThemeBuilder {
           ),
           // 拡張テーマのデフォルト値を指定する
           // 最後に指定してもろもろの設定が適用されたThemeDataを使うようにする
-          extensions: AppTheme._generateBaseExtension(theme),
+          extensions: buildExtensions(theme, brightness),
         );
       });
 
@@ -30,6 +36,7 @@ class AppThemeBuilder {
         (Brightness brightness) => brightness == Brightness.light
             ? ColorConst.lightColorScheme
             : ColorConst.darkColorScheme,
+        (ThemeData theme, Brightness brightness) => <ThemeExtension<dynamic>>[],
       );
 
   /// core builder function
@@ -45,7 +52,6 @@ class AppThemeBuilder {
   ThemeData buildDark() => build(Brightness.dark);
 }
 
-/// アプリテーマ
 class AppTheme {
   factory AppTheme.of(BuildContext context) => AppTheme._(Theme.of(context));
 
@@ -53,19 +59,22 @@ class AppTheme {
 
   final ThemeData _theme;
 
-  ThemeData get basic => _theme;
+  ThemeData get data => _theme;
 
-  /// ベースとなるThemeExtensionの一覧を生成
-  static List<ThemeExtension<dynamic>> _generateBaseExtension(
-    ThemeData theme,
-  ) =>
-      [
-        // @todo このメソッドで指定されなかった物はこのクラス内で定義されたフォールバックを利用するようにする
-      ];
+  T extension<T extends ThemeExtension<T>>() => _theme.extension<T>()!;
+
+  T? extensionOrNull<T extends ThemeExtension<T>>() => _theme.extension<T>();
+
+  T extensionOr<T extends ThemeExtension<T>>(T fallback) =>
+      _theme.extension<T>() ?? fallback;
+
+  T extensionOrElse<T extends ThemeExtension<T>>(T Function() fallbackFn) =>
+      _theme.extension<T>() ?? fallbackFn();
 
   /// ThemeExtensionの一覧のコピー用ヘルパ
-  ThemeData copyExtensionsWith() => _theme.copyWith(
-        // @todo 引数のデータをもとにコピーするようにする
-        extensions: _theme.extensions.values,
-      );
+  ThemeData overrideExtension<T extends ThemeExtension<T>>(T extension) {
+    final extensions = {..._theme.extensions};
+    extensions[T] = extension;
+    return _theme.copyWith(extensions: extensions.values);
+  }
 }
