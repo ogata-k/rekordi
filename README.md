@@ -45,13 +45,13 @@ samples, guidance on mobile development, and a full API reference.
     - presentation : UIに関するフォルダ。
         - event : コントローラーが監視しているリスナーにわたるイベント
         - model : presentationで共通して利用するモデル。
-        - page : アプリに表示する画面。各画面ごとにフォルダを切って、その中でmodel, view, controllerを定義する。
+        - page : アプリに表示する画面。各画面ごとにフォルダを切って、その中でmodel, view,
+          controllerを定義する。appフォルダはルートとなるアプリWidgetが入っている。
         - resource : 言語リソースやテーマリソースの配置場所
         - usecase : page/modelが扱う各１機能のこと。
         - widget : UI部品
         - routing.dart : pageの画面遷移の定義
     - util : domain, infra, presentation全てで利用するようなヘルパーを定義するフォルダ。
-    - app.dart : アプリWidget本体
     - main.dart : エントリーポイントのmainファイル。いわゆるDirty Mainで、各種DIや初期化を実施する。DIは引数形式のDIで依存性を注入する。
 - test : このプロジェクトのテストをまとめたフォルダ。
 - analysis_options : このプロジェクトで使用するFlutterのリント設定を記述したファイル

@@ -63,3 +63,5 @@ extension PairT1T2LiftFutureExt<T1, T2> on Pair<Future<T1>, Future<T2>> {
 
 typedef WithVoidCallback<T> = Pair<T, void Function()>;
 typedef WithAsyncVoidCallback<T> = Pair<T, Future<void> Function()>;
+typedef WithCallback<T, Arg> = Pair<T, void Function(Arg arg)>;
+typedef WithAsyncCallback<T, Arg> = Pair<T, Future<void> Function(Arg arg)>;

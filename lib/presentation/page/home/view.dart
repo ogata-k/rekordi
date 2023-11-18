@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rekordi/domain/component/locator.dart';
+import 'package:rekordi/domain/component/logger.dart';
 import 'package:rekordi/domain/component/router.dart';
+import 'package:rekordi/domain/repository/file/preferences.dart';
 import 'package:rekordi/presentation/page/error/view.dart';
 import 'package:rekordi/presentation/page/home/controller.dart';
 import 'package:rekordi/presentation/page/home/model.dart';
@@ -7,6 +10,7 @@ import 'package:rekordi/presentation/page/view.dart';
 import 'package:rekordi/presentation/resource/l10n/l10n.dart';
 import 'package:rekordi/presentation/resource/theme/const/padding.dart';
 import 'package:rekordi/presentation/resource/theme/theme.dart';
+import 'package:rekordi/presentation/usecase/theme/get_theme_mode.dart';
 
 // @todo 実際のページ
 
@@ -23,16 +27,24 @@ class HomePageExtra extends IPageExtra {
   String get absolutePagePath => '/home';
 }
 
-const int _initialCount = 0;
-
 /// ホーム画面となるページ
 class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
   const HomePage({super.key, required super.extra});
 
   @override
   HomePageController createController(BuildContext context) {
-    const model = HomePageModel(count: _initialCount);
-    return HomePageController(model);
+    final PreferencesRepository preferences =
+        locator().get<PreferencesRepository>();
+
+    final model = HomePageModel(
+      count: 0,
+      themeMode: GetThemeModeUsecase(preferences).call(),
+    );
+
+    return HomePageController(
+      model,
+      preferences: preferences,
+    );
   }
 
   @override
@@ -82,7 +94,35 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
               },
             ),
             const SizedBox(height: PaddingConst.large),
-            // TODO ThemeMode切り替えボタン
+            Consumer<HomePageModel>(
+              builder:
+                  (BuildContext context, HomePageModel value, Widget? child) {
+                return DropdownButton<ThemeMode>(
+                  value: value.themeMode,
+                  items: [
+                    DropdownMenuItem<ThemeMode>(
+                      value: ThemeMode.light,
+                      child: Text(ThemeMode.light.toString()),
+                    ),
+                    DropdownMenuItem<ThemeMode>(
+                      value: ThemeMode.dark,
+                      child: Text(ThemeMode.dark.toString()),
+                    ),
+                    DropdownMenuItem<ThemeMode>(
+                      value: ThemeMode.system,
+                      child: Text(ThemeMode.system.toString()),
+                    ),
+                  ],
+                  onChanged: (ThemeMode? value) {
+                    getController(context)
+                        .updateThemeMode(value)
+                        .catchError((dynamic e, StackTrace stack) {
+                      logger().info(e.toString(), {}, e, stack);
+                    });
+                  },
+                );
+              },
+            ),
             OutlinedButton(
               onPressed: () {
                 router().push(
