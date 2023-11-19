@@ -9,5 +9,5 @@ Future<void> main() async {
   InitializeLocatorUsecase().call();
   await InitializeAppAsyncUsecase().call();
 
-  runApp(RekordiApp(extra: RekordiAppExtra()));
+  runApp(const RekordiApp());
 }

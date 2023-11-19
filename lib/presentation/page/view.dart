@@ -5,20 +5,10 @@ import 'package:rekordi/presentation/page/controller.dart';
 
 export 'package:provider/provider.dart' show Consumer, Selector;
 
-/// ページのエクストラデータ
-abstract class IPageExtra {
-  const IPageExtra();
-
-  /// 絶対パス。呼び出し先を指定するときに利用する。
-  String get absolutePagePath;
-}
-
 /// ページの基本となる抽象クラス
-abstract class IPage<Extra extends IPageExtra, Model,
-    Controller extends IPageController<Model>> extends StatelessWidget {
-  const IPage({super.key, required this.extra});
-
-  final Extra extra;
+abstract class IPage<Model, Controller extends IPageController<Model>>
+    extends StatelessWidget {
+  const IPage({super.key});
 
   /// コントローラーの初期化
   Controller createController(BuildContext context);

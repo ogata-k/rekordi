@@ -1,10 +1,22 @@
 import 'package:flutter/widgets.dart';
 import 'package:rekordi/domain/component/interface/router.dart' as cr;
 import 'package:rekordi/domain/component/locator.dart';
-import 'package:rekordi/presentation/page/view.dart';
 
 /// 簡単に扱うためのヘルパ
 AppRouter router() => locator().get<AppRouter>();
+
+/// ルーティングで遷移するときに利用するパラメーター
+class RouteSetting {
+  RouteSetting({
+    required this.name,
+    this.pathParameters = const <String, String>{},
+    this.queryParameters = const <String, dynamic>{},
+  });
+
+  final String name;
+  final Map<String, String> pathParameters;
+  final Map<String, dynamic> queryParameters;
+}
 
 /// アプリのルーティングを担うルーター
 class AppRouter {
@@ -12,28 +24,43 @@ class AppRouter {
 
   final cr.IRouter _instance;
 
-  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
-  Future<T?> push<Extra extends IPageExtra, T extends Object?>(
+  /// 指定された[setting]を解析して得られたパスをもとに遷移する。
+  Future<T?> push<T extends Object?>(
     BuildContext context,
-    Extra extra,
+    RouteSetting setting,
   ) =>
-      _instance.push(context, extra.absolutePagePath, extra);
+      _instance.push(
+        context,
+        setting.name,
+        pathParameters: setting.pathParameters,
+        queryParameters: setting.queryParameters,
+      );
 
-  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
+  /// 指定された[setting]を解析して得られたパスをもとに遷移する。
   /// 画面のスタックを全部削除して遷移する。
-  void go<Extra extends IPageExtra>(
+  void go(
     BuildContext context,
-    Extra extra,
+    RouteSetting setting,
   ) =>
-      _instance.go(context, extra.absolutePagePath, extra);
+      _instance.go(
+        context,
+        setting.name,
+        pathParameters: setting.pathParameters,
+        queryParameters: setting.queryParameters,
+      );
 
-  /// 指定された[extra]を解析して得られたパスをもとに遷移する。
+  /// 指定された[setting]を解析して得られたパスをもとに遷移する。
   /// 遷移元を置き換えながら遷移する。
-  Future<T?> pushReplacement<Extra extends IPageExtra, T extends Object?>(
+  Future<T?> pushReplacement<T extends Object?>(
     BuildContext context,
-    Extra extra,
+    RouteSetting setting,
   ) =>
-      _instance.pushReplacement(context, extra.absolutePagePath, extra);
+      _instance.pushReplacement(
+        context,
+        setting.name,
+        pathParameters: setting.pathParameters,
+        queryParameters: setting.queryParameters,
+      );
 
   /// 画面が取り除くことができるならtrue
   bool canPop(BuildContext context) => _instance.canPop(context);

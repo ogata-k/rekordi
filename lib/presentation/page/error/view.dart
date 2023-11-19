@@ -6,22 +6,14 @@ import 'package:rekordi/presentation/page/view.dart';
 
 // @todo 実際のエラーページ
 
-class ErrorPageExtra extends IPageExtra {
-  ErrorPageExtra({required this.error});
-
-  final Exception? error;
-
-  static const routingPath = '/error';
-
-  @override
-  // not use
-  String get absolutePagePath => '/error';
-}
-
 /// エラー画面となるページ
-class ErrorPage
-    extends IPage<ErrorPageExtra, ErrorPageModel, ErrorPageController> {
-  const ErrorPage({super.key, required super.extra});
+class ErrorPage extends IPage<ErrorPageModel, ErrorPageController> {
+  const ErrorPage({
+    super.key,
+    required this.error,
+  });
+
+  final String? error;
 
   @override
   ErrorPageController createController(BuildContext context) {
@@ -46,7 +38,7 @@ class ErrorPage
         ],
       ),
       body: Center(
-        child: Text(extra.error?.toString() ?? 'UNKNOWN'),
+        child: Text(error ?? 'UNKNOWN'),
       ),
     );
   }

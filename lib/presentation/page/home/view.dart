@@ -3,9 +3,10 @@ import 'package:rekordi/domain/component/locator.dart';
 import 'package:rekordi/domain/component/logger.dart';
 import 'package:rekordi/domain/component/router.dart';
 import 'package:rekordi/domain/repository/file/preferences.dart';
-import 'package:rekordi/presentation/page/error/view.dart';
+import 'package:rekordi/presentation/page/error/route_setting.dart';
 import 'package:rekordi/presentation/page/home/controller.dart';
 import 'package:rekordi/presentation/page/home/model.dart';
+import 'package:rekordi/presentation/page/home/route_setting.dart';
 import 'package:rekordi/presentation/page/view.dart';
 import 'package:rekordi/presentation/resource/l10n/l10n.dart';
 import 'package:rekordi/presentation/resource/theme/const/padding.dart';
@@ -14,22 +15,14 @@ import 'package:rekordi/presentation/usecase/theme/get_theme_mode.dart';
 
 // @todo 実際のページ
 
-class HomePageExtra extends IPageExtra {
-  const HomePageExtra({required this.pageTitle}) : super();
-
-  factory HomePageExtra.defaultExtra() => const HomePageExtra(pageTitle: null);
+/// ホーム画面となるページ
+class HomePage extends IPage<HomePageModel, HomePageController> {
+  const HomePage({
+    super.key,
+    required this.pageTitle,
+  });
 
   final String? pageTitle;
-
-  static const routingPath = '/home';
-
-  @override
-  String get absolutePagePath => '/home';
-}
-
-/// ホーム画面となるページ
-class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
-  const HomePage({super.key, required super.extra});
 
   @override
   HomePageController createController(BuildContext context) {
@@ -67,7 +60,7 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
             },
           ),
         ],
-        title: Text(extra.pageTitle ?? appL10n.appName),
+        title: Text(pageTitle ?? appL10n.appName),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -127,7 +120,8 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
               onPressed: () {
                 router().push(
                   context,
-                  ErrorPageExtra(error: Exception('Dummy Error from Home')),
+                  ErrorPageRouteSetting(error: 'Dummy Error from Home')
+                      .toRouteSetting(),
                 );
               },
               child: const Text('Open Error Page'),
@@ -135,14 +129,20 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
             const SizedBox(height: 10),
             OutlinedButton(
               onPressed: () {
-                router().push(context, const HomePageExtra(pageTitle: 'PUSH'));
+                router().push(
+                  context,
+                  HomePageRouteSetting(pageTitle: 'PUSH').toRouteSetting(),
+                );
               },
               child: const Text('push'),
             ),
             const SizedBox(height: 10),
             OutlinedButton(
               onPressed: () {
-                router().go(context, const HomePageExtra(pageTitle: 'GO'));
+                router().go(
+                  context,
+                  HomePageRouteSetting(pageTitle: 'GO').toRouteSetting(),
+                );
               },
               child: const Text('go'),
             ),
@@ -151,7 +151,8 @@ class HomePage extends IPage<HomePageExtra, HomePageModel, HomePageController> {
               onPressed: () {
                 router().pushReplacement(
                   context,
-                  const HomePageExtra(pageTitle: 'REPLACEMENT'),
+                  HomePageRouteSetting(pageTitle: 'REPLACEMENT')
+                      .toRouteSetting(),
                 );
               },
               child: const Text('replacement'),

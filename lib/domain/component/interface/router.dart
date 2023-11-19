@@ -4,23 +4,26 @@ abstract class IRouter {
   /// 指定されたパスをもとに遷移する。
   Future<T?> push<T extends Object?>(
     BuildContext context,
-    String path,
-    Object extra,
-  );
+    String name, {
+    Map<String, String> pathParameters = const <String, String>{},
+    Map<String, dynamic> queryParameters = const <String, dynamic>{},
+  });
 
   /// 指定されたパスに遷移する。このとき遷移と同時にこれまでの履歴を削除する。
   void go(
     BuildContext context,
-    String path,
-    Object extra,
-  );
+    String name, {
+    Map<String, String> pathParameters = const <String, String>{},
+    Map<String, dynamic> queryParameters = const <String, dynamic>{},
+  });
 
   /// 指定されたパスに遷移元を置き換えながら遷移する。
   Future<T?> pushReplacement<T extends Object?>(
     BuildContext context,
-    String path,
-    Object extra,
-  );
+    String name, {
+    Map<String, String> pathParameters = const <String, String>{},
+    Map<String, dynamic> queryParameters = const <String, dynamic>{},
+  });
 
   /// 画面が取り除くことができるならtrue
   bool canPop(BuildContext context);

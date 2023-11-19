@@ -12,7 +12,7 @@ import 'package:rekordi/presentation/page/app/view.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(RekordiApp(extra: RekordiAppExtra()));
+    await tester.pumpWidget(const RekordiApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

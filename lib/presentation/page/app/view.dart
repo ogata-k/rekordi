@@ -9,18 +9,10 @@ import 'package:rekordi/presentation/resource/l10n/l10n.dart';
 import 'package:rekordi/presentation/resource/theme/theme.dart';
 import 'package:rekordi/presentation/routing.dart';
 import 'package:rekordi/presentation/usecase/theme/get_theme_mode.dart';
-import 'package:rekordi/util/error/unreachable_error.dart';
-
-class RekordiAppExtra extends IPageExtra {
-  @override
-  // アプリ本体のWidgetなのでパスを呼び出した時点で何かがおかしい
-  String get absolutePagePath => throw UnreachableError();
-}
 
 /// アプリ本体
-class RekordiApp
-    extends IPage<RekordiAppExtra, RekordiAppModel, RekordiAppController> {
-  const RekordiApp({super.key, required super.extra});
+class RekordiApp extends IPage<RekordiAppModel, RekordiAppController> {
+  const RekordiApp({super.key});
 
   @override
   RekordiAppController createController(BuildContext context) {

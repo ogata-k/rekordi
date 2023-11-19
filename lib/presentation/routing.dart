@@ -1,40 +1,46 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rekordi/presentation/page/error/route_setting.dart';
 import 'package:rekordi/presentation/page/error/view.dart';
+import 'package:rekordi/presentation/page/home/route_setting.dart';
 import 'package:rekordi/presentation/page/home/view.dart';
 
-/// エラーページを構築
-Page<dynamic> _buildErrorPage(
-  BuildContext context,
-  GoRouterState state,
+/// クエリパラメータをパースして値を取得する。
+T? _getParam<T>(
+  Map<String, String> params,
+  String key,
+  T? Function(String value) tryParse,
 ) {
-  return _BasicRoutePage(
-    key: state.pageKey,
-    child: ErrorPage(
-      // extraがないということは自動で呼び出されたということなので自動構築する
-      extra: state.extra == null
-          ? ErrorPageExtra(error: state.error)
-          : state.extra! as ErrorPageExtra,
-    ),
-    transitionsBuilder: _fromBottom,
-  );
+  final String? value = params[key] == '' ? null : params[key];
+  if (value == null) {
+    return null;
+  }
+
+  return tryParse(value);
 }
 
 /// ルーティング情報を取得
 GoRouter getRouter() {
   return GoRouter(
+    debugLogDiagnostics: kDebugMode,
+
     // 初期値
-    initialLocation: HomePageExtra.routingPath,
-    initialExtra: HomePageExtra.defaultExtra(),
+    initialLocation: HomePageRouteSetting(pageTitle: null).toInitialLocation(),
 
     // ルーティング一覧
     routes: <RouteBase>[
       GoRoute(
-        path: HomePageExtra.routingPath,
+        name: HomePageRouteSetting.routeName,
+        path: HomePageRouteSetting.routePath,
         pageBuilder: (context, state) => _BasicRoutePage(
           key: state.pageKey,
           child: HomePage(
-            extra: state.extra! as HomePageExtra,
+            pageTitle: _getParam(
+              state.uri.queryParameters,
+              HomePageRouteSetting.pageTitleQueryKey,
+              (value) => value,
+            ),
           ),
           transitionsBuilder: _fromRight,
         ),
@@ -42,13 +48,30 @@ GoRouter getRouter() {
 
       // エラー
       GoRoute(
-        path: ErrorPageExtra.routingPath,
-        pageBuilder: _buildErrorPage,
+        name: ErrorPageRouteSetting.routeName,
+        path: ErrorPageRouteSetting.routePath,
+        pageBuilder: (context, state) => _BasicRoutePage(
+          key: state.pageKey,
+          child: ErrorPage(
+            error: _getParam(
+              state.uri.queryParameters,
+              ErrorPageRouteSetting.errorQueryKey,
+              (value) => value,
+            ),
+          ),
+          transitionsBuilder: _fromBottom,
+        ),
       ),
     ],
 
     // ルーティングに失敗した場合の画面
-    errorPageBuilder: _buildErrorPage,
+    errorPageBuilder: (context, state) => _BasicRoutePage(
+      key: state.pageKey,
+      child: ErrorPage(
+        error: state.error?.toString(),
+      ),
+      transitionsBuilder: _fromBottom,
+    ),
   );
 }
 
@@ -77,11 +100,10 @@ class _BasicRoutePage<T> extends CustomTransitionPage<T> {
 }
 
 /// フェードインアニメーション
-Widget _fadeIn(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
+Widget _fadeIn(BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
 ) {
   return FadeTransition(
     opacity: animation,
@@ -90,11 +112,10 @@ Widget _fadeIn(
 }
 
 /// 右から左へのスライドアニメーション
-Widget _fromRight(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
+Widget _fromRight(BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
 ) {
   return SlideTransition(
     position: animation.drive(
@@ -110,11 +131,10 @@ Widget _fromRight(
 }
 
 /// 下から上へのスライドアニメーション
-Widget _fromBottom(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
+Widget _fromBottom(BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
 ) {
   return SlideTransition(
     position: animation.drive(
@@ -130,11 +150,10 @@ Widget _fromBottom(
 }
 
 /// フェードインで入って、popするときには上から下にスライドしてアニメーション
-Widget _fadeInPopToBottom(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
+Widget _fadeInPopToBottom(BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
 ) {
   switch (animation.status) {
     case AnimationStatus.forward:
