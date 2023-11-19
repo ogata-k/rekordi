@@ -6,16 +6,23 @@ import 'package:rekordi/domain/component/locator.dart';
 AppRouter router() => locator().get<AppRouter>();
 
 /// ルーティングで遷移するときに利用するパラメーター
+/// [queryParameters]はJsonに変換できることを期待している
 class RouteSetting {
   RouteSetting({
-    required this.name,
-    this.pathParameters = const <String, String>{},
+    required this.path,
     this.queryParameters = const <String, dynamic>{},
   });
 
-  final String name;
-  final Map<String, String> pathParameters;
-  final Map<String, dynamic> queryParameters;
+  final String path;
+  final Map<String, dynamic /*String?|Iterable<String>*/ > queryParameters;
+
+  /// hoge/fuga?query=1&param=2の形式に変換する
+  String toLocation() {
+    return Uri(
+      path: path,
+      queryParameters: queryParameters.isEmpty ? null : queryParameters,
+    ).toString();
+  }
 }
 
 /// アプリのルーティングを担うルーター
@@ -31,9 +38,7 @@ class AppRouter {
   ) =>
       _instance.push(
         context,
-        setting.name,
-        pathParameters: setting.pathParameters,
-        queryParameters: setting.queryParameters,
+        setting.toLocation(),
       );
 
   /// 指定された[setting]を解析して得られたパスをもとに遷移する。
@@ -44,9 +49,7 @@ class AppRouter {
   ) =>
       _instance.go(
         context,
-        setting.name,
-        pathParameters: setting.pathParameters,
-        queryParameters: setting.queryParameters,
+        setting.toLocation(),
       );
 
   /// 指定された[setting]を解析して得られたパスをもとに遷移する。
@@ -57,9 +60,7 @@ class AppRouter {
   ) =>
       _instance.pushReplacement(
         context,
-        setting.name,
-        pathParameters: setting.pathParameters,
-        queryParameters: setting.queryParameters,
+        setting.toLocation(),
       );
 
   /// 画面が取り除くことができるならtrue

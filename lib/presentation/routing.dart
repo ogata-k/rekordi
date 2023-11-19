@@ -6,73 +6,63 @@ import 'package:rekordi/presentation/page/error/view.dart';
 import 'package:rekordi/presentation/page/home/route_setting.dart';
 import 'package:rekordi/presentation/page/home/view.dart';
 
-/// クエリパラメータをパースして値を取得する。
-T? _getParam<T>(
-  Map<String, String> params,
-  String key,
-  T? Function(String value) tryParse,
-) {
-  final String? value = params[key] == '' ? null : params[key];
-  if (value == null) {
-    return null;
-  }
-
-  return tryParse(value);
-}
-
 /// ルーティング情報を取得
 GoRouter getRouter() {
   return GoRouter(
-    debugLogDiagnostics: kDebugMode,
+      debugLogDiagnostics: kDebugMode,
 
-    // 初期値
-    initialLocation: HomePageRouteSetting(pageTitle: null).toInitialLocation(),
+      // 初期値
+      initialLocation:
+          HomePageRouteSetting(pageTitle: null).toRouteSetting().toLocation(),
 
-    // ルーティング一覧
-    routes: <RouteBase>[
-      GoRoute(
-        name: HomePageRouteSetting.routeName,
-        path: HomePageRouteSetting.routePath,
-        pageBuilder: (context, state) => _BasicRoutePage(
-          key: state.pageKey,
-          child: HomePage(
-            pageTitle: _getParam(
-              state.uri.queryParameters,
-              HomePageRouteSetting.pageTitleQueryKey,
-              (value) => value,
-            ),
-          ),
-          transitionsBuilder: _fromRight,
-        ),
-      ),
+      // ルーティング一覧
+      routes: <RouteBase>[
+        GoRoute(
+            path: HomePageRouteSetting.routePath,
+            pageBuilder: (context, state) {
+              final params = HomePageRouteSetting.fromPathParams(
+                state.pathParameters,
+                state.uri.queryParametersAll,
+              );
 
-      // エラー
-      GoRoute(
-        name: ErrorPageRouteSetting.routeName,
-        path: ErrorPageRouteSetting.routePath,
-        pageBuilder: (context, state) => _BasicRoutePage(
+              return _BasicRoutePage(
+                key: state.pageKey,
+                child: HomePage(
+                  pageTitle: params.pageTitle,
+                ),
+                transitionsBuilder: _fromRight,
+              );
+            }),
+
+        // エラー
+        GoRoute(
+            path: ErrorPageRouteSetting.routePath,
+            pageBuilder: (context, state) {
+              final params = ErrorPageRouteSetting.fromPathParams(
+                state.pathParameters,
+                state.uri.queryParametersAll,
+              );
+
+              return _BasicRoutePage(
+                key: state.pageKey,
+                child: ErrorPage(
+                  error: params.error,
+                ),
+                transitionsBuilder: _fromBottom,
+              );
+            }),
+      ],
+
+      // ルーティングに失敗した場合の画面
+      errorPageBuilder: (context, state) {
+        return _BasicRoutePage(
           key: state.pageKey,
           child: ErrorPage(
-            error: _getParam(
-              state.uri.queryParameters,
-              ErrorPageRouteSetting.errorQueryKey,
-              (value) => value,
-            ),
+            error: state.error?.toString(),
           ),
           transitionsBuilder: _fromBottom,
-        ),
-      ),
-    ],
-
-    // ルーティングに失敗した場合の画面
-    errorPageBuilder: (context, state) => _BasicRoutePage(
-      key: state.pageKey,
-      child: ErrorPage(
-        error: state.error?.toString(),
-      ),
-      transitionsBuilder: _fromBottom,
-    ),
-  );
+        );
+      });
 }
 
 /// デフォルト設定を設定したこのアプリ用のルーティング
@@ -81,11 +71,11 @@ class _BasicRoutePage<T> extends CustomTransitionPage<T> {
     required super.child,
     required super.transitionsBuilder,
 
-    /// Duration to 400ms
-    super.transitionDuration = const Duration(milliseconds: 400),
+    /// Duration to 300ms
+    super.transitionDuration = const Duration(milliseconds: 300),
 
-    /// Duration to 400ms
-    super.reverseTransitionDuration = const Duration(milliseconds: 500),
+    /// Duration to 300ms
+    super.reverseTransitionDuration = const Duration(milliseconds: 300),
     super.maintainState = true,
     super.fullscreenDialog = false,
     super.opaque = true,
@@ -100,10 +90,11 @@ class _BasicRoutePage<T> extends CustomTransitionPage<T> {
 }
 
 /// フェードインアニメーション
-Widget _fadeIn(BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
+Widget _fadeIn(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
 ) {
   return FadeTransition(
     opacity: animation,
@@ -112,10 +103,11 @@ Widget _fadeIn(BuildContext context,
 }
 
 /// 右から左へのスライドアニメーション
-Widget _fromRight(BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
+Widget _fromRight(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
 ) {
   return SlideTransition(
     position: animation.drive(
@@ -131,10 +123,11 @@ Widget _fromRight(BuildContext context,
 }
 
 /// 下から上へのスライドアニメーション
-Widget _fromBottom(BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
+Widget _fromBottom(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
 ) {
   return SlideTransition(
     position: animation.drive(
@@ -150,10 +143,11 @@ Widget _fromBottom(BuildContext context,
 }
 
 /// フェードインで入って、popするときには上から下にスライドしてアニメーション
-Widget _fadeInPopToBottom(BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
+Widget _fadeInPopToBottom(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
 ) {
   switch (animation.status) {
     case AnimationStatus.forward:

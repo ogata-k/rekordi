@@ -9,41 +9,23 @@ class GoRouterImpl extends dc.IRouter {
   @override
   Future<T?> push<T extends Object?>(
     BuildContext context,
-    String name, {
-    Map<String, String> pathParameters = const <String, String>{},
-    Map<String, dynamic> queryParameters = const <String, dynamic>{},
-  }) =>
-      gr.GoRouter.of(context).pushNamed<T>(
-        name,
-        pathParameters: pathParameters,
-        queryParameters: queryParameters,
-      );
+    String location,
+  ) =>
+      gr.GoRouter.of(context).push<T>(location);
 
   @override
   void go(
     BuildContext context,
-    String name, {
-    Map<String, String> pathParameters = const <String, String>{},
-    Map<String, dynamic> queryParameters = const <String, dynamic>{},
-  }) =>
-      gr.GoRouter.of(context).goNamed(
-        name,
-        pathParameters: pathParameters,
-        queryParameters: queryParameters,
-      );
+    String location,
+  ) =>
+      gr.GoRouter.of(context).go(location);
 
   @override
   Future<T?> pushReplacement<T extends Object?>(
     BuildContext context,
-    String name, {
-    Map<String, String> pathParameters = const <String, String>{},
-    Map<String, dynamic> queryParameters = const <String, dynamic>{},
-  }) =>
-      gr.GoRouter.of(context).pushReplacementNamed<T>(
-        name,
-        pathParameters: pathParameters,
-        queryParameters: queryParameters,
-      );
+    String location,
+  ) =>
+      gr.GoRouter.of(context).pushReplacement<T>(location);
 
   @override
   bool canPop(BuildContext context) => gr.GoRouter.of(context).canPop();
