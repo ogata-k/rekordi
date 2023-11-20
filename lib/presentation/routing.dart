@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -9,153 +12,141 @@ import 'package:rekordi/presentation/page/home/view.dart';
 /// ルーティング情報を取得
 GoRouter getRouter() {
   return GoRouter(
-      debugLogDiagnostics: kDebugMode,
+    debugLogDiagnostics: kDebugMode,
 
-      // 初期値
-      initialLocation:
-          HomePageRouteSetting(pageTitle: null).toRouteSetting().toLocation(),
+    // 初期値
+    initialLocation:
+        HomePageRouteSetting(pageTitle: null).toRouteSetting().toLocation(),
 
-      // ルーティング一覧
-      routes: <RouteBase>[
-        GoRoute(
-            path: HomePageRouteSetting.routePath,
-            pageBuilder: (context, state) {
-              final params = HomePageRouteSetting.fromPathParams(
-                state.pathParameters,
-                state.uri.queryParametersAll,
-              );
+    // ルーティング一覧
+    routes: <RouteBase>[
+      GoRoute(
+        path: HomePageRouteSetting.routePath,
+        pageBuilder: (context, state) {
+          final params = HomePageRouteSetting.fromPathParams(
+            state.pathParameters,
+            state.uri.queryParametersAll,
+          );
 
-              return _BasicRoutePage(
-                key: state.pageKey,
-                child: HomePage(
-                  pageTitle: params.pageTitle,
-                ),
-                transitionsBuilder: _fromRight,
-              );
-            }),
+          return _navigateForPlatform(
+            key: state.pageKey,
+            fullscreenDialog: false,
+            child: HomePage(
+              pageTitle: params.pageTitle,
+            ),
+          );
+        },
+      ),
 
-        // エラー
-        GoRoute(
-            path: ErrorPageRouteSetting.routePath,
-            pageBuilder: (context, state) {
-              final params = ErrorPageRouteSetting.fromPathParams(
-                state.pathParameters,
-                state.uri.queryParametersAll,
-              );
+      // エラー
+      GoRoute(
+        path: ErrorPageRouteSetting.routePath,
+        pageBuilder: (context, state) {
+          final params = ErrorPageRouteSetting.fromPathParams(
+            state.pathParameters,
+            state.uri.queryParametersAll,
+          );
 
-              return _BasicRoutePage(
-                key: state.pageKey,
-                child: ErrorPage(
-                  error: params.error,
-                ),
-                transitionsBuilder: _fromBottom,
-              );
-            }),
-      ],
+          return _navigateForPlatform(
+            key: state.pageKey,
+            fullscreenDialog: true,
+            child: ErrorPage(
+              error: params.error,
+            ),
+          );
+        },
+      ),
+    ],
 
-      // ルーティングに失敗した場合の画面
-      errorPageBuilder: (context, state) {
-        return _BasicRoutePage(
-          key: state.pageKey,
-          child: ErrorPage(
-            error: state.error?.toString(),
-          ),
-          transitionsBuilder: _fromBottom,
-        );
-      });
+    // ルーティングに失敗した場合の画面
+    errorPageBuilder: (context, state) {
+      return _navigateForPlatform(
+        key: state.pageKey,
+        fullscreenDialog: true,
+        child: ErrorPage(
+          error: state.error?.toString(),
+        ),
+      );
+    },
+  );
 }
 
-/// デフォルト設定を設定したこのアプリ用のルーティング
-class _BasicRoutePage<T> extends CustomTransitionPage<T> {
-  const _BasicRoutePage({
+/// プラトフォームごとに表示するPageRouteを振り分ける。
+/// [fullscreenDialog]で変化する挙動は[ThemeData.pageTransitionsTheme]を参照のこと。
+Page<T> _navigateForPlatform<T>({
+  LocalKey? key,
+  required bool fullscreenDialog,
+  bool allowSnapshotting = true,
+  required Widget child,
+}) {
+  if (Platform.isIOS || Platform.isMacOS) {
+    return CupertinoPage<T>(
+      key: key,
+      maintainState: true,
+      fullscreenDialog: fullscreenDialog,
+      allowSnapshotting: allowSnapshotting,
+      child: child,
+    );
+  }
+
+  return _MyMaterialPage<T>(
+    key: key,
+    maintainState: true,
+    fullscreenDialog: fullscreenDialog,
+    allowSnapshotting: allowSnapshotting,
+    child: child,
+  );
+}
+
+/// 実装自体は[MaterialPage]と同じだが、カスタムできるように調整したPageRouteを返すようにしてある。
+class _MyMaterialPage<T> extends MaterialPage<T> {
+  const _MyMaterialPage({
     required super.child,
-    required super.transitionsBuilder,
-
-    /// Duration to 300ms
-    super.transitionDuration = const Duration(milliseconds: 300),
-
-    /// Duration to 300ms
-    super.reverseTransitionDuration = const Duration(milliseconds: 300),
     super.maintainState = true,
     super.fullscreenDialog = false,
-    super.opaque = true,
-    super.barrierDismissible = false,
-    super.barrierColor,
-    super.barrierLabel,
+    super.allowSnapshotting = true,
     super.key,
     super.name,
     super.arguments,
     super.restorationId,
   });
-}
 
-/// フェードインアニメーション
-Widget _fadeIn(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
-) {
-  return FadeTransition(
-    opacity: animation,
-    child: child,
-  );
-}
-
-/// 右から左へのスライドアニメーション
-Widget _fromRight(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
-) {
-  return SlideTransition(
-    position: animation.drive(
-      Tween<Offset>(
-        begin: const Offset(1, 0),
-        end: Offset.zero,
-      ).chain(
-        CurveTween(curve: Curves.linear),
-      ),
-    ),
-    child: child,
-  );
-}
-
-/// 下から上へのスライドアニメーション
-Widget _fromBottom(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
-) {
-  return SlideTransition(
-    position: animation.drive(
-      Tween<Offset>(
-        begin: const Offset(0, 1),
-        end: Offset.zero,
-      ).chain(
-        CurveTween(curve: Curves.linear),
-      ),
-    ),
-    child: child,
-  );
-}
-
-/// フェードインで入って、popするときには上から下にスライドしてアニメーション
-Widget _fadeInPopToBottom(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
-) {
-  switch (animation.status) {
-    case AnimationStatus.forward:
-      return _fadeIn(context, animation, secondaryAnimation, child);
-    case AnimationStatus.reverse:
-      return _fromBottom(context, animation, secondaryAnimation, child);
-    case AnimationStatus.dismissed:
-    case AnimationStatus.completed:
-      return child;
+  @override
+  Route<T> createRoute(BuildContext context) {
+    return _MyPageBasedMaterialPageRoute<T>(
+      page: this,
+      allowSnapshotting: allowSnapshotting,
+    );
   }
+}
+
+/// 実装自体は[MaterialPage]で返しているPageRouteのレスポンスと同じだが、
+/// [transitionDuration]をデフォルトの300msより遅めに設定してある。
+class _MyPageBasedMaterialPageRoute<T> extends PageRoute<T>
+    with MaterialRouteTransitionMixin<T> {
+  _MyPageBasedMaterialPageRoute({
+    required MaterialPage<T> page,
+    super.allowSnapshotting,
+  }) : super(settings: page) {
+    assert(opaque);
+  }
+
+  MaterialPage<T> get _page => settings as MaterialPage<T>;
+
+  @override
+  Widget buildContent(BuildContext context) {
+    return _page.child;
+  }
+
+  @override
+  bool get maintainState => _page.maintainState;
+
+  @override
+  bool get fullscreenDialog => _page.fullscreenDialog;
+
+  @override
+  String get debugLabel => '${super.debugLabel}(${_page.name})';
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 450);
 }

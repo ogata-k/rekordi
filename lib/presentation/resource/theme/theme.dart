@@ -25,6 +25,13 @@ class AppThemeBuilder {
           appBarTheme: theme.appBarTheme.copyWith(
             toolbarHeight: 48.0,
           ),
+          pageTransitionsTheme: const PageTransitionsTheme(
+            builders: <TargetPlatform, PageTransitionsBuilder>{
+              TargetPlatform.android: _MyMaterialPageTransitionsBuilder(),
+              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+              TargetPlatform.macOS: FadeUpwardsPageTransitionsBuilder(),
+            },
+          ),
           // 拡張テーマのデフォルト値を指定する
           // 最後に指定してもろもろの設定が適用されたThemeDataを使うようにする
           extensions: buildExtensions(theme, brightness),
@@ -50,6 +57,45 @@ class AppThemeBuilder {
 
   /// ダークテーマで構築
   ThemeData buildDark() => build(Brightness.dark);
+}
+
+class _MyMaterialPageTransitionsBuilder extends PageTransitionsBuilder {
+  const _MyMaterialPageTransitionsBuilder() : super();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    if (route.fullscreenDialog) {
+      return SlideTransition(
+        position: animation.drive(
+          Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).chain(
+            CurveTween(curve: Curves.linear),
+          ),
+        ),
+        child: child,
+      );
+    }
+
+    return SlideTransition(
+      position: animation.drive(
+        Tween<Offset>(
+          begin: const Offset(1, 0),
+          end: Offset.zero,
+        ).chain(
+          CurveTween(curve: Curves.linear),
+        ),
+      ),
+      child: child,
+    );
+  }
 }
 
 class AppTheme {
