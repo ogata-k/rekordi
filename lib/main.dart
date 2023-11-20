@@ -9,5 +9,8 @@ Future<void> main() async {
   InitializeLocatorUsecase().call();
   await InitializeAppAsyncUsecase().call();
 
+  // 今はデフォルト値を利用するので未指定だが、必要ならresponsive_builderをimportして下記を指定する。
+  // ResponsiveSizingConfig.instance.setCustomBreakpoints()
+
   runApp(const RekordiApp());
 }

@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:rekordi/presentation/resource/theme/const/color.dart';
 
+export 'package:flutter_screenutil/flutter_screenutil.dart'
+    show
+        BorderRaduisExtension,
+        BoxConstraintsExtension,
+        EdgeInsetsExtension,
+        RaduisExtension,
+        SizeExtension;
+
 typedef ExtensionsBuilder = List<ThemeExtension<dynamic>> Function(
   ThemeData theme,
   Brightness brightness,

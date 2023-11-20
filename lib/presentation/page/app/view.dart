@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekordi/domain/component/locator.dart';
 import 'package:rekordi/domain/repository/file/preferences.dart';
@@ -30,19 +31,30 @@ class RekordiApp extends IPage<RekordiAppModel, RekordiAppController> {
   @override
   Widget buildPage(BuildContext context, Widget? child) {
     final GoRouter router = getRouter();
-    final themeBuilder = AppThemeBuilder.appDefault();
 
-    return Consumer<RekordiAppModel>(
-      builder: (BuildContext context, RekordiAppModel value, Widget? child) {
-        return MaterialApp.router(
-          localizationsDelegates: AppL10n.localizationsDelegates,
-          supportedLocales: AppL10n.supportedLocales,
-          theme: themeBuilder.buildLight(),
-          darkTheme: themeBuilder.buildDark(),
-          themeMode: value.themeMode,
-          debugShowCheckedModeBanner: false,
-          debugShowMaterialGrid: false,
-          routerConfig: router,
+    return ScreenUtilInit(
+      // default designSize
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: false,
+      builder: (context, _) {
+        final themeBuilder = AppThemeBuilder.appDefault();
+
+        return Consumer<RekordiAppModel>(
+          builder:
+              (BuildContext context, RekordiAppModel value, Widget? child) {
+            return MaterialApp.router(
+              localizationsDelegates: AppL10n.localizationsDelegates,
+              supportedLocales: AppL10n.supportedLocales,
+              // @todo サイズ指定に16.spというような指定をつかって解像度に対して柔軟性を持たせる。
+              theme: themeBuilder.buildLight(),
+              darkTheme: themeBuilder.buildDark(),
+              themeMode: value.themeMode,
+              debugShowCheckedModeBanner: false,
+              debugShowMaterialGrid: false,
+              routerConfig: router,
+            );
+          },
         );
       },
     );

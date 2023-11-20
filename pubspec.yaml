@@ -46,6 +46,10 @@ dependencies:
   ## Event Listener
   event_bus: 2.0.0
 
+  # responsive design
+  flutter_screenutil: 5.9.0
+  responsive_builder: 0.7.0
+
   # presenter
   provider: 6.1.1
   state_notifier: 1.0.0
